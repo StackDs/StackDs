@@ -1,84 +1,279 @@
-## 🤝 Connect with me
-
-<p align="center">
-    
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/StackDs)
-</p>
-
-## 🛠 Tech Stack
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=YOUR_TOPICS&perline=8" />
-</p>
-
-## 📊 GitHub Stats
-
-<p align="center">
-  <img height="160" src="https://github-readmeapp.vercel.app/api?username=StackDs&show_icons=true&theme=transparent&hide_border=true&title_color=58A6FF&text_color=c9d1d9&icon_color=58A6FF"/>
-  <img height="160" src="https://github-readmeapp.vercel.app/api/top-langs/?username=StackDs&layout=compact&theme=transparent&hide_border=true&title_color=58A6FF&text_color=c9d1d9"/>
-</p>
-
-## 🧑‍💻 About Me
-
-| | |
-|:--|:--|
-| 🔭 **Working on** | YOUR_PROJECT |
-| 🌱 **Learning** | YOUR_LEARNING |
-| 📍 **Location** | YOUR_CITY, YOUR_COUNTRY |
-| 💼 **Role** | YOUR_ROLE |
-| 📫 **Email** | YOUR_EMAIL |
-| ⚡ **Fun fact** | YOUR_FUN_FACT |
-
-## 💡 Top Languages
-
-<p align="center">
-  <img src="https://github-readmeapp.vercel.app/api/top-langs/?username=StackDs&layout=donut&theme=transparent&hide_border=true&title_color=58A6FF&text_color=c9d1d9"/>
-</p>
-
-## 🔥 Streak
-
-<p align="center">
-  <img src="https://streak-stats.demolab.com?user=StackDs&theme=transparent&hide_border=true&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF" width="55%"/>
-</p>
-
-## 🏆 Trophies
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=StackDs&theme=nord&no-frame=true&row=2&column=4"/>
-</p>
-
-## 📈 Activity Graph
-
-<p align="center">
-  <a href="https://github.com/StackDs">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=StackDs&custom_title=Activity%20Graph&bg_color=0d1117&color=58A6FF&line=7C3AED&point=FFFFFF&area=true&hide_border=true" alt="Activity Graph">
-  </a>
-</p>
-
-## 🚀 Featured Projects
-
-- **[StackDs](https://github.com/StackDs/StackDs)** — YOUR_PROJECT_1_DESC
-- **[MetricasCentralidad_Redes_ED](https://github.com/StackDs/MetricasCentralidad_Redes_ED)** — YOUR_PROJECT_2_DESC
-
 <div align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
+
+```
+ ██████ ╗██╗   ██╗██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗███╗   ██╗██╗  ██╗
+ ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██║   ██║████╗  ██║██║ ██╔╝
+ ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝██████╔╝██║   ██║██╔██╗ ██║█████╔╝ 
+ ██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗██╔═══╝ ██║   ██║██║╚██╗██║██╔═██╗ 
+ ╚██████╗   ██║   ██████╔╝███████╗██║  ██║██║     ╚██████╔╝██║ ╚████║██║  ██╗
+  ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝
+```
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=35&duration=3000&pause=1000&color=00FF41&center=true&vCenter=true&width=600&lines=SYSTEM%3A+CONNECTED;USER%3A+Stack;ROLE%3A+Estudiante ;STATUS%3A+ONLINE" alt="Matrix Typing"/>
+
 </div>
 
+---
+
 <div align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Bryan&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=Building things on the internet&descAlignY=55" width="100%"/>
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=Hi+there!+I'm+Bryan+👋;YOUR_ROLE;Building things on the internet" alt="Typing SVG"/>
+
+## ⚡ NEURAL INTERFACE ACTIVATED ⚡
+
 </div>
 
-## ⌨️ About Me
+<img align="right" alt="Cyberpunk GIF" width="300" src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif">
 
-<p align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com/?font=JetBrains+Mono&weight=600&size=24&duration=2500&pause=1000&color=58A6FF&center=true&vCenter=true&width=850&lines=Building%20things%20on%20the%20internet" alt="Typing SVG" />
-  </a>
-</p>
+```bash
+> ACCESS GRANTED: Bryan Aguirre
+> ALIAS: Stack
+> CLEARANCE LEVEL: [Your experienceLevel]
+> LOCATION: Chile
+> CORPORATION: [Your company]
+> STATUS: [Your currentStatus]
+```
 
-## 🐍 Contribution Snake
+**🔬 BIO_DATA:**  
+Soy estudiante de Ingeniería Civil Informática y me apasiona crear software que no solo funcione, sino que también sea entretenido de desarrollar y agradable de usar. Me gusta entender cómo funcionan las cosas desde su base, por eso suelo interesarme por Linux, la automatización, el desarrollo de herramientas y el funcionamiento interno de los sistemas.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/StackDs/StackDs/output/github-contribution-grid-snake.svg" alt="github contribution grid snake animation">
-</p>
+Disfruto transformar procesos complejos en soluciones simples. Si una tarea puede automatizarse, probablemente voy a intentar hacerlo, aunque me tome más tiempo crear la herramienta que realizar el trabajo manual. Para mí, el desafío de construir la solución es parte de la diversión.
+
+Fuera del mundo del desarrollo, la música ocupa un lugar importante en mi vida. Paso gran parte del tiempo escuchando rock e indie, además de tocar guitarra. También soy un entusiasta de los videojuegos, especialmente aquellos con una identidad visual y sonora que dejan huella, y me llaman mucho la atención la preservación de videojuegos, el hardware clásico y la ingeniería detrás de las consolas.
+
+Me atrae la estética retrofuturista, las interfaces inspiradas en terminales, el diseño minimalista y todo lo que combine tecnología con un toque de nostalgia. Muchas de las cosas que desarrollo buscan reflejar esa personalidad: herramientas útiles, interfaces limpias y proyectos que transmitan carácter.
+
+
+**🧠 CORE_PHILOSOPHY:**  
+La tecnología debería ser libre y siempre buscar facilitar la vida
+
+**⚡ SUPERPOWER:**  
+Saber toda la sintaxis de todos los lenguajes 
+
+**🛡️ WEAKNESS:**  
+[Your weakness]
+
+<br clear="right"/>
+
+---
+
+<div align="center">
+
+## 🚀 PROJECT ARCHIVES 🚀
+
+<img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" width="100">
+
+</div>
+
+<table>
+<tr>
+<td colspan="3">
+
+### 🌐 CLASSIFIED OPERATIONS
+
+</td>
+</tr>
+<tr>
+<td width="33%">
+
+#### 💚 Rookie Linux Develop
+```
+STATUS: DEPLOYED
+ACCESS: PUBLIC
+```
+Un proyecto corto de código abierto que tiene el fin de ser una aplicación interactiva para facilitar el instalar Linux por primera vez otorgando una interfaz amigable y con información actualizada.
+
+**TECH_STACK:** `[Your project1Tech]`
+
+[![REPO](https://img.shields.io/badge/REPO-000000?style=for-the-badge&logo=github&logoColor=00FF41)](https://github.com/StackDs/Rookie-Linux-Develop)
+[![DEMO](https://img.shields.io/badge/DEMO-FF0080?style=for-the-badge&logo=vercel&logoColor=white)]([Your project1Link])
+
+</td>
+<td width="33%">
+
+#### 💜 [Your project2Name]
+```
+STATUS: ACTIVE
+ACCESS: PUBLIC
+```
+[Your project2Description]
+
+**TECH_STACK:** `[Your project2Tech]`
+
+[![REPO](https://img.shields.io/badge/REPO-000000?style=for-the-badge&logo=github&logoColor=00FF41)]([Your project2Repo])
+[![DEMO](https://img.shields.io/badge/DEMO-FF0080?style=for-the-badge&logo=vercel&logoColor=white)]([Your project2Link])
+
+</td>
+<td width="33%">
+
+#### 🔵 [Your project3Name]
+```
+STATUS: BETA
+ACCESS: LIMITED
+```
+[Your project3Description]
+
+**TECH_STACK:** `[Your project3Tech]`
+
+[![REPO](https://img.shields.io/badge/REPO-000000?style=for-the-badge&logo=github&logoColor=00FF41)]([Your project3Repo])
+[![DEMO](https://img.shields.io/badge/DEMO-FF0080?style=for-the-badge&logo=vercel&logoColor=white)]([Your project3Link])
+
+</td>
+</tr>
+</table>
+
+---
+
+<div align="center">
+
+## 💻 TECH ARSENAL 💻
+
+<img src="https://media.giphy.com/media/fuJPZBIIqzbt1kAYVc/giphy.gif" width="100">
+
+</div>
+
+PROGRAMMING_LANGUAGES:
+  arsenal: [![My Skills](https://skillicons.dev/icons?i=postgresql,cs,django,java,python,docker,linux,ubuntu,flutter,figma,pandas,numpy,jupyter,git,github,vscode,discord)](https://skillicons.dev)
+  
+```yaml
+
+
+FRONTEND_MATRIX:
+  skills: "HTML/CSS"
+  
+BACKEND_CORE:
+  skills: "[![My Skills](https://skillicons.dev/icons?i=cs,django,java,python)](https://skillicons.dev)"
+  
+DATABASE_NODES:
+  connections: "[![My Skills](https://skillicons.dev/icons?i=postgresql)](https://skillicons.dev)"
+  
+DEVOPS_PIPELINE:
+  automation: "[Your devops1]"
+  
+CLOUD_NETWORK:
+  infrastructure: "[![My Skills](https://skillicons.dev/icons?i=docker,linux,ubuntu)](https://skillicons.dev)"
+```
+
+<div align="center">
+
+### ⚡ SYSTEM STATS ⚡
+
+<div align="center">
+
+  <img src="https://img.shields.io/badge/ALL THE WORLD OF C -000000?style=for-the-badge&logo=code&logoColor=00FF41" alt="Primary Tech" />
+  <img src="https://img.shields.io/badge/EXP_LEVEL-[Your experienceLevel]-FF0080?style=for-the-badge&logoColor=white" alt="Experience Level" />
+  <img src="https://img.shields.io/badge/BEST_ACCURACY-[Your bestAccuracy]-00FFFF?style=for-the-badge&logoColor=black" alt="Best Accuracy" />
+  <img src="https://img.shields.io/badge/CODING_HOURS-[Your programmingHours]/week-00FF41?style=for-the-badge&logoColor=black" alt="Coding Hours" />
+
+</div>
+
+
+</div>
+
+---
+
+<div align="center">
+
+## 📊 NEURAL NETWORK ANALYTICS 📊
+
+<img src="https://github-readme-stats.vercel.app/api?username=StackDs&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&title_color=00FF41&text_color=FFFFFF&icon_color=FF0080" alt="GitHub Stats" width="49%"/>
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=StackDs&theme=radical&hide_border=true&background=0D1117&ring=00FF41&fire=FF0080&currStreakLabel=00FFFF" alt="GitHub Streak" width="49%"/>
+
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=StackDs&layout=compact&theme=radical&hide_border=true&bg_color=0D1117&title_color=00FF41&text_color=FFFFFF" alt="Top Languages" width="45%"/>
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=StackDs&bg_color=0D1117&color=00FF41&line=FF0080&point=00FFFF&area=true&hide_border=true" alt="Activity Graph" width="100%"/>
+
+</div>
+
+---
+
+<div align="center">
+
+## 🔬 LEARNING PROTOCOL 🔬
+
+<img src="https://media.giphy.com/media/LaVp0AyqR5bGsC5Cbm/giphy.gif" width="100">
+
+</div>
+
+```bash
+> CURRENT_LEARNING_PROCESS: [Your currentLearning]
+> MOTIVATION_CORE: [Your motivation]
+> OBJECTIVE_PRIMARY: [Your currentGoal]
+> OBJECTIVE_SECONDARY: [Your nextGoal]
+```
+
+**⏰ NEURAL_UPTIME:** [Your programmingHours] hours/week
+
+---
+
+<div align="center">
+
+## 🌐 NETWORK CONNECTIONS 🌐
+
+<img src="https://media.giphy.com/media/LMt9638dO8dftAjtco/giphy.gif" width="100">
+
+<a href="https://github.com/StackDs">
+  <img src="https://img.shields.io/badge/GITHUB-000000?style=for-the-badge&logo=github&logoColor=00FF41" alt="GitHub"/>
+</a>
+<a href="https://linkedin.com/in/[Your linkedin]">
+  <img src="https://img.shields.io/badge/LINKEDIN-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+</a>
+<a href="https://twitter.com/[Your twitter]">
+  <img src="https://img.shields.io/badge/TWITTER-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter"/>
+</a>
+<a href="[Your portfolio]">
+  <img src="https://img.shields.io/badge/PORTFOLIO-FF0080?style=for-the-badge&logo=firefox&logoColor=white" alt="Portfolio"/>
+</a>
+<a href="https://discord.gg/servy#6815">
+  <img src="https://img.shields.io/badge/DISCORD-7289DA?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"/>
+</a>
+<a href="mailto:codbryxp@gmail.com">
+  <img src="https://img.shields.io/badge/EMAIL-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
+</a>
+
+</div>
+
+---
+
+<div align="center">
+
+## 🎯 MISSION DIRECTIVE 🎯
+
+<img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="100">
+
+</div>
+
+```
+> PERSONAL_QUOTE: "[Your quote]"
+> HIDEOUT_LOCATION: [Your hideout]
+> CONNECTION_STATUS: ALWAYS_ONLINE
+> COLLABORATION_MODE: ENABLED
+```
+
+---
+
+<div align="center">
+
+### ⚡ SYSTEM MONITORING ⚡
+
+<img src="https://komarev.com/ghpvc/?username=StackDs&color=00FF41&style=for-the-badge&label=NEURAL+CONNECTIONS" alt="Profile Views"/>
+
+<img src="https://github-trophies.vercel.app/?username=StackDs&theme=radical&no-frame=true&no-bg=true&margin-w=4" alt="GitHub Trophies"/>
+
+```
+> STATUS: ONLINE AND READY FOR COLLABORATION
+> LAST_SEEN: JUST NOW
+> NEXT_MISSION: BUILDING THE FUTURE
+```
+
+<img src="https://media.giphy.com/media/xUA7aM09ByyR1w5YWc/giphy.gif" width="400">
+
+</div>
+
+---
+
+<div align="center">
+
+```
+END OF FILE
+```
+
+</div>
