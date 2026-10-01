@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="390" viewBox="0 0 880 390" role="img" aria-labelledby="title desc">
+  <title id="title">Stack / Bryan — Arch Linux</title>
+  <desc id="desc">Una terminal con arte ASCII de Stack. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
+  <style>
+    text { font-family: 'DejaVu Sans Mono', 'Liberation Mono', monospace; }
+    .reveal { animation: type 1.8s steps(32, end) .4s both; }
+    .cursor { animation: blink .8s step-end 5 forwards; }
+    @keyframes type { from { width: 0; } to { width: 832px; } }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { animation: none; }
+      .cursor { animation: none; opacity: 0; }
+    }
+  </style>
+  <defs><clipPath id="typing"><rect class="reveal" x="36" y="0" width="832" height="390"/></clipPath></defs>
+  <rect x="1" y="1" width="878" height="388" rx="12" fill="#161B2B" stroke="#3B445C"/>
+  <path d="M1 45H879" stroke="#3B445C"/>
+  <circle cx="25" cy="24" r="5" fill="#E9BD78"/>
+  <circle cx="43" cy="24" r="5" fill="#B6A4EA"/>
+  <circle cx="61" cy="24" r="5" fill="#86DCE5"/>
+
+<text x="440.0" y="29" fill="#B7C2D9" font-size="12" text-anchor="middle">stack@arch: ~</text>
+<text x="36" y="81" fill="#86DCE5" font-size="14" >~ $ fastfetch --logo stack</text>
+<text x="36" y="126" fill="#B6A4EA" font-size="22" xml:space="preserve"> ____  _____  _    ____ _  __</text>
+<text x="36" y="151" fill="#B6A4EA" font-size="22" xml:space="preserve">/ ___||_   _|/ \  / ___| |/ /</text>
+<text x="36" y="176" fill="#B6A4EA" font-size="22" xml:space="preserve">\___ \  | | / _ \| |   | &#x27; / </text>
+<text x="36" y="201" fill="#86DCE5" font-size="22" xml:space="preserve"> ___) | | |/ ___ \ |___| . \ </text>
+<text x="36" y="226" fill="#86DCE5" font-size="22" xml:space="preserve">|____/  |_/_/   \_\____|_|\_\ </text>
+<text x="490" y="126" fill="#E6EDF3" font-size="21" font-weight="bold">Bryan / Stack</text>
+<text x="490" y="159" fill="#E9BD78" font-size="14" >os</text>
+<text x="542" y="159" fill="#E6EDF3" font-size="14" >Arch Linux</text>
+<text x="490" y="183" fill="#E9BD78" font-size="14" >role</text>
+<text x="542" y="183" fill="#E6EDF3" font-size="14" >Estudiante de informática</text>
+<text x="490" y="207" fill="#E9BD78" font-size="14" >loc</text>
+<text x="542" y="207" fill="#E6EDF3" font-size="14" >Chile</text>
+<text x="490" y="231" fill="#E9BD78" font-size="14" >alias</text>
+<text x="542" y="231" fill="#E6EDF3" font-size="14" >La mejor estructura de datos</text>
+<text x="36" y="242" fill="#B7C2D9" font-size="13" >Last in, first out.</text>
+<path d="M36 281H844" stroke="#3B445C"/>
+<text x="36" y="314" fill="#86DCE5" font-size="14" clip-path="url(#typing)">~ $ stack.push(&quot;hello, world&quot;);</text>
+<rect class="cursor" x="299" y="302" width="8" height="16" fill="#86DCE5"/>
+<text x="36" y="344" fill="#E6EDF3" font-size="14" >Código, música y demasiados videojuegos.</text>
+<text x="844" y="81" fill="#E9BD78" font-size="12" text-anchor="end">I use Arch, btw.</text>
+</svg>
