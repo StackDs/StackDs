@@ -6,6 +6,7 @@ import random
 from html import escape
 from math import ceil
 from pathlib import Path
+from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
@@ -17,9 +18,8 @@ BACKGROUND = "#0F1419"
 ART_BACKGROUND = "#080E14"
 TEXT_PRIMARY = "#ECEFF4"
 TEXT_SECONDARY = "#D3C6AA"
-ACCENT = "#1793D1"
-ACCENT_SECONDARY = "#088DDC"
-ACCENT_LIGHT = "#6BC5ED"
+ACCENT = "#088DDC"
+COMMENT = "#5c6370"
 PHOTO_COLOR = "#A5F3FC"
 PHOTO_SHADOW = "#3FAFE0"
 PHOTO_MID = "#7ED7F0"
@@ -31,6 +31,30 @@ DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW
 ASCII_RAMP = DENSITY_RAMP[::-1]
 PHOTO_TONES = (PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR)
 PHOTO_GRID_SCALE = 1.25
+ABOUT_ME_TEXT = "I'm a Computer Engineering student with a passion for teaching. I enjoy teaching math and computer science, always guided by the philosophy that the best way to learn is by teaching. I love programming, although with AI around, I don't do it as much anymore XD. I like designing systems and tools for various topics, and I'm obsessed with customization because I use Arch, btw. AFK, I'm a musician and play several instruments. I definitely have more hours logged in video games than touching grass. I also love playing basketball because you have to move your ass every once in a while, and I'm a bit of an alcoholic, but what engineer isn't?"
+ABOUT_ME_WRAP = 40
+ABOUT_ME_PADDING_RIGHT = 24
+ABOUT_ME_LINE_HEIGHT = 20
+QUOTES = (
+"  • I'm the son of rage and love  - St. Jimmy",
+"  • You can't get a hangover if you don't stop drinking - Lemmy Kilmister",
+"  • Talk is cheap. Show me the code - Linus Torvalds",
+"  • A wrong decision is better than indecision - Tony Soprano",
+"  • Yeah, Mr. White! Yeah, science! - Jesse Pinkman",
+"  • Wubba lubba dub dub! - Rick Sanchez",
+"  • What's in the box? - Se7en",
+"  • Cadia stands, and we shall not fall - Imperial Creed",
+"  • War. War never changes. - Fallout",
+"  • Forget about Freeman - Half-Life",
+"  • The cake is a lie - Portal",
+"  • Praise the sun! - Solaire of Astora",
+"  • Would you kindly? - Atlas",
+"  • How's your sister? - Cayde-6",
+"  • In a world withouh gold, we might've been heroes - BlackBeard",
+"  • SIC PARVIS MAGNA - Sir Francis Drake",
+"  • Kept you waiting, huh? - Big Boss",
+"  • It can't be for nothing  -Ellie"
+)
 
 
 def text(x, y, value, fill=TEXT_PRIMARY, size=15, extra=""):
@@ -126,6 +150,21 @@ def image_to_ascii(path, columns, rows):
         grayscale = grayscale.resize((columns, rows), Image.Resampling.LANCZOS)
         grayscale = ImageOps.autocontrast(grayscale, cutoff=1)
         grayscale = ImageEnhance.Contrast(grayscale).enhance(1.35)
+
+        # Give the upper-center focal area a restrained local clarity boost.
+        # The feathered oval covers facial features in both supplied portraits
+        # without creating a visible boundary in the surrounding image.
+        face_mask = Image.new("L", (720, 720), 0)
+        ImageDraw.Draw(face_mask).ellipse(
+            (int(.16 * 720), int(.08 * 720), int(.96 * 720), int(.76 * 720)),
+            fill=255,
+        )
+        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=48)).resize(
+            (columns, rows), Image.Resampling.LANCZOS)
+        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.10)
+        face_detail = face_detail.filter(ImageFilter.UnsharpMask(
+            radius=.65, percent=190, threshold=1))
+        grayscale = Image.composite(face_detail, grayscale, face_mask)
         grayscale = grayscale.filter(ImageFilter.UnsharpMask(
             radius=.8, percent=160, threshold=2))
         edges = ImageOps.invert(grayscale.filter(ImageFilter.FIND_EDGES))
@@ -161,29 +200,69 @@ def render(mobile=False, art=None, image_name=""):
     columns = max(len(layer) for row in art for layer in row)
     width = 420 if mobile else 880
     left = 24 if mobile else 36
+    command_y = 81
     art_width = width - 2 * left if mobile else 414
     art_padding = 8
     art_x = left + art_padding
-    art_y = 108 + art_padding
+    art_y = command_y + 27 + art_padding
     art_inner_width = art_width - 2 * art_padding
     cell_width = art_inner_width / columns
     art_size = cell_width / .602
-    art_top = 108
+    art_top = command_y + 27
     art_height = art_width / REFERENCE_ASPECT_RATIO
     art_inner_height = art_height - 2 * art_padding
     line_height = art_inner_height / len(art)
     art_bottom = ceil(art_top + art_height)
+    quote_column_count = 1 if mobile else 2
+    quote_column_gap = 14 if quote_column_count == 2 else 0
+    quote_content_width = art_width - 2 * art_padding
+    quote_column_width = (
+        quote_content_width - quote_column_gap * (quote_column_count - 1)
+    ) / quote_column_count
+    quote_width = max(12, int(quote_column_width / (12 * .602)))
+    quote_layout = []
+    quote_column_y = [art_bottom + 20] * quote_column_count
+    ordered_quotes = sorted(
+        enumerate(QUOTES),
+        key=lambda item: (len(item[1].strip().removeprefix("•").strip()), item[0]))
+    for order_index, (quote_index, quote) in enumerate(ordered_quotes):
+        column_index = order_index % quote_column_count
+        quote_x = (left + art_padding
+                   + column_index * (quote_column_width + quote_column_gap))
+        quote_text = quote.strip().removeprefix("•").strip()
+        quote_body, separator, quote_author = quote_text.rpartition(" -")
+        if separator:
+            quote_body = quote_body.rstrip()
+            quote_attribution = f" - {quote_author.strip()}"
+        else:
+            quote_body = quote_text
+            quote_attribution = ""
+        quote_lines = wrap(quote_body, width=quote_width,
+                           initial_indent="• ", subsequent_indent="  ",
+                           break_long_words=True, break_on_hyphens=False) or ["• "]
+        for line_index, line in enumerate(quote_lines):
+            is_last_line = line_index == len(quote_lines) - 1
+            attribution = quote_attribution if is_last_line else ""
+            if attribution and len(line) + len(attribution) > quote_width:
+                attribution = ""
+            quote_layout.append((quote_index, line_index, quote_x,
+                                 quote_column_y[column_index], line, attribution))
+            quote_column_y[column_index] += 17
+        if quote_attribution and not quote_layout[-1][-1]:
+            quote_layout.append((quote_index, len(quote_lines), quote_x,
+                                 quote_column_y[column_index], "",
+                                 f"  - {quote_author.strip()}"))
+            quote_column_y[column_index] += 17
+        quote_column_y[column_index] += 4
+    quote_bottom = max(quote_column_y) - 4
     info_x = left if mobile else 490
-    info_y = art_bottom + 40 if mobile else round((art_top + art_bottom) / 2 - 54)
-    tagline_y = info_y + 157 if mobile else art_bottom + 24
-    divider = tagline_y + 25
-    height = divider + 96
+    info_y = quote_bottom + 40 if mobile else art_top + 33
     clock = 200
     cursor_frames = {}
     typed_segments = []
 
     def typed(identifier, x, y, value, fill=TEXT_PRIMARY, size=14,
-              speed=34, pause=0, extra=""):
+              speed=17, pause=0, extra=""):
         """Reveal whole characters on one shared millisecond timeline.
 
         Each character is visible by default. SMIL hides it only until its
@@ -211,28 +290,97 @@ def render(mobile=False, art=None, image_name=""):
                 f'fill="{fill}" font-size="{size}" xml:space="preserve" '
                 f'{extra}>{"".join(spans)}</text>')
 
-    command = typed("command", left, 81, "~ $ fastfetch --Stack", ACCENT, speed=40)
+    command = typed("command", left, command_y, "~ $ fastfetch --Stack", ACCENT,
+                    speed=20, extra='font-weight="bold"')
     clock += 200
     scan_start = clock
-    info = [typed("profile-name", info_x, info_y, "Stack", size=21,
-                  speed=42, extra='font-weight="bold"')]
-    for i, (label, value) in enumerate([
-        ("os", "Arch Linux"),
-        ("role", "Estudiante de informática"),
+    quote_items = []
+    for quote_index, line_index, x, y, line, attribution in quote_layout:
+        if line:
+            quote_items.append(typed(
+                f"quote-{quote_index}-{line_index}", x, y, line,
+                TEXT_PRIMARY, size=12, speed=13, pause=60,
+            ))
+        if attribution:
+            attribution_x = x + len(line) * 12 * .602 if line else x
+            quote_items.append(typed(
+                f"quote-author-{quote_index}-{line_index}", attribution_x, y,
+                attribution, COMMENT, size=12, speed=13,
+                pause=0 if line else 60,
+            ))
+    profile_fields = [
+        ("name", "Bryan Aguirre"),
+        ("age", "21"),
+        ("role", "Informatic Engineering Student"),
+        ("school", "Udec (Unfortunately)"),
         ("loc", "Chile"),
-    ]):
-        y = info_y + 33 + i * 24
-        info.append(typed(f"{label}-label", info_x, y, label, TEXT_SECONDARY, pause=160))
-        info.append(typed(f"{label}-value", info_x + 52, y, value))
-    tagline = typed("tagline", left, tagline_y, "• I'm the son of rage and love  - St. Jimmy", TEXT_SECONDARY,
-                    size=13, speed=28, pause=420)
-    prompt = typed("footer-command", left, divider + 33,
-                   '~ $ stack.push(" Wtf are you looking at? ");', ACCENT, pause=200)
-    interests = typed("interests", left, divider + 63,
-                      "No sé teoría músical :(", speed=24, pause=140)
+        ("os", "Arch Linux"),
+        ("contact", "stackctrlz@gmail.com"),
+    ]
+    info = [typed("profile-name", info_x, info_y, "Stack", ACCENT, size=21,
+                  speed=21, extra='font-weight="bold"')]
+    # One shared value_x gives the personal data a stable two-column grid.
+    label_width = ceil(max(len(label) * 14 * .602 for label, _ in profile_fields) + 16)
+    value_x = info_x + label_width
+    right_edge = width - left
+    value_chars = max(10, int((right_edge - value_x) / (14 * .602)))
+    row_y = info_y + 33
+    for label, value in profile_fields:
+        value_lines = wrap(value, width=value_chars, break_long_words=True,
+                           break_on_hyphens=False) or [""]
+        info.append(typed(f"{label}-label", info_x, row_y, label,
+                          TEXT_SECONDARY, pause=160))
+        for line_index, line in enumerate(value_lines):
+            info.append(typed(f"{label}-value-{line_index}", value_x,
+                              row_y + line_index * 20, line))
+        row_y += max(24, len(value_lines) * 20 + 4)
+
+    about_title_y = row_y + 12
+    info.append(typed("about-heading", info_x, about_title_y, "about me",
+                      ACCENT, size=14, pause=260,
+                      extra='font-weight="bold"'))
+    about_width = min(
+        ABOUT_ME_WRAP,
+        max(12, int((right_edge - info_x - ABOUT_ME_PADDING_RIGHT) / (13 * .602))),
+    )
+    about_lines = wrap(ABOUT_ME_TEXT, width=about_width, break_long_words=True,
+                       break_on_hyphens=False) or [""]
+    about_start_y = about_title_y + 23
+    for line_index, line in enumerate(about_lines):
+        info.append(typed(f"about-text-{line_index}", info_x,
+                           about_start_y + line_index * ABOUT_ME_LINE_HEIGHT, line,
+                          TEXT_SECONDARY, size=13, speed=15,
+                          pause=100 if line_index else 160,
+                          extra='text-anchor="start"'))
+    about_end_y = about_start_y + (len(about_lines) - 1) * ABOUT_ME_LINE_HEIGHT
+
+    divider = max(art_bottom, about_end_y, quote_bottom) + 32
+    parts_width = max(12, int((width - 2 * left) / (14 * .602)))
+    command_lines = wrap('~ $ stack.push(" Wtf are you looking at? ");',
+                         width=parts_width, break_long_words=True,
+                         break_on_hyphens=False)
+    prompt = []
+    for line_index, line in enumerate(command_lines):
+        prompt.append(typed(f"footer-command-{line_index}", left,
+                            divider + 27 + line_index * 19, line,
+                            ACCENT, pause=200 if line_index == 0 else 80,
+                            extra='font-weight="bold"'))
+    interests_lines = []
+    for interest in ("O(log n)", "vibecoder (not really)"):
+        interests_lines.extend(wrap(interest, width=parts_width,
+                                    break_long_words=True,
+                                    break_on_hyphens=False))
+    interest_start = divider + 27 + len(command_lines) * 19 + 17
+    interests = []
+    for line_index, line in enumerate(interests_lines):
+        interests.append(typed(f"interests-{line_index}", left,
+                               interest_start + line_index * 19, line,
+                               ACCENT,
+                               speed=12, pause=140 if line_index == 0 else 80))
+    height = interest_start + len(interests_lines) * 19 + 30
 
     type_end = clock
-    erase_start = type_end + 1000
+    erase_start = type_end + 4000
     erase_clock = erase_start
     erase_times = {}
     for segment_index in range(len(typed_segments) - 1, -1, -1):
@@ -270,8 +418,10 @@ def render(mobile=False, art=None, image_name=""):
   <title id="title">Stack / Bryan — Arch Linux</title>
     <desc id="desc">Una terminal con una fotografía convertida a arte ASCII desde {escape(image_name or "el perfil")}. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&amp;400&amp;500&amp;600&amp;700&amp;display=swap');
     text {{ font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
-      font-feature-settings: "calt" 1, "liga" 1; font-variant-ligatures: contextual; }}
+      font-weight: 400; font-feature-settings: "calt" 1, "liga" 1;
+      font-variant-ligatures: contextual; }}
     .ascii-shade {{ font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }}
     @media (prefers-reduced-motion: reduce) {{
       .typed-char {{ opacity: 1 !important; }}
@@ -282,32 +432,16 @@ def render(mobile=False, art=None, image_name=""):
     }}
   </style>
   <defs>
-    <linearGradient id="card-neon" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="{ACCENT}"/>
-      <stop offset=".42" stop-color="{ACCENT_SECONDARY}"/>
-      <stop offset=".7" stop-color="{ACCENT_LIGHT}"/>
-      <stop offset="1" stop-color="{ACCENT}"/>
-      <animateTransform attributeName="gradientTransform" type="rotate"
-        from="0 .5 .5" to="360 .5 .5" dur="7s" repeatCount="indefinite"/>
-    </linearGradient>
-    <linearGradient id="art-neon" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="{ACCENT_SECONDARY}"/>
-      <stop offset=".45" stop-color="{ACCENT}"/>
-      <stop offset=".75" stop-color="{ACCENT_LIGHT}"/>
-      <stop offset="1" stop-color="{ACCENT_SECONDARY}"/>
-      <animateTransform attributeName="gradientTransform" type="rotate"
-        from="0 .5 .5" to="360 .5 .5" dur="5s" repeatCount="indefinite"/>
-    </linearGradient>
     <filter id="neon-glow" x="-15%" y="-15%" width="130%" height="130%">
       <feGaussianBlur stdDeviation="2.5"/>
     </filter>
   </defs>
-  <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="12" fill="{BACKGROUND}" stroke="{RULE}"/>
+  <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="12" fill="{BACKGROUND}" stroke="{ACCENT}"/>
   <path d="M1 45H{width - 1}" stroke="{RULE}"/>
   <g aria-hidden="true">
     <circle cx="25" cy="24" r="5" fill="{ACCENT}"/>
-    <circle cx="43" cy="24" r="5" fill="{ACCENT_SECONDARY}"/>
-    <circle cx="61" cy="24" r="5" fill="{ACCENT_LIGHT}"/>
+    <circle cx="43" cy="24" r="5" fill="{ACCENT}"/>
+    <circle cx="61" cy="24" r="5" fill="{ACCENT}"/>
   </g>
 ''']
     parts.append(text(width / 2, 29, "stack@arch: ~", TEXT_SECONDARY, 12,
@@ -315,9 +449,9 @@ def render(mobile=False, art=None, image_name=""):
     parts.append(command)
 
     parts.append('<g id="ascii-art" aria-hidden="true">')
-    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{RULE}"/>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{ACCENT}"/>')
     final_scan_y = art_y + (len(art) - 1) * line_height
-    parts.append(f'''<rect class="scanline motion" x="{art_x}" y="{art_y}" width="{art_inner_width}" height="{line_height:.3f}" fill="{ACCENT_SECONDARY}" opacity="0">
+    parts.append(f'''<rect class="scanline motion" x="{art_x}" y="{art_y}" width="{art_inner_width}" height="{line_height:.3f}" fill="{ACCENT}" opacity="0">
       <animate attributeName="y" values="{art_y};{art_y};{final_scan_y:.3f};{final_scan_y:.3f}" keyTimes="0;.02;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;.14;.14;0" keyTimes="0;.025;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
     </rect>''')
@@ -336,26 +470,27 @@ def render(mobile=False, art=None, image_name=""):
                 f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve" '
                 f'textLength="{columns * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
                 f'{escape(line)}<animate class="motion" attributeName="fill" '
-                f'values="{color};{color};{TEXT_PRIMARY};{ACCENT_SECONDARY};{color}" '
+                f'values="{color};{color};{TEXT_PRIMARY};{ACCENT};{color}" '
                 f'keyTimes="0;{highlight_start:.8f};{highlight_end:.8f};'
                 f'{highlight_trail:.8f};1" '
                 f'begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" '
                 'repeatCount="indefinite"/></text>')
         parts.append('</g>')
     parts.append('</g>')
-    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="url(#art-neon)" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
-    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="url(#art-neon)" stroke-width="1.5" class="motion"/>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
 
+    parts.extend(quote_items)
     parts.extend(info)
-    parts.append(tagline)
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
-    parts.extend([prompt, interests,
-                  terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration)])
+    parts.extend(prompt)
+    parts.extend(interests)
+    parts.append(terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration))
     if not mobile:
-        parts.append(text(width-left, 81, "I use Arch, btw.", ACCENT, 12,
+        parts.append(text(width-left, command_y, "I use Arch, btw.", ACCENT, 12,
                           'text-anchor="end"'))
-    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="url(#card-neon)" stroke-width="4" opacity=".28" filter="url(#neon-glow)" class="motion"/>')
-    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="url(#card-neon)" stroke-width="1.5" class="motion"/>')
+    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".28" filter="url(#neon-glow)" class="motion"/>')
+    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
     parts.append("</svg>\n")
     rendered = "\n".join(parts)
     for marker, animation in animations.items():
