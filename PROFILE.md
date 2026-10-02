@@ -1,19 +1,33 @@
 # Mantener el perfil
 
-El contenido del perfil está en `README.md`. Las imágenes están guardadas en
-este repositorio; la cabecera no depende de un servicio externo de banners.
+El contenido del perfil está en `README.md`. La cabecera usa `dark.svg` y
+`light.svg`, guardados en la raíz del repositorio, sin servicios externos.
 
 ## Cabecera
 
-Editar `scripts/render_terminal.py` y regenerar los SVG:
+Editar los datos de `PROFILE` y los colores de `THEMES` en
+`scripts/render_terminal.py` y regenerar los SVG con Python 3, sin dependencias:
 
 ```sh
 python3 scripts/render_terminal.py
 ```
 
-El README selecciona la versión compacta en pantallas de hasta 600 px. La
-animación termina tras unos segundos y respeta `prefers-reduced-motion`.
-La presentación también está escrita como texto en el README.
+El README selecciona la variante clara u oscura mediante `<picture>` y
+`prefers-color-scheme`. Ambas comparten un lienzo de 1180 × 610 y se adaptan al
+ancho disponible conservando las proporciones. En pantallas pequeñas, la
+presentación también se puede leer como texto debajo de la imagen.
+
+La pila isométrica está dibujada con caracteres SVG, sin imágenes incrustadas.
+Las animaciones usan SMIL: entrada escalonada, cursor breve y dos barridos
+suaves. Terminan a los 17 segundos. Con `prefers-reduced-motion: reduce`, se
+ocultan los elementos en movimiento y el contenido aparece sin transiciones.
+Si el visor no admite SMIL, la composición sigue siendo legible.
+
+Al cambiar información personal, actualizar también el texto y la descripción
+alternativa en `README.md`. Los textos actuales están ajustados al diseño;
+revisar los saltos de línea y el espacio disponible si se añaden valores largos.
+
+Para publicar la cabecera solo hacen falta `README.md`, `dark.svg` y `light.svg`.
 
 ## Snake
 
