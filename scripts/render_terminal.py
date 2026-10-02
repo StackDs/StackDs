@@ -1,272 +1,263 @@
 #!/usr/bin/env python3
-"""Build the two standalone profile banners using only the standard library."""
+"""Regenerate the self-contained terminal illustrations (standard library only)."""
 
 from html import escape
+from math import ceil
 from pathlib import Path
 
+from profile_ascii import ART
+
 ROOT = Path(__file__).resolve().parents[1]
-
-# Profile facts come from the original README and terminal illustration.
-# Keep the prose in README.md in sync when changing these values.
-PROFILE = {
-    "name": "Bryan / Stack",
-    "terminal": "stack@arch:~",
-    "headline": "Estudiante de informática",
-    "education": ("Ingeniería Civil", "Informática"),
-    "location": "Chile",
-    "system": "Arch Linux",
-    "tagline": "Last in, first out.",
-    "alias": ("Mi nick viene de la mejor", "estructura de datos: la pila."),
-}
-
-THEMES = {
-    "dark": {
-        "background": "#060C18", "background_end": "#0C1728",
-        "surface": "#152238", "surface_opacity": ".35",
-        "glass": "#B4D4FF", "glass_opacity": ".035",
-        "ink": "#F0F5FF", "muted": "#A1B1C9", "faint": "#889CB9",
-        "border": "#34475F", "line": "#293C54", "grid": "#8DAACF",
-        "accent": "#77E0F4", "secondary": "#B5A1F8", "green": "#80DEC1",
-        "bloom": "#254B89", "bloom_opacity": ".24",
-        "halo": "#51328A", "halo_opacity": ".16",
-        "shadow": "#000817", "shadow_opacity": ".32",
-        "pill": "#193044", "pill_border": "#36576E",
-        "console": "#060E1C", "console_opacity": ".55",
-        "reflection": "#DAEDFF",
-    },
-    "light": {
-        "background": "#F8FAFF", "background_end": "#EDF3FA",
-        "surface": "#FFFFFF", "surface_opacity": ".35",
-        "glass": "#FFFFFF", "glass_opacity": ".76",
-        "ink": "#15263D", "muted": "#475B76", "faint": "#556B87",
-        "border": "#BCCCDD", "line": "#CEDAE8", "grid": "#7495B9",
-        "accent": "#116780", "secondary": "#6650AF", "green": "#18735F",
-        "bloom": "#BCDDF4", "bloom_opacity": ".50",
-        "halo": "#D6C9F2", "halo_opacity": ".28",
-        "shadow": "#607997", "shadow_opacity": ".12",
-        "pill": "#EAF4FA", "pill_border": "#B8D1E1",
-        "console": "#E8EFF8", "console_opacity": ".75",
-        "reflection": "#FFFFFF",
-    },
-}
+REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
 
 
-def text(x, y, value, color="ink", size=16, extra=""):
-    return (f'<text x="{x}" y="{y}" class="{color}" font-size="{size}" '
+def text(x, y, value, fill="#E6EDF3", size=15, extra=""):
+    return (f'<text x="{x}" y="{y}" fill="{fill}" font-size="{size}" '
             f'{extra}>{escape(value)}</text>')
 
 
-def entrance(delay, duration=.65):
-    # Static opacity is always 1. The animation overrides it only while active.
-    # Start together and hold before revealing, avoiding a flash before begin.
-    total = delay + duration
-    return (f'<animate attributeName="opacity" values=".15;.15;1" '
-            f'keyTimes="0;{delay / total:.4f};1" begin="0s" '
-            f'dur="{total:.3f}s" fill="remove"/>')
+def seconds(milliseconds):
+    return f"{milliseconds / 1000:.3f}s"
 
 
-def inside(x, y, polygon):
-    """Point-in-convex-polygon test for the character-rendered stack faces."""
-    signs = []
-    for start, end in zip(polygon, polygon[1:] + polygon[:1]):
-        signs.append((end[0] - start[0]) * (y - start[1])
-                     - (end[1] - start[1]) * (x - start[0]))
-    return all(value >= 0 for value in signs) or all(value <= 0 for value in signs)
+def discrete_animation(attribute, events, duration, repeat=False):
+    """Use absolute timeline events, collapsing unchanged values."""
+    changes = []
+    for time, value in sorted(events):
+        if not changes or changes[-1][1] != value:
+            changes.append((time, value))
+    if changes[0][0] != 0:
+        changes.insert(0, (0, changes[0][1]))
+    if changes[-1][0] != duration:
+        changes.append((duration, changes[-1][1]))
+    values = ";".join(f"{value:.3f}" for _, value in changes)
+    times = ";".join(f"{time / duration:.8f}" for time, _ in changes)
+    repeat_attribute = 'repeatCount="indefinite"' if repeat else ""
+    return (f'<animate attributeName="{attribute}" values="{values}" '
+            f'keyTimes="{times}" calcMode="discrete" begin="0s" '
+            f'dur="{seconds(duration)}" fill="remove" '
+            f'{repeat_attribute}/>')
 
 
-def stack_art():
-    """An original 69 × 50 character illustration, not a raster conversion.
-
-    Three isometric slabs express the existing Stack / LIFO identity. Each
-    face has its own character density; sparse glints give the top depth.
-    """
-    cells = [[" " for _ in range(69)] for _ in range(50)]
-    for layer in (24, 12, 0):
-        top = [(34, layer), (66, layer + 10),
-               (34, layer + 20), (2, layer + 10)]
-        left = [(2, layer + 10), (34, layer + 20),
-                (34, layer + 25), (2, layer + 15)]
-        right = [(34, layer + 20), (66, layer + 10),
-                 (66, layer + 15), (34, layer + 25)]
-        for y in range(50):
-            for x in range(69):
-                if inside(x, y, left):
-                    cells[y][x] = "+" if (x + y) % 3 == 0 else ":"
-                if inside(x, y, right):
-                    cells[y][x] = "#" if (x + y) % 3 == 0 else "*"
-                if inside(x, y, top):
-                    cells[y][x] = ":" if (x + y) % 3 == 0 else "·"
-                    edge = min(abs(y - (layer + abs(x - 34) / 3.2)),
-                               abs(y - (layer + 20 - abs(x - 34) / 3.2)))
-                    if edge < .65:
-                        cells[y][x] = "+"
-                    elif 27 <= x <= 41 and abs(y - layer - 10) < 2:
-                        cells[y][x] = "*"
-    return ["".join(row) for row in cells]
-
-
-def render(theme):
-    c = THEMES[theme]
-    p = PROFILE
-    label = (f'{p["name"]}, estudiante de {" ".join(p["education"])} '
-             f'en {p["location"]}. Usuario de {p["system"]}. {p["tagline"]}')
-    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="610"
-  viewBox="0 0 1180 610" fill="none" role="img" aria-label="{escape(label, quote=True)}"
-  aria-labelledby="title desc" xml:lang="es">
-  <title id="title">{escape(p["name"])} — perfil</title>
-  <desc id="desc">{escape(label)} A la izquierda, una pila de tres bloques
-  isométricos dibujados con caracteres. A la derecha, información del perfil.</desc>
-  <style>
-    text {{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }}
-    .ink {{ fill: {c["ink"]}; }}
-    .muted {{ fill: {c["muted"]}; }}
-    .faint {{ fill: {c["faint"]}; }}
-    .accent {{ fill: {c["accent"]}; }}
-    .secondary {{ fill: {c["secondary"]}; }}
-    .ascii {{ fill: url(#ascii-ink); font-size: 8.3px; }}
-    @media (prefers-reduced-motion: reduce) {{
-      .motion {{ display: none; }}
-      .entrance {{ opacity: 1 !important; }}
-    }}
-  </style>
-  <defs>
-    <linearGradient id="background" x1="0" y1="0" x2="1180" y2="610" gradientUnits="userSpaceOnUse">
-      <stop stop-color="{c["background"]}"/>
-      <stop offset="1" stop-color="{c["background_end"]}"/>
-    </linearGradient>
-    <radialGradient id="bloom">
-      <stop stop-color="{c["bloom"]}" stop-opacity="{c["bloom_opacity"]}"/>
-      <stop offset="1" stop-color="{c["bloom"]}" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="halo">
-      <stop stop-color="{c["halo"]}" stop-opacity="{c["halo_opacity"]}"/>
-      <stop offset="1" stop-color="{c["halo"]}" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="glass" x1="0" y1="0" x2=".75" y2="1">
-      <stop stop-color="{c["glass"]}" stop-opacity="{c["glass_opacity"]}"/>
-      <stop offset="1" stop-color="{c["surface"]}" stop-opacity="{c["surface_opacity"]}"/>
-    </linearGradient>
-    <linearGradient id="rim" x1="24" y1="88" x2="1156" y2="552" gradientUnits="userSpaceOnUse">
-      <stop stop-color="{c["accent"]}" stop-opacity=".48"/>
-      <stop offset=".35" stop-color="{c["border"]}"/>
-      <stop offset=".78" stop-color="{c["border"]}"/>
-      <stop offset="1" stop-color="{c["secondary"]}" stop-opacity=".4"/>
-    </linearGradient>
-    <linearGradient id="ascii-ink" x1="86" y1="165" x2="378" y2="407" gradientUnits="userSpaceOnUse">
-      <stop stop-color="{c["accent"]}"/>
-      <stop offset=".54" stop-color="{c["secondary"]}"/>
-      <stop offset="1" stop-color="{c["accent"]}"/>
-    </linearGradient>
-    <linearGradient id="scan">
-      <stop stop-color="{c["accent"]}" stop-opacity="0"/>
-      <stop offset=".5" stop-color="{c["accent"]}"/>
-      <stop offset="1" stop-color="{c["accent"]}" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="reflection" x1="0" y1="0" x2="1" y2=".7">
-      <stop stop-color="{c["reflection"]}" stop-opacity=".08"/>
-      <stop offset="1" stop-color="{c["reflection"]}" stop-opacity="0"/>
-    </linearGradient>
-    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
-      <path d="M24 0H0V24" stroke="{c["grid"]}" stroke-opacity=".055"/>
-    </pattern>
-    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
-      <path d="M0 .5H4" stroke="{c["grid"]}" stroke-opacity=".045"/>
-    </pattern>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="{c["shadow"]}" flood-opacity="{c["shadow_opacity"]}"/>
-    </filter>
-    <clipPath id="canvas"><rect x="1" y="1" width="1178" height="608" rx="24"/></clipPath>
-    <clipPath id="visual"><rect x="48" y="152" width="384" height="264" rx="8"/></clipPath>
-  </defs>
-
-  <g clip-path="url(#canvas)">
-    <rect x="1" y="1" width="1178" height="608" rx="24" fill="url(#background)"/>
-    <ellipse cx="250" cy="210" rx="430" ry="370" fill="url(#halo)"/>
-    <ellipse cx="920" cy="450" rx="600" ry="380" fill="url(#bloom)"/>
-    <rect x="1" y="64" width="1178" height="545" fill="url(#grid)"/>
-    <path d="M24 64H1156" stroke="{c["line"]}"/>
-
-    <!-- Terminal chrome: controls are decorative, not buttons. -->
-    <g aria-hidden="true">
-      <circle cx="32" cy="33" r="5" fill="#F47B83"/>
-      <circle cx="52" cy="33" r="5" fill="#E7BC65"/>
-      <circle cx="72" cy="33" r="5" fill="#75C7A1"/>
-    </g>
-''']
-    parts.extend([
-        text(96, 38, p["terminal"], "muted", 13),
-        text(590, 38, "~/profile", "faint", 12, 'text-anchor="middle"'),
-        text(1148, 38, "perfil.svg", "faint", 12, 'text-anchor="end"'),
-        f'''<g filter="url(#shadow)">
-      <rect x="24" y="88" width="432" height="464" rx="16" fill="url(#glass)" stroke="url(#rim)"/>
-      <rect x="472" y="88" width="684" height="464" rx="16" fill="url(#glass)" stroke="url(#rim)"/>
-    </g>
-    <path d="M40 89H440M488 89H1140" stroke="{c["reflection"]}" stroke-opacity=".16"/>
-    <path d="M25 104Q25 89 40 89H440L25 346Z" fill="url(#reflection)"/>
-    <path d="M48 140H432M504 140H1124" stroke="{c["line"]}"/>''',
-        text(48, 120, "VISUAL.MAP", "muted", 12, 'letter-spacing="1.6"'),
-        text(432, 120, "LIFO", "faint", 11, 'text-anchor="end" letter-spacing="1"'),
-        text(504, 120, "SYSTEM.INFO", "muted", 12, 'letter-spacing="1.6"'),
-        text(1124, 120, "[ perfil ]", "faint", 11, 'text-anchor="end"'),
-        '<g clip-path="url(#visual)" aria-hidden="true">',
-        '<rect x="48" y="152" width="384" height="264" fill="url(#scanlines)"/>',
-    ])
-
-    # Fixed per-row textLength keeps the illustration centered across local fonts.
-    for i, row in enumerate(stack_art()):
-        parts.append(f'<text class="ascii entrance" x="67.5" y="{164 + i * 4.85:.2f}" '
-                     'textLength="345" lengthAdjust="spacingAndGlyphs" xml:space="preserve">'
-                     f'{escape(row)}{entrance(round(.10 + i * .009, 3), .45)}</text>')
-
-    parts.extend([
-        '''<rect class="motion" x="64" y="164" width="352" height="1" fill="url(#scan)" opacity="0">
-        <animate attributeName="y" values="164;407" begin="1s" dur="8s" repeatCount="2"/>
-        <animate attributeName="opacity" values="0;.22;.22;0" keyTimes="0;.15;.85;1" begin="1s" dur="8s" repeatCount="2"/>
-      </rect>
-    </g>''',
-        text(244, 446, "STACK", "ink", 36,
-             'text-anchor="middle" letter-spacing="8" font-weight="700"'),
-        text(240, 473, p["tagline"], "muted", 15, 'text-anchor="middle"'),
-        f'<rect x="48" y="492" width="384" height="36" rx="8" fill="{c["console"]}" fill-opacity="{c["console_opacity"]}" stroke="{c["line"]}"/>',
-        text(64, 515, '~ $ stack.push("hello");', "accent", 13),
-        f'''<rect class="motion" x="248" y="503" width="7" height="14" fill="{c["accent"]}" opacity="0" aria-hidden="true">
-      <animate attributeName="opacity" values="1;0;1" keyTimes="0;.5;1" calcMode="discrete" dur="1s" repeatCount="4"/>
-    </rect>''',
-        text(504, 168, p["terminal"] + "$ ./profile.sh", "faint", 13),
-        '<g class="entrance">' + entrance(.20),
-        text(814, 220, p["name"], "ink", 44, 'text-anchor="middle" font-weight="700" letter-spacing="-1.5"'),
-        '</g><g class="entrance">' + entrance(.30),
-        text(814, 254, p["headline"], "accent", 20, 'text-anchor="middle"'),
-        f'</g><path d="M504 278H1124" stroke="{c["line"]}"/>',
-        '<g class="entrance">' + entrance(.40),
-        text(748, 318, "FORMACIÓN", "muted", 12, 'text-anchor="end" letter-spacing=".5"'),
-        text(772, 318, p["education"][0], "ink", 18),
-        text(772, 344, p["education"][1], "ink", 18),
-        '</g><g class="entrance">' + entrance(.50),
-        text(748, 384, "UBICACIÓN", "muted", 12, 'text-anchor="end" letter-spacing=".5"'),
-        text(772, 384, p["location"], "ink", 18),
-        '</g><g class="entrance">' + entrance(.60),
-        text(748, 426, "SISTEMA", "muted", 12, 'text-anchor="end" letter-spacing=".5"'),
-        f'<rect x="772" y="404" width="152" height="32" rx="8" fill="{c["pill"]}" stroke="{c["pill_border"]}"/>',
-        f'<circle cx="788" cy="420" r="3" fill="{c["green"]}" aria-hidden="true"/>',
-        text(802, 426, p["system"], "accent", 15),
-        '</g><g class="entrance">' + entrance(.70),
-        f'<path d="M504 461H1124" stroke="{c["line"]}"/>',
-        text(656, 493, "//", "secondary", 18, 'aria-hidden="true"'),
-        text(688, 493, p["alias"][0], "muted", 17),
-        text(688, 518, p["alias"][1], "muted", 17),
-        '</g>',
-        text(32, 585, "stack / profile", "faint", 11),
-        text(1148, 585, "UTF-8", "faint", 11, 'text-anchor="end"'),
-        '</g>',
-        f'<rect x="1" y="1" width="1178" height="608" rx="24" stroke="{c["border"]}"/>',
-        '</svg>\n',
-    ])
+def terminal_cursor(frames, erase_start, erase_end, duration):
+    """One cursor follows the typing/deletion cycle and blinks in the pause."""
+    start = min(frames)
+    first = frames[start]
+    parts = [f'<rect id="terminal-cursor" class="cursor motion" '
+             f'x="{first[0]:.3f}" y="{first[1]:.3f}" '
+             f'width="{first[2]:.3f}" height="{first[3]:.3f}" '
+             'fill="#86DCE5" opacity="0" aria-hidden="true">']
+    for i, attribute in enumerate(("x", "y", "width", "height")):
+        parts.append(discrete_animation(
+            attribute, [(time, frame[i]) for time, frame in frames.items()], duration,
+            repeat=True))
+    parts.append(discrete_animation("opacity", [
+        (0, 0), (start, 1), (erase_start, 1), (erase_end, 0),
+        (duration, 0),
+    ], duration, repeat=True))
+    parts.append("</rect>")
     return "\n".join(parts)
 
 
+def render(mobile=False):
+    width = 420 if mobile else 880
+    left = 24 if mobile else 36
+    art_width = width - 2 * left if mobile else 414
+    art_padding = 8
+    art_x = left + art_padding
+    art_y = 108 + art_padding
+    art_inner_width = art_width - 2 * art_padding
+    cell_width = art_inner_width / max(map(len, ART))
+    art_size = cell_width / .602
+    art_top = 108
+    art_height = art_width / REFERENCE_ASPECT_RATIO
+    art_inner_height = art_height - 2 * art_padding
+    line_height = art_inner_height / len(ART)
+    art_bottom = ceil(art_top + art_height)
+    info_x = left if mobile else 490
+    info_y = art_bottom + 40 if mobile else round((art_top + art_bottom) / 2 - 54)
+    tagline_y = info_y + 157 if mobile else art_bottom + 24
+    divider = tagline_y + 25
+    height = divider + 96
+    clock = 200
+    cursor_frames = {}
+    typed_segments = []
+
+    def typed(identifier, x, y, value, fill="#E6EDF3", size=14,
+              speed=34, pause=0, extra=""):
+        """Reveal whole characters on one shared millisecond timeline.
+
+        Each character is visible by default. SMIL hides it only until its
+        reveal time, so unsupported animation and reduced motion remain useful.
+        """
+        nonlocal clock
+        clock += pause
+        advance = size * .602
+        spans = []
+        cursor_frames[clock] = (x + 1.5, y - size * .85, advance * .8, size + 2)
+        for i, character in enumerate(value):
+            reveal = clock + (i + 1) * speed
+            cursor_frames[reveal] = (
+                x + (i + 1) * advance + 1.5, y - size * .85, advance * .8, size + 2,
+            )
+            spans.append(
+                f'<tspan class="typed-char" x="{x + i * advance:.3f}">'
+                f'{escape(character)}__CHAR_ANIMATION_{len(typed_segments)}_{i}__</tspan>')
+        typed_segments.append({
+            "id": identifier, "value": value, "start": clock,
+            "speed": speed, "advance": advance, "x": x, "y": y, "size": size,
+        })
+        clock += len(value) * speed
+        return (f'<text id="{identifier}" class="typed" x="{x}" y="{y}" '
+                f'fill="{fill}" font-size="{size}" xml:space="preserve" '
+                f'{extra}>{"".join(spans)}</text>')
+
+    command = typed("command", left, 81, "~ $ fastfetch --Stack", "#86DCE5", speed=40)
+    clock += 200
+    scan_start = clock
+    info = [typed("profile-name", info_x, info_y, "Stack", size=21,
+                  speed=42, extra='font-weight="bold"')]
+    for i, (label, value) in enumerate([
+        ("os", "Arch Linux"),
+        ("role", "Estudiante de informática"),
+        ("loc", "Chile"),
+    ]):
+        y = info_y + 33 + i * 24
+        info.append(typed(f"{label}-label", info_x, y, label, "#E9BD78", pause=160))
+        info.append(typed(f"{label}-value", info_x + 52, y, value))
+    tagline = typed("tagline", left, tagline_y, "• I'm the son of rage and love  - St. Jimmy", "#B7C2D9",
+                    size=13, speed=28, pause=420)
+    prompt = typed("footer-command", left, divider + 33,
+                   '~ $ stack.push(" Wtf are you looking at? ");', "#86DCE5", pause=200)
+    interests = typed("interests", left, divider + 63,
+                      "No sé teoría músical :(", speed=24, pause=140)
+
+    type_end = clock
+    erase_start = type_end + 1000
+    erase_clock = erase_start
+    erase_times = {}
+    for segment_index in range(len(typed_segments) - 1, -1, -1):
+        segment = typed_segments[segment_index]
+        value = segment["value"]
+        speed = segment["speed"]
+        for char_index in range(len(value) - 1, -1, -1):
+            erase_clock += speed
+            erase_times[(segment_index, char_index)] = erase_clock
+            cursor_frames[erase_clock] = (
+                segment["x"] + char_index * segment["advance"] + 1.5,
+                segment["y"] - segment["size"] * .85,
+                segment["advance"] * .8, segment["size"] + 2,
+            )
+        erase_clock += 120
+    erase_end = erase_clock
+    cycle_duration = erase_end + 700
+    scan_duration = 8000
+
+    # Each glyph types in, holds, then erases in reverse order. All segments
+    # share one repeat interval so the cursor and text restart in sync.
+    animations = {}
+    for segment_index, segment in enumerate(typed_segments):
+        for char_index in range(len(segment["value"])):
+            reveal_at = segment["start"] + (char_index + 1) * segment["speed"]
+            erase_at = erase_times[(segment_index, char_index)]
+            animations[f"__CHAR_ANIMATION_{segment_index}_{char_index}__"] = (
+                f'<animate class="motion" attributeName="opacity" '
+                f'values="0;1;0;0" keyTimes="0;{reveal_at / cycle_duration:.8f};'
+                f'{erase_at / cycle_duration:.8f};1" calcMode="discrete" '
+                f'begin="0s" dur="{seconds(cycle_duration)}" '
+                'repeatCount="indefinite" fill="remove"/>')
+
+    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="es">
+  <title id="title">Stack / Bryan — Arch Linux</title>
+  <desc id="desc">Una terminal con la ilustración ASCII proporcionada por el usuario. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
+  <style>
+    text {{ font-family: 'DejaVu Sans Mono', 'Liberation Mono', monospace; }}
+    @media (prefers-reduced-motion: reduce) {{
+      .typed-char {{ opacity: 1 !important; }}
+      .ascii {{ fill: #B6A4EA !important; }}
+      .motion {{ display: none; }}
+    }}
+  </style>
+  <defs>
+    <linearGradient id="card-neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset=".42" stop-color="#8B7CFF"/>
+      <stop offset=".7" stop-color="#42E6C0"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+      <animateTransform attributeName="gradientTransform" type="rotate"
+        from="0 .5 .5" to="360 .5 .5" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="art-neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset=".45" stop-color="#8B7CFF"/>
+      <stop offset=".75" stop-color="#42E6C0"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+      <animateTransform attributeName="gradientTransform" type="rotate"
+        from="0 .5 .5" to="360 .5 .5" dur="5s" repeatCount="indefinite"/>
+    </linearGradient>
+    <filter id="neon-glow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+  </defs>
+  <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="12" fill="#161B2B" stroke="#3B445C"/>
+  <path d="M1 45H{width - 1}" stroke="#3B445C"/>
+  <g aria-hidden="true">
+    <circle cx="25" cy="24" r="5" fill="#E9BD78"/>
+    <circle cx="43" cy="24" r="5" fill="#B6A4EA"/>
+    <circle cx="61" cy="24" r="5" fill="#86DCE5"/>
+  </g>
+''']
+    parts.append(text(width / 2, 29, "stack@arch: ~", "#B7C2D9", 12,
+                      'text-anchor="middle"'))
+    parts.append(command)
+
+    parts.append('<g id="ascii-art" aria-hidden="true">')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="#0D1524" fill-opacity=".48" stroke="#3B445C"/>')
+    final_scan_y = art_y + (len(ART) - 1) * line_height
+    parts.append(f'''<rect class="scanline motion" x="{art_x}" y="{art_y}" width="{art_inner_width}" height="{line_height:.3f}" fill="#86DCE5" opacity="0">
+      <animate attributeName="y" values="{art_y};{art_y};{final_scan_y:.3f};{final_scan_y:.3f}" keyTimes="0;.02;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;.14;.14;0" keyTimes="0;.025;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
+    </rect>''')
+    for i, line in enumerate(ART):
+        # Keep one cell width across every row, including spaces. Fitting each
+        # row independently to the full width would distort the supplied art.
+        highlight_start = .02 + i * .94 / len(ART)
+        highlight_end = highlight_start + .65 / len(ART)
+        highlight_trail = min(highlight_end + .01, .985)
+        parts.append(
+            f'<text class="ascii" x="{art_x}" y="{art_y + art_size + i * line_height:.3f}" '
+            f'fill="#B6A4EA" font-size="{art_size:.3f}" xml:space="preserve" '
+            f'textLength="{len(line) * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
+            f'{escape(line)}<animate class="motion" attributeName="fill" '
+            f'values="#B6A4EA;#B6A4EA;#86DCE5;#B6A4EA;#B6A4EA" '
+            f'keyTimes="0;{highlight_start:.8f};{highlight_end:.8f};'
+            f'{highlight_trail:.8f};1" '
+            f'begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" '
+            'repeatCount="indefinite"/></text>')
+    parts.append('</g>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="url(#art-neon)" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="url(#art-neon)" stroke-width="1.5" class="motion"/>')
+
+    parts.extend(info)
+    parts.append(tagline)
+    parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="#3B445C"/>')
+    parts.extend([prompt, interests,
+                  terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration)])
+    if not mobile:
+        parts.append(text(width-left, 81, "I use Arch, btw.", "#E9BD78", 12,
+                          'text-anchor="end"'))
+    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="url(#card-neon)" stroke-width="4" opacity=".28" filter="url(#neon-glow)" class="motion"/>')
+    parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="url(#card-neon)" stroke-width="1.5" class="motion"/>')
+    parts.append("</svg>\n")
+    rendered = "\n".join(parts)
+    for marker, animation in animations.items():
+        rendered = rendered.replace(marker, animation)
+    return rendered
+
+
 if __name__ == "__main__":
-    for theme in THEMES:
-        target = ROOT / f"{theme}.svg"
-        target.write_text(render(theme), encoding="utf-8")
+    (ROOT / "assets").mkdir(exist_ok=True)
+    for filename, mobile in [("terminal.svg", False), ("terminal-mobile.svg", True)]:
+        target = ROOT / "assets" / filename
+        target.write_text(render(mobile), encoding="utf-8")
         print(target.relative_to(ROOT))

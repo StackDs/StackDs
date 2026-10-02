@@ -1,33 +1,36 @@
 # Mantener el perfil
 
-El contenido del perfil está en `README.md`. La cabecera usa `dark.svg` y
-`light.svg`, guardados en la raíz del repositorio, sin servicios externos.
+El contenido del perfil está en `README.md`. Las imágenes están guardadas en
+este repositorio; la cabecera no depende de un servicio externo de banners.
 
 ## Cabecera
 
-Editar los datos de `PROFILE` y los colores de `THEMES` en
-`scripts/render_terminal.py` y regenerar los SVG con Python 3, sin dependencias:
+El dibujo está en `scripts/profile_ascii.py`, con los espacios y saltos de línea
+del ASCII suministrado. La composición y los datos se editan en
+`scripts/render_terminal.py`. Regenerar los SVG con Python 3, sin dependencias:
 
 ```sh
 python3 scripts/render_terminal.py
 ```
 
-El README selecciona la variante clara u oscura mediante `<picture>` y
-`prefers-color-scheme`. Ambas comparten un lienzo de 1180 × 610 y se adaptan al
-ancho disponible conservando las proporciones. En pantallas pequeñas, la
-presentación también se puede leer como texto debajo de la imagen.
+La versión de escritorio, `assets/terminal.svg`, muestra el dibujo completo a
+la izquierda y los datos a la derecha. El README selecciona
+`assets/terminal-mobile.svg` en pantallas de hasta 600 px, con el dibujo encima
+de los datos. El espaciado entre filas conserva la proporción cuadrada (1:1)
+de la imagen de referencia; la altura de la terminal se adapta al dibujo para
+evitar recortes. La proporción se configura con `REFERENCE_ASPECT_RATIO` en
+el generador.
 
-La pila isométrica está dibujada con caracteres SVG, sin imágenes incrustadas.
-Las animaciones usan SMIL: entrada escalonada, cursor breve y dos barridos
-suaves. Terminan a los 17 segundos. Con `prefers-reduced-motion: reduce`, se
-ocultan los elementos en movimiento y el contenido aparece sin transiciones.
-Si el visor no admite SMIL, la composición sigue siendo legible.
+El dibujo usa texto SVG, sin imágenes incrustadas. Bordes de neón recorren el
+marco exterior y el marco del ASCII. La animación SMIL se repite: el comando y
+los datos aparecen carácter a carácter, se mantienen brevemente y se borran en
+orden inverso. Un cursor acompaña la escritura y el borrado; a la vez, el escaneo
+resalta las filas completas de arriba abajo y vuelve a empezar.
 
-Al cambiar información personal, actualizar también el texto y la descripción
-alternativa en `README.md`. Los textos actuales están ajustados al diseño;
-revisar los saltos de línea y el espacio disponible si se añaden valores largos.
-
-Para publicar la cabecera solo hacen falta `README.md`, `dark.svg` y `light.svg`.
+Con `prefers-reduced-motion`, el contenido queda completo y estático, sin cursor,
+escaneo ni bordes animados. Los visores sin SMIL también muestran el contenido
+completo. La descripción alternativa del README contiene la presentación en
+texto.
 
 ## Snake
 
