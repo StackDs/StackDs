@@ -1,0 +1,32 @@
+name: Check generated profile
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out profile
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+
+      - name: Test generators without optional photo dependencies
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Check generated artifacts
+        run: python3 scripts/build_profile.py --check
+
+      - name: Check whitespace
+        run: git diff --check

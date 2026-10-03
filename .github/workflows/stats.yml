@@ -1,0 +1,50 @@
+name: Update profile statistics
+
+on:
+  schedule:
+    - cron: '43 6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/stats.yml'
+      - 'scripts/update_stats.py'
+      - 'scripts/profile_config.py'
+      - 'config/profile.json'
+      - 'config/theme.json'
+
+permissions:
+  contents: read
+
+# Serialize both activity writers; each checks out the latest main after waiting.
+concurrency:
+  group: profile-activity-assets
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == 'StackDs/StackDs' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Check out latest profile
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+
+      - name: Refresh validated statistics
+        run: python3 scripts/update_stats.py
+
+      - name: Save updated statistics
+        run: |
+          git add assets/stats/github.svg
+          if git diff --cached --quiet; then
+            echo 'Statistics are already up to date.'
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m "chore: update profile statistics [skip ci]"
+          git push origin HEAD:main

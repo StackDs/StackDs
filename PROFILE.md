@@ -1,133 +1,194 @@
-# Mantener el perfil
+# Maintaining the profile
 
-La vista previa del perfil y los enlaces sociales directos están en
-`README.md`. La tarjeta web interactiva también está publicada en GitHub Pages.
-Las imágenes están guardadas en este repositorio; el banner no depende de un
-servicio externo.
+The profile is published in two places: the repository's `README.md` and the
+[web contact card](https://stackds.github.io/StackDs/). Both use the same compact
+terminal banners, identity, contact links, and color palette.
 
-## Cabecera
+## Edit content or colors
 
-El avatar predeterminado se lee de `ascii.txt` y se incorpora directamente a los
-SVG. Regenerar las variantes de escritorio y móvil:
+1. Edit the relevant source:
+
+   | Source | What to change |
+   | --- | --- |
+   | `content/about.md` | The three About Me paragraphs; Markdown is supported. |
+   | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, quotes, stats endpoint, and optional widgets. |
+   | `config/theme.json` | Shared `#RRGGBB` colors, including the five contribution levels for each snake variant. |
+   | `ascii.txt` | Default avatar; preserve spaces and line breaks. |
+   | `templates/README.md.tpl` | Section order, headings, quote summary, and the closing C snippet. |
+   | `templates/site.html.tpl` | Web card structure and interface copy. |
+   | `site/styles.css` | Web layout and spacing; palette values come from generated `site/theme.css`. |
+
+2. Regenerate from the repository root:
+
+   ```sh
+   python3 scripts/build_profile.py
+   ```
+
+3. Check the generated files:
+
+   ```sh
+   python3 -m unittest discover -s tests -v
+   python3 scripts/build_profile.py --check
+   git diff --check
+   ```
+
+4. Include the edited sources and their generated outputs in the same change.
+
+Python **3.11 or newer** is supported. The normal build and offline tests use
+only the standard library. No network request is made by `build_profile.py`.
+`--check` exits with status 1 for stale or missing outputs and never writes them.
+Configuration is validated and all outputs are rendered before any are written.
+
+Generated outputs are `README.md`, `site/index.html`, `site/theme.css`, the
+terminal and contribution SVGs (animated and static), and `assets/stats/github.svg`.
+Changes made directly to generated text or banners will be overwritten.
+The snake and stats snapshots keep their existing activity data during a local
+build; their colors and accessibility styling are reapplied offline.
+
+JSON strings are plain text and are escaped for Markdown or HTML. Use
+`content/about.md` and the templates when you want authored Markdown. Templates
+use Python's `string.Template`: placeholders look like `$ABOUT`; write `$$` for a
+literal dollar sign.
+
+### Add a technology, project, or quote
+
+Add a technology to the appropriate `stack[].items` list:
+
+```json
+{"name": "C++", "logo": "cplusplus", "url": "https://isocpp.org/"}
+```
+
+`logo` is a Shields.io / Simple Icons identifier. Use an empty string for a
+text-only badge, as with Java and SDL3. URLs and names, including `C++`, are
+encoded automatically. All badges use `flat`, the shared surface color, and
+the shared accent for supported logos.
+
+Add a project to `projects` with `name`, `url`, and a one-line `description`.
+Keep the table to two to four projects for readability. Add quotes to `quotes`
+with separate `text` and `author` fields. They appear inside a closed `<details>`
+section rather than in the animated banner.
+
+Contacts use `id`, `label`, and `url`. The `email` contact's `mailto:` address is
+also used by the web card's copy button. The ordinary email link remains usable
+when JavaScript or the Clipboard API is unavailable.
+
+## Regenerate the banner from a photo
+
+The default avatar comes from `ascii.txt`. Photo modes are optional and need Pillow:
 
 ```sh
 python3 -m pip install -r requirements.txt
-python3 scripts/render_terminal.py
-```
-
-Para usar la fotografía predeterminada en lugar del arte ASCII:
-
-```sh
 python3 scripts/render_terminal.py --photo
 ```
 
-Para elegir al azar entre las imágenes compatibles de `assets/images/`:
+Use `--random` to choose from compatible images in `assets/images/`; the same
+photo is used for both banner sizes. These modes are local previews: the
+reproducible full build and CI expect the default ASCII avatar. Run
+`python3 scripts/build_profile.py` to return to that version.
+
+The SVG contains text, not an embedded copy of the photograph. Animation uses
+SMIL and exposes the complete content in viewers without SMIL support. With
+`prefers-reduced-motion: reduce`, the README and web card select `*-static.svg`
+through `<picture>`. These variants have no SMIL nodes and disable CSS animation,
+so embedded images do not depend on inheriting the host's media preference.
+The animated files also include reduced-motion styles for direct viewing.
+The avatar's aspect ratio is controlled by
+`REFERENCE_ASPECT_RATIO` in `scripts/render_terminal.py`.
+
+## Update activity data
+
+### Contribution snake
+
+`.github/workflows/contributions.yml` runs Platane/snk at **06:23 UTC daily**, on
+relevant changes to `main`, and through manual dispatch. It reads the palette
+using `scripts/reduce_snake_motion.py --outputs`, then postprocesses the result
+with the same script. Postprocessing is idempotent; in reduced-motion mode it
+shows the static contribution cells and hides the moving snake and progress bar.
+
+The light and dark SVGs and their static counterparts are stored in
+`assets/contributions/`. The README chooses between them with
+`prefers-color-scheme` and `prefers-reduced-motion`. Local generation only restyles those
+snapshots; run **Actions → Update contribution snake → Run workflow** to refresh
+the contribution data.
+
+### GitHub statistics
+
+Refresh the card locally:
 
 ```sh
-python3 scripts/render_terminal.py --random
+python3 scripts/update_stats.py
 ```
 
-La misma imagen seleccionada se usa en los banners de escritorio y móvil. Pillow,
-declarado en `requirements.txt`, solo se necesita para estos modos de fotografía.
-Editar `ascii.txt` para cambiar el avatar predeterminado. Editar `QUOTES`, los
-datos del perfil, las líneas de intereses y `ABOUT_ME_TEXT` en
-`scripts/render_terminal.py`. Las citas se agrupan debajo del avatar,
-ordenadas por longitud en dos columnas en escritorio y una en móvil; el texto va
-en blanco y las atribuciones en gris comentario. Se ajustan en líneas; al añadir
-más, el pie se desplaza para dejarles espacio. `about me` ajusta sus saltos de
-línea al ancho disponible, conserva 24 px de margen derecho y usa 20 px entre
-líneas.
+`.github/workflows/stats.yml` does this at **06:43 UTC daily**, on relevant
+changes to `main`, and through manual dispatch. It requests an English GitHub
+Readme Stats card showing rank, commits, and PRs, with explicit shared colors.
+By default, `commits_year` is the current UTC calendar year when the card is
+fetched; the year remains printed on the cached card. Set
+`stats.include_all_commits` to `true` for all-time commits.
 
-La versión de escritorio, `assets/terminal.svg`, muestra el dibujo completo a
-la izquierda y los datos a la derecha. El README selecciona
-`assets/terminal-mobile.svg` en pantallas de hasta 600 px, con el dibujo encima
-de los datos. El espaciado entre filas conserva la proporción cuadrada (1:1)
-de la imagen de referencia; la altura de la terminal se adapta al dibujo para
-evitar recortes. La proporción se configura con `REFERENCE_ASPECT_RATIO` en
-el generador. Etiquetas y valores usan columnas estables; los campos largos se
-ajustan a varias líneas y el contenido posterior se desplaza para evitar cruces.
+The response must be an SVG containing the expected stats and rank elements.
+Timeouts, HTML responses, malformed XML, and provider error cards cannot replace
+a good snapshot. If there has never been a successful fetch, a local English
+unavailable card is generated. The updater reports the problem and exits
+successfully so a temporary provider outage does not break publication.
 
-En el modo de fotografía, la imagen se reduce a una cuadrícula de mayor
-resolución y se dibuja con una rampa de 69 caracteres, corrección de proporción
-para monospace, contraste local y enfoque de bordes. La zona central-superior
-recibe un refuerzo suave de contraste y nitidez para definir los rasgos de la
-cara. Tres tonos de cian
-diferencian sombras, medios tonos y luces para conservar detalles pequeños como
-ojos, lentes y contornos. El fondo blanco
-exterior de JPEG se elimina y los píxeles transparentes de PNG se conservan
-como espacios. Los SVG solo contienen el resultado en texto; no incrustan las
-fotos originales. El azul `#088DDC` unifica los bordes del marco y del ASCII.
-La animación SMIL se repite: las citas, el comando y
-los datos aparecen carácter a carácter, se mantienen brevemente y se borran en
-orden inverso. Un cursor acompaña la escritura y el borrado; a la vez, el escaneo
-resalta las filas completas de arriba abajo y vuelve a empezar.
+`stats.endpoint` can point at a compatible self-hosted GitHub Readme Stats
+instance. Keep any provider credentials in that service's environment or in
+GitHub Secrets, rather than in image URLs or this repository.
 
-Con `prefers-reduced-motion`, el contenido queda completo y estático, sin cursor,
-escaneo ni bordes animados. Los visores sin SMIL también muestran el contenido
-completo. La descripción alternativa del README contiene la presentación en
-texto.
+The two activity workflows share a concurrency group to avoid simultaneous bot
+pushes. They use the automatic `GITHUB_TOKEN` and need `contents: write` plus
+repository rules that allow their updates to `main`. Schedules can be delayed.
+Their commits do not need to trigger a Pages deployment: activity is displayed
+in the README, and the web contact card only uses the terminal banners.
 
-## Tarjeta web interactiva
+## Enable optional music or coding-time cards
 
-La página publicada en <https://stackds.github.io/StackDs/> reúne el banner y
-los enlaces sociales en una tarjeta adaptable. Los enlaces y el botón de correo
-son controles HTML; el correo copia `stackctrlz@gmail.com` y muestra feedback.
-El README muestra los enlaces sociales como enlaces Markdown independientes para
-que funcionen directamente desde la pestaña principal del perfil; el banner SVG
-ya no sirve como enlace a esta página.
+Spotify and WakaTime are disabled by default. In `config/profile.json`, update
+the corresponding object in `widgets`:
 
-El workflow `.github/workflows/pages.yml` publica `site/` cuando cambian la
-página o los SVG del banner en `main`; también se puede ejecutar manualmente
-desde GitHub Actions. Durante la publicación copia las dos variantes del banner
-a `site/assets/`. La fuente de GitHub Pages del repositorio debe ser **GitHub
-Actions** en **Settings → Pages → Build and deployment**.
+- `enabled`: set to `true` after configuring the provider.
+- `image_url`: the public HTTPS URL of an embeddable card image.
+- `url`: the HTTPS destination when the card is clicked.
+- `title`: section heading.
+- `caption`: describe the data, including the measured period for WakaTime.
 
-Para probar la página localmente desde la raíz del repositorio:
+Spotify requires a separate authorized card provider. Configure it to show the
+last track when playback stops, and to use this profile's palette. GitHub caches
+images, so a README cannot guarantee live playback updates.
+
+WakaTime requires a public shareable chart or a separate service authorized to
+read your stats. Set its time window to match the caption (seven days by default),
+apply the shared palette through that provider, and configure its no-data state.
+These external cards control their own colors and refresh behavior; the local
+generator embeds their URLs. Disabled widgets produce no empty headings.
+
+## Preview the web card
 
 ```sh
+python3 scripts/build_profile.py
 mkdir -p site/assets
-cp assets/terminal.svg assets/terminal-mobile.svg site/assets/
+cp assets/terminal*.svg site/assets/
 python3 -m http.server 8000 --directory site
 ```
 
-Abrir <http://localhost:8000/>. El copiado del correo requiere un contexto
-seguro como GitHub Pages para usar Clipboard API.
+Open <http://localhost:8000/>. The email button uses the Clipboard API on a secure
+context such as localhost or GitHub Pages, with an ordinary email link as a fallback.
 
-La paleta usa fondo `#0F1419`, acento `#088DDC`, texto `#ECEFF4`, secundario
-`#D3C6AA` y color de comentario `#5c6370`. JetBrains Mono se importa desde
-Google Fonts y tiene alternativas monospace para visores que bloquean fuentes
-remotas. Los encabezados y prompts usan negrita; los valores y el cuerpo usan
-peso normal.
+The Pages workflow copies the terminal banners into the deployment artifact and
+publishes `site/`. In **Settings → Pages**, select **GitHub Actions** as the source.
+JetBrains Mono is loaded from Google Fonts with local monospace fallbacks.
 
-## Snake
+Review the README on GitHub in light/dark mode and at mobile width. Markdown
+text and links follow the reader's GitHub theme; exact palette control applies
+to the generated SVGs, badge parameters, and the web card.
 
-Las imágenes iniciales usan el calendario público de StackDs consultado el
-1 de octubre de 2026. El workflow `Update contribution snake` las reemplaza
-con datos actualizados a las 06:23 UTC cada día. También se ejecuta al subir
-el propio workflow a `main` y permite ejecución manual desde GitHub Actions.
+## Validation and CI
 
-Se utiliza [Platane/snk](https://github.com/Platane/snk), fijado a una revisión
-concreta, y el `GITHUB_TOKEN` automático de Actions. No necesita un token
-personal ni GitHub Pages. Las imágenes se guardan en `assets/contributions/`
-y se incluyen directamente desde el README.
+`.github/workflows/check-profile.yml` runs the offline tests, the freshness check,
+and `git diff --check`. Tests cover malformed configuration, escaping, long
+banner values, theme propagation, optional widgets, idempotence, read-only
+checking, and successful/failed statistics refreshes.
 
-Para activar la actualización, subir estos archivos a `main` y comprobar
-la ejecución en **Actions → Update contribution snake**. Si Actions está
-deshabilitado en el repositorio, habilitarlo primero. El trabajo necesita
-`contents: write`; una regla que impida pushes del bot a `main` también
-impedirá que guarde las imágenes. El horario programado puede sufrir demoras.
-
-`scripts/reduce_snake_motion.py` añade soporte de movimiento reducido después
-de cada generación. Los colores claro y oscuro se editan en `outputs` dentro
-de `.github/workflows/contributions.yml`.
-
-## Comprobación local
-
-```sh
-python3 scripts/render_terminal.py
-python3 scripts/reduce_snake_motion.py
-git diff --check
-```
-
-Comprobar también el README en GitHub: usa Markdown, HTML compatible y SVG,
-sin JavaScript ni estilos CSS insertados en el Markdown.
+After changes to layout, also inspect desktop and mobile banners, keyboard focus,
+the email copy success/failure states, quote expansion, and reduced-motion mode.

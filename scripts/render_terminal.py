@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate self-contained profile banners from the images in assets/images."""
+"""Render compact, self-contained profile banners from shared configuration."""
 
 import argparse
 import random
@@ -8,56 +8,20 @@ from math import ceil
 from pathlib import Path
 from textwrap import wrap
 
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
-
 from profile_ascii import ART
+from profile_config import load_profile, load_theme
+from svg_motion import static_svg
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
-BACKGROUND = "#0F1419"
-ART_BACKGROUND = "#080E14"
-TEXT_PRIMARY = "#ECEFF4"
-TEXT_SECONDARY = "#D3C6AA"
-ACCENT = "#088DDC"
-COMMENT = "#5c6370"
-PHOTO_COLOR = "#A5F3FC"
-PHOTO_SHADOW = "#3FAFE0"
-PHOTO_MID = "#7ED7F0"
-ART_BACKGROUND_RGB = tuple(int(ART_BACKGROUND[i:i + 2], 16) for i in (1, 3, 5))
-RULE = "#2B3A45"
 DEFAULT_IMAGE = "bryan.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
-PHOTO_TONES = (PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR)
 PHOTO_GRID_SCALE = 1.25
-ABOUT_ME_TEXT = "I'm a Computer Engineering student with a passion for teaching. I enjoy teaching math and computer science, always guided by the philosophy that the best way to learn is by teaching. I love programming, although with AI around, I don't do it as much anymore XD. I like designing systems and tools for various topics, and I'm obsessed with customization because I use Arch, btw. AFK, I'm a musician and play several instruments. I definitely have more hours logged in video games than touching grass. I also love playing basketball because you have to move your ass every once in a while, and I'm a bit of an alcoholic, but what engineer isn't?"
-ABOUT_ME_WRAP = 40
-ABOUT_ME_PADDING_RIGHT = 24
-ABOUT_ME_LINE_HEIGHT = 20
-QUOTES = (
-"  • I'm the son of rage and love  - St. Jimmy",
-"  • You can't get a hangover if you don't stop drinking - Lemmy Kilmister",
-"  • Talk is cheap. Show me the code - Linus Torvalds",
-"  • A wrong decision is better than indecision - Tony Soprano",
-"  • Yeah, Mr. White! Yeah, science! - Jesse Pinkman",
-"  • Wubba lubba dub dub! - Rick Sanchez",
-"  • What's in the box? - Se7en",
-"  • Cadia stands, and we shall not fall - Imperial Creed",
-"  • War. War never changes. - Fallout",
-"  • Forget about Freeman - Half-Life",
-"  • The cake is a lie - Portal",
-"  • Praise the sun! - Solaire of Astora",
-"  • Would you kindly? - Atlas",
-"  • How's your sister? - Cayde-6",
-"  • In a world withouh gold, we might've been heroes - BlackBeard",
-"  • SIC PARVIS MAGNA - Sir Francis Drake",
-"  • Kept you waiting, huh? - Big Boss",
-"  • It can't be for nothing  -Ellie"
-)
 
 
-def text(x, y, value, fill=TEXT_PRIMARY, size=15, extra=""):
+def text(x, y, value, fill, size=15, extra=""):
     return (f'<text x="{x}" y="{y}" fill="{fill}" font-size="{size}" '
             f'{extra}>{escape(value)}</text>')
 
@@ -85,14 +49,14 @@ def discrete_animation(attribute, events, duration, repeat=False):
             f'{repeat_attribute}/>')
 
 
-def terminal_cursor(frames, erase_start, erase_end, duration):
+def terminal_cursor(frames, erase_start, erase_end, duration, accent):
     """One cursor follows the typing/deletion cycle and blinks in the pause."""
     start = min(frames)
     first = frames[start]
     parts = [f'<rect id="terminal-cursor" class="cursor motion" '
              f'x="{first[0]:.3f}" y="{first[1]:.3f}" '
              f'width="{first[2]:.3f}" height="{first[3]:.3f}" '
-             f'fill="{ACCENT}" opacity="0" aria-hidden="true">']
+             f'fill="{accent}" opacity="0" aria-hidden="true">']
     for i, attribute in enumerate(("x", "y", "width", "height")):
         parts.append(discrete_animation(
             attribute, [(time, frame[i]) for time, frame in frames.items()], duration,
@@ -110,12 +74,12 @@ def choose_image(randomize=False):
     images = sorted(path for path in image_dir.iterdir()
                     if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS)
     if not images:
-        raise FileNotFoundError(f"No hay imágenes compatibles en {image_dir}")
+        raise FileNotFoundError(f"No supported images in {image_dir}")
     if randomize:
         return random.choice(images)
     default = image_dir / DEFAULT_IMAGE
     if not default.is_file():
-        raise FileNotFoundError(f"No se encontró la imagen predeterminada: {default}")
+        raise FileNotFoundError(f"Default image not found: {default}")
     return default
 
 
@@ -125,13 +89,17 @@ def photo_grid_size():
     return columns, rows
 
 
-def image_to_ascii(path, columns, rows):
+def image_to_ascii(path, columns, rows, theme=None):
     """Convert a photo into preserved-whitespace SVG text rows.
 
     The grid has twice as many columns as rows because terminal glyph cells are
     roughly half as wide as their line height; this keeps square portraits square.
     Transparent pixels remain spaces, so PNG alpha is preserved in the ASCII.
     """
+    from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
+
+    background = (theme or load_theme())["background"]
+    background_rgb = tuple(int(background[i:i + 2], 16) for i in (1, 3, 5))
     with Image.open(path) as source:
         source = ImageOps.exif_transpose(source).convert("RGBA")
         source = ImageOps.fit(source, (720, 720), method=Image.Resampling.LANCZOS,
@@ -141,11 +109,11 @@ def image_to_ascii(path, columns, rows):
         # Remove edge-connected white only; keep white details inside the art.
         if path.suffix.lower() in {".jpg", ".jpeg"}:
             for seed in ((0, 0), (719, 0), (0, 719), (719, 719)):
-                ImageDraw.floodfill(source, seed, (*ART_BACKGROUND_RGB, 0), thresh=28)
+                ImageDraw.floodfill(source, seed, (*background_rgb, 0), thresh=28)
 
         alpha = source.getchannel("A").resize(
             (columns, rows), Image.Resampling.LANCZOS)
-        backdrop = Image.new("RGBA", source.size, (*ART_BACKGROUND_RGB, 255))
+        backdrop = Image.new("RGBA", source.size, (*background_rgb, 255))
         grayscale = Image.alpha_composite(backdrop, source).convert("L")
         grayscale = grayscale.resize((columns, rows), Image.Resampling.LANCZOS)
         grayscale = ImageOps.autocontrast(grayscale, cutoff=1)
@@ -192,8 +160,23 @@ def image_to_ascii(path, columns, rows):
         return art
 
 
-def render(mobile=False, art=None, image_name=""):
-    art = art or ART
+def render(mobile=False, art=None, image_name="", profile=None, theme=None):
+    profile = profile if profile is not None else load_profile()
+    theme = theme if theme is not None else load_theme()
+    terminal = profile["terminal"]
+    BACKGROUND = theme["surface"]
+    ART_BACKGROUND = theme["background"]
+    TEXT_PRIMARY = theme["text"]
+    TEXT_SECONDARY = theme["text_secondary"]
+    ACCENT = theme["accent"]
+    RULE = theme["border"]
+    PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR = (
+        theme["photo_shadow"], theme["photo_mid"], theme["photo_light"])
+    PHOTO_TONES = (PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR)
+    if art is None:
+        art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
+    if not art or not any(art):
+        raise ValueError("ASCII artwork must not be empty")
     photo_art = image_name != ""
     if not photo_art:
         art = [(line, " " * len(line), " " * len(line)) for line in art]
@@ -213,50 +196,8 @@ def render(mobile=False, art=None, image_name=""):
     art_inner_height = art_height - 2 * art_padding
     line_height = art_inner_height / len(art)
     art_bottom = ceil(art_top + art_height)
-    quote_column_count = 1 if mobile else 2
-    quote_column_gap = 14 if quote_column_count == 2 else 0
-    quote_content_width = art_width - 2 * art_padding
-    quote_column_width = (
-        quote_content_width - quote_column_gap * (quote_column_count - 1)
-    ) / quote_column_count
-    quote_width = max(12, int(quote_column_width / (12 * .602)))
-    quote_layout = []
-    quote_column_y = [art_bottom + 20] * quote_column_count
-    ordered_quotes = sorted(
-        enumerate(QUOTES),
-        key=lambda item: (len(item[1].strip().removeprefix("•").strip()), item[0]))
-    for order_index, (quote_index, quote) in enumerate(ordered_quotes):
-        column_index = order_index % quote_column_count
-        quote_x = (left + art_padding
-                   + column_index * (quote_column_width + quote_column_gap))
-        quote_text = quote.strip().removeprefix("•").strip()
-        quote_body, separator, quote_author = quote_text.rpartition(" -")
-        if separator:
-            quote_body = quote_body.rstrip()
-            quote_attribution = f" - {quote_author.strip()}"
-        else:
-            quote_body = quote_text
-            quote_attribution = ""
-        quote_lines = wrap(quote_body, width=quote_width,
-                           initial_indent="• ", subsequent_indent="  ",
-                           break_long_words=True, break_on_hyphens=False) or ["• "]
-        for line_index, line in enumerate(quote_lines):
-            is_last_line = line_index == len(quote_lines) - 1
-            attribution = quote_attribution if is_last_line else ""
-            if attribution and len(line) + len(attribution) > quote_width:
-                attribution = ""
-            quote_layout.append((quote_index, line_index, quote_x,
-                                 quote_column_y[column_index], line, attribution))
-            quote_column_y[column_index] += 17
-        if quote_attribution and not quote_layout[-1][-1]:
-            quote_layout.append((quote_index, len(quote_lines), quote_x,
-                                 quote_column_y[column_index], "",
-                                 f"  - {quote_author.strip()}"))
-            quote_column_y[column_index] += 17
-        quote_column_y[column_index] += 4
-    quote_bottom = max(quote_column_y) - 4
     info_x = left if mobile else 490
-    info_y = quote_bottom + 40 if mobile else art_top + 33
+    info_y = art_bottom + 40 if mobile else art_top + 33
     clock = 200
     cursor_frames = {}
     typed_segments = []
@@ -290,34 +231,12 @@ def render(mobile=False, art=None, image_name=""):
                 f'fill="{fill}" font-size="{size}" xml:space="preserve" '
                 f'{extra}>{"".join(spans)}</text>')
 
-    command = typed("command", left, command_y, "~ $ fastfetch --Stack", ACCENT,
+    command = typed("command", left, command_y, terminal["command"], ACCENT,
                     speed=20, extra='font-weight="bold"')
     clock += 200
     scan_start = clock
-    quote_items = []
-    for quote_index, line_index, x, y, line, attribution in quote_layout:
-        if line:
-            quote_items.append(typed(
-                f"quote-{quote_index}-{line_index}", x, y, line,
-                TEXT_PRIMARY, size=12, speed=13, pause=60,
-            ))
-        if attribution:
-            attribution_x = x + len(line) * 12 * .602 if line else x
-            quote_items.append(typed(
-                f"quote-author-{quote_index}-{line_index}", attribution_x, y,
-                attribution, COMMENT, size=12, speed=13,
-                pause=0 if line else 60,
-            ))
-    profile_fields = [
-        ("name", "Bryan Aguirre"),
-        ("age", "21"),
-        ("role", "Informatic Engineering Student"),
-        ("school", "Udec (Unfortunately)"),
-        ("loc", "Chile"),
-        ("os", "Arch Linux"),
-        ("contact", "stackctrlz@gmail.com"),
-    ]
-    info = [typed("profile-name", info_x, info_y, "Stack", ACCENT, size=21,
+    profile_fields = [(field["label"], field["value"]) for field in terminal["fields"]]
+    info = [typed("profile-name", info_x, info_y, profile["display_name"], ACCENT, size=21,
                   speed=21, extra='font-weight="bold"')]
     # One shared value_x gives the personal data a stable two-column grid.
     label_width = ceil(max(len(label) * 14 * .602 for label, _ in profile_fields) + 16)
@@ -325,38 +244,19 @@ def render(mobile=False, art=None, image_name=""):
     right_edge = width - left
     value_chars = max(10, int((right_edge - value_x) / (14 * .602)))
     row_y = info_y + 33
-    for label, value in profile_fields:
+    for field_index, (label, value) in enumerate(profile_fields):
         value_lines = wrap(value, width=value_chars, break_long_words=True,
                            break_on_hyphens=False) or [""]
-        info.append(typed(f"{label}-label", info_x, row_y, label,
+        info.append(typed(f"field-{field_index}-label", info_x, row_y, label,
                           TEXT_SECONDARY, pause=160))
         for line_index, line in enumerate(value_lines):
-            info.append(typed(f"{label}-value-{line_index}", value_x,
+            info.append(typed(f"field-{field_index}-value-{line_index}", value_x,
                               row_y + line_index * 20, line))
         row_y += max(24, len(value_lines) * 20 + 4)
 
-    about_title_y = row_y + 12
-    info.append(typed("about-heading", info_x, about_title_y, "about me",
-                      ACCENT, size=14, pause=260,
-                      extra='font-weight="bold"'))
-    about_width = min(
-        ABOUT_ME_WRAP,
-        max(12, int((right_edge - info_x - ABOUT_ME_PADDING_RIGHT) / (13 * .602))),
-    )
-    about_lines = wrap(ABOUT_ME_TEXT, width=about_width, break_long_words=True,
-                       break_on_hyphens=False) or [""]
-    about_start_y = about_title_y + 23
-    for line_index, line in enumerate(about_lines):
-        info.append(typed(f"about-text-{line_index}", info_x,
-                           about_start_y + line_index * ABOUT_ME_LINE_HEIGHT, line,
-                          TEXT_SECONDARY, size=13, speed=15,
-                          pause=100 if line_index else 160,
-                          extra='text-anchor="start"'))
-    about_end_y = about_start_y + (len(about_lines) - 1) * ABOUT_ME_LINE_HEIGHT
-
-    divider = max(art_bottom, about_end_y, quote_bottom) + 32
+    divider = max(art_bottom, row_y) + 24
     parts_width = max(12, int((width - 2 * left) / (14 * .602)))
-    command_lines = wrap('~ $ stack.push(" Wtf are you looking at? ");',
+    command_lines = wrap(terminal["footer"],
                          width=parts_width, break_long_words=True,
                          break_on_hyphens=False)
     prompt = []
@@ -366,7 +266,7 @@ def render(mobile=False, art=None, image_name=""):
                             ACCENT, pause=200 if line_index == 0 else 80,
                             extra='font-weight="bold"'))
     interests_lines = []
-    for interest in ("O(log n)", "vibecoder (not really)"):
+    for interest in terminal["interests"]:
         interests_lines.extend(wrap(interest, width=parts_width,
                                     break_long_words=True,
                                     break_on_hyphens=False))
@@ -415,12 +315,12 @@ def render(mobile=False, art=None, image_name=""):
                 'repeatCount="indefinite" fill="remove"/>')
 
     avatar_description = (
-        f"avatar ASCII basado en {escape(image_name)}"
-        if image_name else "avatar ASCII personalizado"
+        f"an ASCII avatar based on {escape(image_name)}"
+        if image_name else "a custom ASCII avatar"
     )
-    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="es">
-  <title id="title">Stack / Bryan — Arch Linux</title>
-    <desc id="desc">Una terminal con {avatar_description}. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
+    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="en">
+  <title id="title">{escape(profile["title"])}</title>
+    <desc id="desc">A terminal with {avatar_description}. {escape(profile["description"])}</desc>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&amp;400&amp;500&amp;600&amp;700&amp;display=swap');
     text {{ font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
@@ -448,7 +348,7 @@ def render(mobile=False, art=None, image_name=""):
     <circle cx="61" cy="24" r="5" fill="{ACCENT}"/>
   </g>
 ''']
-    parts.append(text(width / 2, 29, "stack@arch: ~", TEXT_SECONDARY, 12,
+    parts.append(text(width / 2, 29, terminal["title"], TEXT_SECONDARY, 12,
                       'text-anchor="middle"'))
     parts.append(command)
 
@@ -484,14 +384,13 @@ def render(mobile=False, art=None, image_name=""):
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
 
-    parts.extend(quote_items)
     parts.extend(info)
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
     parts.extend(prompt)
     parts.extend(interests)
-    parts.append(terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration))
+    parts.append(terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration, ACCENT))
     if not mobile:
-        parts.append(text(width-left, command_y, "I use Arch, btw.", ACCENT, 12,
+        parts.append(text(width-left, command_y, terminal["aside"], ACCENT, 12,
                           'text-anchor="end"'))
     parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".28" filter="url(#neon-glow)" class="motion"/>')
     parts.append(f'<rect x="2.5" y="2.5" width="{width - 5}" height="{height - 5}" rx="10" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
@@ -503,30 +402,34 @@ def render(mobile=False, art=None, image_name=""):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Genera el banner ASCII del perfil.")
+    parser = argparse.ArgumentParser(description="Generate the profile's ASCII banners.")
     image_mode = parser.add_mutually_exclusive_group()
     image_mode.add_argument("--photo", action="store_true",
-                            help="usa la fotografía predeterminada en lugar de ascii.txt")
+                             help="use the default photo instead of ascii.txt")
     image_mode.add_argument("--random", action="store_true",
-                            help="elige al azar una imagen de assets/images")
+                             help="choose a random image from assets/images")
     args = parser.parse_args()
 
-    (ROOT / "assets").mkdir(exist_ok=True)
+    profile, theme = load_profile(), load_theme()
     image_name = ""
     if args.photo or args.random:
         image = choose_image(randomize=args.random)
         columns, rows = photo_grid_size()
-        art = image_to_ascii(image, columns, rows)
+        art = image_to_ascii(image, columns, rows, theme)
         image_name = image.name
-        print(f"Imagen seleccionada: {image.relative_to(ROOT)}")
+        print(f"Selected image: {image.relative_to(ROOT)}")
     else:
         avatar = ROOT / "ascii.txt"
         art = avatar.read_text(encoding="utf-8").splitlines()
         if not art or not any(art):
-            raise ValueError(f"El avatar ASCII está vacío: {avatar}")
-        print(f"Avatar seleccionado: {avatar.relative_to(ROOT)}")
+            raise ValueError(f"ASCII avatar is empty: {avatar}")
+        print(f"Selected avatar: {avatar.relative_to(ROOT)}")
 
     for filename, mobile in [("terminal.svg", False), ("terminal-mobile.svg", True)]:
         target = ROOT / "assets" / filename
-        target.write_text(render(mobile, art=art, image_name=image_name), encoding="utf-8")
+        source = render(mobile, art=art, image_name=image_name, profile=profile, theme=theme)
+        target.write_text(source, encoding="utf-8")
+        static_target = target.with_name(target.stem + "-static.svg")
+        static_target.write_text(static_svg(source), encoding="utf-8")
         print(target.relative_to(ROOT))
+        print(static_target.relative_to(ROOT))

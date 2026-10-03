@@ -1,0 +1,17 @@
+{
+  "background": "#080E14",
+  "surface": "#0F1419",
+  "accent": "#088DDC",
+  "accent_light": "#6BC5ED",
+  "text": "#ECEFF4",
+  "text_secondary": "#D3C6AA",
+  "comment": "#5C6370",
+  "border": "#2B3A45",
+  "control": "#0B1117",
+  "control_hover": "#111D27",
+  "photo_shadow": "#3FAFE0",
+  "photo_mid": "#7ED7F0",
+  "photo_light": "#A5F3FC",
+  "snake_dark": ["#0F1419", "#12344D", "#165A80", "#088DDC", "#6BC5ED"],
+  "snake_light": ["#E8EFF5", "#C6E7F7", "#8DCEE9", "#369FD3", "#088DDC"]
+}

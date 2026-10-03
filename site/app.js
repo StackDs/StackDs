@@ -1,10 +1,10 @@
 const copyButton = document.querySelector("#copy-email");
 const feedback = document.querySelector("#copy-feedback");
 const manualCopy = document.querySelector("#manual-copy");
-const emailAddress = "stackctrlz@gmail.com";
+const emailAddress = copyButton?.dataset.email;
 let feedbackTimer;
 
-copyButton.addEventListener("click", async () => {
+copyButton?.addEventListener("click", async () => {
   window.clearTimeout(feedbackTimer);
 
   try {
@@ -13,11 +13,11 @@ copyButton.addEventListener("click", async () => {
     }
 
     await navigator.clipboard.writeText(emailAddress);
-    feedback.textContent = "Copiado: stackctrlz@gmail.com";
+    feedback.textContent = `Copied: ${emailAddress}`;
     manualCopy.hidden = true;
     copyButton.dataset.copied = "true";
   } catch {
-    feedback.textContent = "No se pudo copiar la dirección.";
+    feedback.textContent = `Could not copy: ${emailAddress}`;
     manualCopy.hidden = false;
     delete copyButton.dataset.copied;
   }

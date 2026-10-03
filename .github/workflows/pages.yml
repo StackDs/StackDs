@@ -6,8 +6,7 @@ on:
     paths:
       - '.github/workflows/pages.yml'
       - 'site/**'
-      - 'assets/terminal.svg'
-      - 'assets/terminal-mobile.svg'
+      - 'assets/terminal*.svg'
   workflow_dispatch:
 
 concurrency:
@@ -36,7 +35,7 @@ jobs:
       - name: Prepare site assets
         run: |
           mkdir -p site/assets
-          cp assets/terminal.svg assets/terminal-mobile.svg site/assets/
+          cp assets/terminal*.svg site/assets/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3

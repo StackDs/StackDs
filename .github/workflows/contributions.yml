@@ -9,12 +9,15 @@ on:
     paths:
       - '.github/workflows/contributions.yml'
       - 'scripts/reduce_snake_motion.py'
+      - 'scripts/profile_config.py'
+      - 'scripts/svg_motion.py'
+      - 'config/theme.json'
 
 permissions:
   contents: read
 
 concurrency:
-  group: contribution-snake
+  group: profile-activity-assets
   cancel-in-progress: false
 
 jobs:
@@ -30,13 +33,20 @@ jobs:
         with:
           ref: main
 
+      - name: Read shared snake palette
+        id: palette
+        run: |
+          {
+            echo 'outputs<<SNAKE_OUTPUTS'
+            python3 scripts/reduce_snake_motion.py --outputs
+            echo 'SNAKE_OUTPUTS'
+          } >> "$GITHUB_OUTPUT"
+
       - name: Generate both color themes
         uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            assets/contributions/snake.svg?color_snake=#7255b5&color_dots=#ebedf0,#cae9eb,#86cbd0,#479da9,#256775
-            assets/contributions/snake-dark.svg?palette=github-dark&color_snake=#b6a4ea&color_dots=#242c40,#304b5a,#417786,#68adba,#86dce5
+          outputs: ${{ steps.palette.outputs.outputs }}
 
       - name: Respect reduced motion
         run: python3 scripts/reduce_snake_motion.py
@@ -45,7 +55,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/contributions/snake.svg assets/contributions/snake-dark.svg
+          git add assets/contributions/snake*.svg
           if git diff --cached --quiet; then
             echo 'Contribution images are already up to date.'
             exit 0
