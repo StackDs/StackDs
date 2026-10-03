@@ -1,8 +1,9 @@
 # Mantener el perfil
 
-La vista previa del perfil está en `README.md` y enlaza a una tarjeta web
-interactiva publicada en GitHub Pages. Las imágenes están guardadas en este
-repositorio; el banner no depende de un servicio externo.
+La vista previa del perfil y los enlaces sociales directos están en
+`README.md`. La tarjeta web interactiva también está publicada en GitHub Pages.
+Las imágenes están guardadas en este repositorio; el banner no depende de un
+servicio externo.
 
 ## Cabecera
 
@@ -71,8 +72,9 @@ texto.
 La página publicada en <https://stackds.github.io/StackDs/> reúne el banner y
 los enlaces sociales en una tarjeta adaptable. Los enlaces y el botón de correo
 son controles HTML; el correo copia `stackctrlz@gmail.com` y muestra feedback.
-GitHub solo muestra la vista previa SVG estática en el README, por lo que hay
-que abrirla para usar los controles.
+El README muestra los enlaces sociales como enlaces Markdown independientes para
+que funcionen directamente desde la pestaña principal del perfil; el banner SVG
+ya no sirve como enlace a esta página.
 
 El workflow `.github/workflows/pages.yml` publica `site/` cuando cambian la
 página o los SVG del banner en `main`; también se puede ejecutar manualmente
