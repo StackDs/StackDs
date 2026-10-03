@@ -414,9 +414,13 @@ def render(mobile=False, art=None, image_name=""):
                 f'begin="0s" dur="{seconds(cycle_duration)}" '
                 'repeatCount="indefinite" fill="remove"/>')
 
+    avatar_description = (
+        f"avatar ASCII basado en {escape(image_name)}"
+        if image_name else "avatar ASCII personalizado"
+    )
     parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="es">
   <title id="title">Stack / Bryan — Arch Linux</title>
-    <desc id="desc">Una terminal con una fotografía convertida a arte ASCII desde {escape(image_name or "el perfil")}. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
+    <desc id="desc">Una terminal con {avatar_description}. Bryan, estudiante de Ingeniería Civil Informática en Chile. Last in, first out.</desc>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&amp;400&amp;500&amp;600&amp;700&amp;display=swap');
     text {{ font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
@@ -500,16 +504,29 @@ def render(mobile=False, art=None, image_name=""):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Genera el banner ASCII del perfil.")
-    parser.add_argument("--random", action="store_true",
-                        help="elige al azar una imagen de assets/images (por defecto: bryan.jpeg)")
+    image_mode = parser.add_mutually_exclusive_group()
+    image_mode.add_argument("--photo", action="store_true",
+                            help="usa la fotografía predeterminada en lugar de ascii.txt")
+    image_mode.add_argument("--random", action="store_true",
+                            help="elige al azar una imagen de assets/images")
     args = parser.parse_args()
 
     (ROOT / "assets").mkdir(exist_ok=True)
-    image = choose_image(randomize=args.random)
-    columns, rows = photo_grid_size()
-    art = image_to_ascii(image, columns, rows)
-    print(f"Imagen seleccionada: {image.relative_to(ROOT)}")
+    image_name = ""
+    if args.photo or args.random:
+        image = choose_image(randomize=args.random)
+        columns, rows = photo_grid_size()
+        art = image_to_ascii(image, columns, rows)
+        image_name = image.name
+        print(f"Imagen seleccionada: {image.relative_to(ROOT)}")
+    else:
+        avatar = ROOT / "ascii.txt"
+        art = avatar.read_text(encoding="utf-8").splitlines()
+        if not art or not any(art):
+            raise ValueError(f"El avatar ASCII está vacío: {avatar}")
+        print(f"Avatar seleccionado: {avatar.relative_to(ROOT)}")
+
     for filename, mobile in [("terminal.svg", False), ("terminal-mobile.svg", True)]:
         target = ROOT / "assets" / filename
-        target.write_text(render(mobile, art=art, image_name=image.name), encoding="utf-8")
+        target.write_text(render(mobile, art=art, image_name=image_name), encoding="utf-8")
         print(target.relative_to(ROOT))

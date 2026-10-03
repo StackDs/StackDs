@@ -6,24 +6,31 @@ repositorio; el banner no depende de un servicio externo.
 
 ## Cabecera
 
-El generador convierte una imagen de `assets/images/` a caracteres SVG con
-Pillow. Instalar la dependencia y regenerar los SVG:
+El avatar predeterminado se lee de `ascii.txt` y se incorpora directamente a los
+SVG. Regenerar las variantes de escritorio y móvil:
 
 ```sh
 python3 -m pip install -r requirements.txt
 python3 scripts/render_terminal.py
 ```
 
-Por defecto usa `assets/images/bryan.jpeg`. Para elegir al azar entre las
-imágenes compatibles de la carpeta, ejecutar:
+Para usar la fotografía predeterminada en lugar del arte ASCII:
+
+```sh
+python3 scripts/render_terminal.py --photo
+```
+
+Para elegir al azar entre las imágenes compatibles de `assets/images/`:
 
 ```sh
 python3 scripts/render_terminal.py --random
 ```
 
-La misma imagen seleccionada se usa en los banners de escritorio y móvil.
-Editar `QUOTES`, los datos del perfil, las líneas de intereses y `ABOUT_ME_TEXT`
-en `scripts/render_terminal.py`. Las citas se agrupan debajo de la fotografía,
+La misma imagen seleccionada se usa en los banners de escritorio y móvil. Pillow,
+declarado en `requirements.txt`, solo se necesita para estos modos de fotografía.
+Editar `ascii.txt` para cambiar el avatar predeterminado. Editar `QUOTES`, los
+datos del perfil, las líneas de intereses y `ABOUT_ME_TEXT` en
+`scripts/render_terminal.py`. Las citas se agrupan debajo del avatar,
 ordenadas por longitud en dos columnas en escritorio y una en móvil; el texto va
 en blanco y las atribuciones en gris comentario. Se ajustan en líneas; al añadir
 más, el pie se desplaza para dejarles espacio. `about me` ajusta sus saltos de
@@ -39,10 +46,11 @@ evitar recortes. La proporción se configura con `REFERENCE_ASPECT_RATIO` en
 el generador. Etiquetas y valores usan columnas estables; los campos largos se
 ajustan a varias líneas y el contenido posterior se desplaza para evitar cruces.
 
-La foto se reduce a una cuadrícula de mayor resolución y se dibuja con una
-rampa de 69 caracteres, corrección de proporción para monospace, contraste local
-y enfoque de bordes. La zona central-superior recibe un refuerzo suave de
-contraste y nitidez para definir los rasgos de la cara. Tres tonos de cian
+En el modo de fotografía, la imagen se reduce a una cuadrícula de mayor
+resolución y se dibuja con una rampa de 69 caracteres, corrección de proporción
+para monospace, contraste local y enfoque de bordes. La zona central-superior
+recibe un refuerzo suave de contraste y nitidez para definir los rasgos de la
+cara. Tres tonos de cian
 diferencian sombras, medios tonos y luces para conservar detalles pequeños como
 ojos, lentes y contornos. El fondo blanco
 exterior de JPEG se elimina y los píxeles transparentes de PNG se conservan
