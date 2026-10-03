@@ -7,44 +7,46 @@
   <img src="assets/terminal.svg" width="100%" alt="$BANNER_ALT">
 </picture>
 
+---
+
+## Contact
+
 $CONTACTS
+
+---
 
 ## About Me
 
 $ABOUT
 
+---
+
 ## Tech Stack
 
 $STACK
 
+---
+
 ## Featured Projects
 
-| Project | What it solves |
-| --- | --- |
 $PROJECTS
+
+---
 
 ## Activity & Contributions
 
 <picture>
-  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
-  <source media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg">
-  <img src="assets/contributions/snake.svg" width="100%" alt="Contribution calendar animated as a snake; a static calendar is shown with reduced motion.">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
+  <img src="assets/contributions/snake-static.svg" width="100%" alt="GitHub contribution calendar, from empty days to highest activity.">
 </picture>
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)]($GITHUB_URL)
 
 $STATS_CAPTION
-
-## Hall of Fame
-
-<details>
-<summary>💬 View intercepted transmissions — Quotes</summary>
-
-$QUOTES
-
-</details>
 $WIDGETS
+
+---
+
 ## Code Philosophy
 
 ```c
@@ -54,3 +56,14 @@ if (opening_brace_on_same_line) {
 ```
 
 *Last in, first out.*
+
+---
+
+## Hall of Fame
+
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/quotes-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/quotes-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/quotes-mobile.svg">
+  <img src="assets/quotes.svg" width="100%" alt="$QUOTES_ALT">
+</picture>

@@ -8,6 +8,9 @@ import xml.etree.ElementTree as ET
 from profile_config import ROOT, load_profile, load_theme
 import reduce_snake_motion
 import render_readme
+import render_contact_badges
+import render_project_cards
+import render_quotes
 import render_site
 import render_terminal
 import render_theme
@@ -31,6 +34,14 @@ def artifacts(root=ROOT):
         banner = render_terminal.render(mobile, art=art, profile=profile, theme=theme)
         result[f"assets/terminal{suffix}.svg"] = banner
         result[f"assets/terminal{suffix}-static.svg"] = static_svg(banner)
+        quotes = render_quotes.render(profile, theme, mobile)
+        result[f"assets/quotes{suffix}.svg"] = quotes
+        result[f"assets/quotes{suffix}-static.svg"] = static_svg(quotes)
+        for index, project in enumerate(profile["projects"], 1):
+            result[f"assets/project-{index:02d}{suffix}.svg"] = render_project_cards.render(
+                project, theme, mobile)
+    for index, contact in enumerate(profile["contacts"], 1):
+        result[f"assets/contact-{index:02d}.svg"] = render_contact_badges.render(contact, theme)
     for suffix, dark in (("", False), ("-dark", True)):
         path = f"assets/contributions/snake{suffix}.svg"
         result[path] = reduce_snake_motion.render(read(path), theme, dark)

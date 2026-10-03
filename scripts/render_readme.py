@@ -36,27 +36,38 @@ def render_widgets(widgets):
             sections.append(
                 f'## {title}\n\n[![{title}]({link_url(widget["image_url"])})]'
                 f'({link_url(widget["url"])})\n\n{markdown(widget["caption"])}\n')
-    return "\n" + "\n".join(sections) if sections else ""
+    return "\n---\n\n" + "\n---\n\n".join(sections) if sections else ""
+
+
+def render_project(project, index):
+    """The outer link stays interactive when GitHub renders the SVG as an image."""
+    alt = escape(f'{project["name"]} — {project["description"]}', quote=True)
+    base = f"assets/project-{index:02d}"
+    return (f'<a href="{escape(link_url(project["url"]), quote=True)}">\n'
+            f'  <picture>\n'
+            f'    <source media="(max-width: 600px)" srcset="{base}-mobile.svg">\n'
+            f'    <img src="{base}.svg" width="100%" alt="{alt}">\n'
+            f'  </picture>\n'
+            f'</a>')
 
 
 def render(profile, theme, about, template):
-    contacts = " · ".join(
-        f'[{markdown(item["label"])}]({link_url(item["url"])})'
-        for item in profile["contacts"])
+    contacts = " ".join(
+        f'[![{markdown(item["label"])}](assets/contact-{index:02d}.svg)]({link_url(item["url"])})'
+        for index, item in enumerate(profile["contacts"], 1))
     stack = "\n\n".join(
         f'**{markdown(group["category"])}**\n\n'
         + " ".join(render_badge(item, theme) for item in group["items"])
         for group in profile["stack"])
-    projects = "\n".join(
-        f'| [{markdown(item["name"])}]({link_url(item["url"])}) | '
-        f'{markdown(item["description"])} |' for item in profile["projects"])
-    quotes = "\n\n".join(
-        f'> "{markdown(item["text"])}" — *{markdown(item["author"])}*'
-        for item in profile["quotes"])
+    projects = "\n\n".join(render_project(item, index)
+                           for index, item in enumerate(profile["projects"], 1))
+    quotes_alt = "Hall of Fame. " + " ".join(
+        f'{item["text"]} — {item["author"]}.' for item in profile["quotes"])
     period = "All-time commits" if profile["stats"]["include_all_commits"] else "Commit year is shown on the card"
     return Template(template).substitute(
         BANNER_ALT=escape(profile["description"], quote=True), CONTACTS=contacts,
-        ABOUT=about.strip(), STACK=stack, PROJECTS=projects, QUOTES=quotes,
+        ABOUT=about.strip(), STACK=stack, PROJECTS=projects,
+        QUOTES_ALT=escape(quotes_alt, quote=True),
         GITHUB_URL=f'https://github.com/{profile["username"]}',
         STATS_CAPTION=f"{period}; rank and PR totals are reported by GitHub Readme Stats. "
                       "Updated daily when the provider is available.",

@@ -30,7 +30,7 @@ def seconds(milliseconds):
     return f"{milliseconds / 1000:.3f}s"
 
 
-def discrete_animation(attribute, events, duration, repeat=False):
+def discrete_animation(attribute, events, duration):
     """Use absolute timeline events, collapsing unchanged values."""
     changes = []
     for time, value in sorted(events):
@@ -42,29 +42,25 @@ def discrete_animation(attribute, events, duration, repeat=False):
         changes.append((duration, changes[-1][1]))
     values = ";".join(f"{value:.3f}" for _, value in changes)
     times = ";".join(f"{time / duration:.8f}" for time, _ in changes)
-    repeat_attribute = 'repeatCount="indefinite"' if repeat else ""
     return (f'<animate attributeName="{attribute}" values="{values}" '
             f'keyTimes="{times}" calcMode="discrete" begin="0s" '
-            f'dur="{seconds(duration)}" fill="remove" '
-            f'{repeat_attribute}/>')
+            f'dur="{seconds(duration)}" fill="remove"/>')
 
 
-def terminal_cursor(frames, erase_start, erase_end, duration, accent):
-    """One cursor follows the typing/deletion cycle and blinks in the pause."""
+def terminal_cursor(frames, duration, accent):
+    """Follow a single typing pass, then rest at the last character."""
     start = min(frames)
-    first = frames[start]
+    final = frames[max(frames)]
     parts = [f'<rect id="terminal-cursor" class="cursor motion" '
-             f'x="{first[0]:.3f}" y="{first[1]:.3f}" '
-             f'width="{first[2]:.3f}" height="{first[3]:.3f}" '
-             f'fill="{accent}" opacity="0" aria-hidden="true">']
+             f'x="{final[0]:.3f}" y="{final[1]:.3f}" '
+             f'width="{final[2]:.3f}" height="{final[3]:.3f}" '
+             f'fill="{accent}" opacity="1" aria-hidden="true">']
     for i, attribute in enumerate(("x", "y", "width", "height")):
         parts.append(discrete_animation(
-            attribute, [(time, frame[i]) for time, frame in frames.items()], duration,
-            repeat=True))
+            attribute, [(time, frame[i]) for time, frame in frames.items()], duration))
     parts.append(discrete_animation("opacity", [
-        (0, 0), (start, 1), (erase_start, 1), (erase_end, 0),
-        (duration, 0),
-    ], duration, repeat=True))
+        (0, 0), (start, 1), (duration, 1),
+    ], duration))
     parts.append("</rect>")
     return "\n".join(parts)
 
@@ -279,40 +275,20 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
                                speed=12, pause=140 if line_index == 0 else 80))
     height = interest_start + len(interests_lines) * 19 + 30
 
-    type_end = clock
-    erase_start = type_end + 4000
-    erase_clock = erase_start
-    erase_times = {}
-    for segment_index in range(len(typed_segments) - 1, -1, -1):
-        segment = typed_segments[segment_index]
-        value = segment["value"]
-        speed = segment["speed"]
-        for char_index in range(len(value) - 1, -1, -1):
-            erase_clock += speed
-            erase_times[(segment_index, char_index)] = erase_clock
-            cursor_frames[erase_clock] = (
-                segment["x"] + char_index * segment["advance"] + 1.5,
-                segment["y"] - segment["size"] * .85,
-                segment["advance"] * .8, segment["size"] + 2,
-            )
-        erase_clock += 120
-    erase_end = erase_clock
-    cycle_duration = erase_end + 700
+    duration = clock + 1
     scan_duration = 8000
 
-    # Each glyph types in, holds, then erases in reverse order. All segments
-    # share one repeat interval so the cursor and text restart in sync.
+    # Base text is visible. Animation only hides it until its reveal time;
+    # the completed pass and viewers without SMIL both show the entire card.
     animations = {}
     for segment_index, segment in enumerate(typed_segments):
         for char_index in range(len(segment["value"])):
             reveal_at = segment["start"] + (char_index + 1) * segment["speed"]
-            erase_at = erase_times[(segment_index, char_index)]
             animations[f"__CHAR_ANIMATION_{segment_index}_{char_index}__"] = (
-                f'<animate class="motion" attributeName="opacity" '
-                f'values="0;1;0;0" keyTimes="0;{reveal_at / cycle_duration:.8f};'
-                f'{erase_at / cycle_duration:.8f};1" calcMode="discrete" '
-                f'begin="0s" dur="{seconds(cycle_duration)}" '
-                'repeatCount="indefinite" fill="remove"/>')
+                f'<animate class="reveal" attributeName="opacity" '
+                f'values="0;1;1" keyTimes="0;{reveal_at / duration:.8f};1" '
+                f'calcMode="discrete" begin="0s" dur="{seconds(duration)}" '
+                'fill="remove"/>')
 
     avatar_description = (
         f"an ASCII avatar based on {escape(image_name)}"
@@ -356,8 +332,8 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{ACCENT}"/>')
     final_scan_y = art_y + (len(art) - 1) * line_height
     parts.append(f'''<rect class="scanline motion" x="{art_x}" y="{art_y}" width="{art_inner_width}" height="{line_height:.3f}" fill="{ACCENT}" opacity="0">
-      <animate attributeName="y" values="{art_y};{art_y};{final_scan_y:.3f};{final_scan_y:.3f}" keyTimes="0;.02;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0;.14;.14;0" keyTimes="0;.025;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" repeatCount="indefinite"/>
+      <animate attributeName="y" values="{art_y};{art_y};{final_scan_y:.3f};{final_scan_y:.3f}" keyTimes="0;.02;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}"/>
+      <animate attributeName="opacity" values="0;.14;.14;0" keyTimes="0;.025;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}"/>
     </rect>''')
     for i, layers in enumerate(art):
         # Keep one cell width across every row, including spaces. Fitting each
@@ -378,7 +354,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
                 f'keyTimes="0;{highlight_start:.8f};{highlight_end:.8f};'
                 f'{highlight_trail:.8f};1" '
                 f'begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" '
-                'repeatCount="indefinite"/></text>')
+                'fill="remove"/></text>')
         parts.append('</g>')
     parts.append('</g>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
@@ -388,7 +364,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
     parts.extend(prompt)
     parts.extend(interests)
-    parts.append(terminal_cursor(cursor_frames, erase_start, erase_end, cycle_duration, ACCENT))
+    parts.append(terminal_cursor(cursor_frames, duration, ACCENT))
     if not mobile:
         parts.append(text(width-left, command_y, terminal["aside"], ACCENT, 12,
                           'text-anchor="end"'))

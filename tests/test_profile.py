@@ -82,10 +82,10 @@ class ProfileTests(unittest.TestCase):
         self.profile["quotes"][0]["text"] = "<script> & *not italic*"
         self.profile["description"] = 'A "quote" & <tag>'
         result = render_readme.render(self.profile, self.theme, "About", (ROOT / "templates/README.md.tpl").read_text())
-        self.assertIn(r"Demo &#124; \[link\] &lt;tag&gt;", result)
-        self.assertIn(r"&lt;script&gt; &amp; \*not italic\*", result)
+        self.assertIn("Demo | [link] &lt;tag&gt;", result)
+        self.assertIn("&lt;script&gt; &amp; *not italic*", result)
         self.assertIn('alt="A &quot;quote&quot; &amp; &lt;tag&gt;"', result)
-        self.assertIn('<details>\n<summary>', result)
+        self.assertIn('src="assets/quotes.svg"', result)
         self.assertNotIn("<script>", result)
 
     def test_widgets_are_opt_in(self):
@@ -128,7 +128,7 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(["AB1234"], params["ring_color"])
 
     def test_site_uses_configured_email_and_escaped_identity(self):
-        self.profile["contacts"][-1]["url"] = "mailto:example@example.org"
+        next(item for item in self.profile["contacts"] if item["id"] == "email")["url"] = "mailto:example@example.org"
         self.profile["title"] = 'Stack <&> "Profile"'
         source = render_site.render(self.profile, self.theme, (ROOT / "templates/site.html.tpl").read_text())
         self.assertIn('data-email="example@example.org"', source)

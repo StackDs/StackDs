@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="156" viewBox="0 0 420 156" role="img" aria-labelledby="title desc" xml:lang="en" data-motion="static">
+  <title id="title">Rookie-Linux-Develop</title>
+  <desc id="desc">Automates Linux image preparation with preconfigured development tools, reducing manual environment setup.</desc>
+  <rect x="1" y="1" width="418" height="154" rx="8" fill="#0F1419" stroke="#2B3A45"/>
+  <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
+    <text x="24" y="36" font-size="18" font-weight="bold" fill="#6BC5ED">Rookie-Linux-Develop</text><text x="24" y="72" font-size="14" font-weight="normal" fill="#ECEFF4">Automates Linux image preparation with</text><text x="24" y="94" font-size="14" font-weight="normal" fill="#ECEFF4">preconfigured development tools, reducing</text><text x="24" y="116" font-size="14" font-weight="normal" fill="#ECEFF4">manual environment setup.</text>
+  </g>
+</svg>

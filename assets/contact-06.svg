@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="36" viewBox="0 0 100 36" role="img" aria-labelledby="title" xml:lang="en" data-motion="static">
+  <title id="title">Steam</title>
+  <rect x=".5" y=".5" width="99" height="35" rx="6" fill="#0F1419" stroke="#2B3A45"/>
+  <style>.icon-fill { fill: #6BC5ED; stroke: none; }</style>
+  <g transform="translate(11 7) scale(.9)" fill="none" stroke="#6BC5ED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="16.5" cy="7.5" r="5"/><circle cx="16.5" cy="7.5" r="2.5"/><circle cx="7" cy="17" r="3.5"/><path d="m1 13 7 3M1 16l5 3M9 14l3-6M10 18l7-5"/>
+  </g>
+  <text x="43" y="23" font-family="DejaVu Sans Mono, Liberation Mono, monospace" font-size="13" fill="#ECEFF4">Steam</text>
+</svg>

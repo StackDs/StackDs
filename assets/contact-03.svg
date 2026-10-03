@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="123" height="36" viewBox="0 0 123 36" role="img" aria-labelledby="title" xml:lang="en" data-motion="static">
+  <title id="title">LinkedIn</title>
+  <rect x=".5" y=".5" width="122" height="35" rx="6" fill="#0F1419" stroke="#2B3A45"/>
+  <style>.icon-fill { fill: #6BC5ED; stroke: none; }</style>
+  <g transform="translate(11 7) scale(.9)" fill="none" stroke="#6BC5ED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path class="icon-fill" d="M5.2 3.2a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM3.4 9h3.7v11.8H3.4zM9.5 9h3.5v1.6h.1A3.8 3.8 0 0 1 16.5 8.7c3.8 0 4.5 2.5 4.5 5.7v6.4h-3.7v-5.7c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1v5.8H9.5z"/>
+  </g>
+  <text x="43" y="23" font-family="DejaVu Sans Mono, Liberation Mono, monospace" font-size="13" fill="#ECEFF4">LinkedIn</text>
+</svg>

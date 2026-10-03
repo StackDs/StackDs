@@ -7,15 +7,21 @@
   <img src="assets/terminal.svg" width="100%" alt="Bryan, a Computer Engineering student in Chile. Learning by teaching, building custom tools, and playing guitar and bass.">
 </picture>
 
-[Instagram](https://www.instagram.com/_bryan.712/) · [PSN Profiles](https://psnprofiles.com/StackDS) · [LinkedIn](https://www.linkedin.com/in/bryan-aguirre-fuentes-1953642bb/) · [Email](mailto:stackctrlz@gmail.com)
+---
+
+## Contact
+
+[![Instagram](assets/contact-01.svg)](https://www.instagram.com/_bryan.712/) [![PSN Profiles](assets/contact-02.svg)](https://psnprofiles.com/StackDS) [![LinkedIn](assets/contact-03.svg)](https://www.linkedin.com/in/bryan-aguirre-fuentes-1953642bb/) [![Email](assets/contact-04.svg)](mailto:stackctrlz@gmail.com) [![Discord](assets/contact-05.svg)](https://discord.com/users/468600348500688917) [![Steam](assets/contact-06.svg)](https://steamcommunity.com/id/StackDs/)
+
+---
 
 ## About Me
 
-I'm a Computer Engineering student who enjoys teaching mathematics and programming. My philosophy is simple: **the best way to learn something is to teach it.**
+I'm a Computer Engineering student with a passion for teaching. I enjoy teaching math and computer science, always guided by the philosophy that the best way to learn is by teaching. I love programming, although with AI around, I don't do it as much anymore XD. I like designing systems and tools for various topics, and I'm obsessed with customization because I use Arch, btw.
 
-I enjoy building custom tools and automating repetitive work. I'm especially interested in assessment platforms, programming judges, and development environments tailored to the people using them.
+AFK, I'm a musician and play several instruments. I definitely have more hours logged in video games than touching grass. I also love playing basketball because you have to move your ass every once in a while, and I'm a bit of an alcoholic, but what engineer isn't?
 
-Away from the keyboard, I play **guitar and bass**. I also make time for video games, basketball, and an arguably unreasonable amount of Arch Linux customization.
+---
 
 ## Tech Stack
 
@@ -35,69 +41,46 @@ Away from the keyboard, I play **guitar and bass**. I also make time for video g
 
 [![PostgreSQL](https://img.shields.io/static/v1?style=flat&label=&message=PostgreSQL&color=0F1419&logoColor=088DDC&logo=postgresql)](https://www.postgresql.org/)
 
+---
+
 ## Featured Projects
 
-| Project | What it solves |
-| --- | --- |
-| [Rookie-Linux-Develop](https://github.com/StackDs/Rookie-Linux-Develop) | Automates Linux image preparation with preconfigured development tools, reducing manual environment setup. |
-| [Basic-C-Without-Tears](https://github.com/StackDs/Basic-C-Without-Tears) | Helps Python programmers learn C through theory, exercises, and projects, including multimedia with SDL3. |
-| [Not-Quite-My-Tempo](https://github.com/StackDs/Not-Quite-My-Tempo) | Early-stage project for measuring algorithms and processes across multiple programming languages. |
+<a href="https://github.com/StackDs/Rookie-Linux-Develop">
+  <picture>
+    <source media="(max-width: 600px)" srcset="assets/project-01-mobile.svg">
+    <img src="assets/project-01.svg" width="100%" alt="Rookie-Linux-Develop — Automates Linux image preparation with preconfigured development tools, reducing manual environment setup.">
+  </picture>
+</a>
+
+<a href="https://github.com/StackDs/Basic-C-Without-Tears">
+  <picture>
+    <source media="(max-width: 600px)" srcset="assets/project-02-mobile.svg">
+    <img src="assets/project-02.svg" width="100%" alt="Basic-C-Without-Tears — Helps Python programmers learn C through theory, exercises, and projects, including multimedia with SDL3.">
+  </picture>
+</a>
+
+<a href="https://github.com/StackDs/Not-Quite-My-Tempo">
+  <picture>
+    <source media="(max-width: 600px)" srcset="assets/project-03-mobile.svg">
+    <img src="assets/project-03.svg" width="100%" alt="Not-Quite-My-Tempo — Early-stage project for measuring algorithms and processes across multiple programming languages.">
+  </picture>
+</a>
+
+---
 
 ## Activity & Contributions
 
 <picture>
-  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
-  <source media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg">
-  <img src="assets/contributions/snake.svg" width="100%" alt="Contribution calendar animated as a snake; a static calendar is shown with reduced motion.">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
+  <img src="assets/contributions/snake-static.svg" width="100%" alt="GitHub contribution calendar, from empty days to highest activity.">
 </picture>
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)](https://github.com/StackDs)
 
 Commit year is shown on the card; rank and PR totals are reported by GitHub Readme Stats. Updated daily when the provider is available.
 
-## Hall of Fame
 
-<details>
-<summary>💬 View intercepted transmissions — Quotes</summary>
-
-> "I'm the son of rage and love" — *St. Jimmy*
-
-> "You can't get a hangover if you don't stop drinking" — *Lemmy Kilmister*
-
-> "Talk is cheap. Show me the code" — *Linus Torvalds*
-
-> "A wrong decision is better than indecision" — *Tony Soprano*
-
-> "Yeah, Mr. White\! Yeah, science\!" — *Jesse Pinkman*
-
-> "Wubba lubba dub dub\!" — *Rick Sanchez*
-
-> "What's in the box?" — *Se7en*
-
-> "Cadia stands, and we shall not fall" — *Imperial Creed*
-
-> "War. War never changes." — *Fallout*
-
-> "Forget about Freeman" — *Half-Life*
-
-> "The cake is a lie" — *Portal*
-
-> "Praise the sun\!" — *Solaire of Astora*
-
-> "Would you kindly?" — *Atlas*
-
-> "How's your sister?" — *Cayde-6*
-
-> "In a world without gold, we might've been heroes" — *Blackbeard*
-
-> "SIC PARVIS MAGNA" — *Sir Francis Drake*
-
-> "Kept you waiting, huh?" — *Big Boss*
-
-> "It can't be for nothing" — *Ellie*
-
-</details>
+---
 
 ## Code Philosophy
 
@@ -108,3 +91,14 @@ if (opening_brace_on_same_line) {
 ```
 
 *Last in, first out.*
+
+---
+
+## Hall of Fame
+
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/quotes-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/quotes-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/quotes-mobile.svg">
+  <img src="assets/quotes.svg" width="100%" alt="Hall of Fame. I&#x27;m the son of rage and love — St. Jimmy. You can&#x27;t get a hangover if you don&#x27;t stop drinking — Lemmy Kilmister. Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Yeah, Mr. White! Yeah, science! — Jesse Pinkman. Wubba lubba dub dub! — Rick Sanchez. What&#x27;s in the box? — Se7en. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Praise the sun! — Solaire of Astora. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. In a world without gold, we might&#x27;ve been heroes — Blackbeard. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie.">
+</picture>

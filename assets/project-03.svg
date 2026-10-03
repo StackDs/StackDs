@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="134" viewBox="0 0 880 134" role="img" aria-labelledby="title desc" xml:lang="en" data-motion="static">
+  <title id="title">Not-Quite-My-Tempo</title>
+  <desc id="desc">Early-stage project for measuring algorithms and processes across multiple programming languages.</desc>
+  <rect x="1" y="1" width="878" height="132" rx="8" fill="#0F1419" stroke="#2B3A45"/>
+  <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
+    <text x="36" y="36" font-size="18" font-weight="bold" fill="#6BC5ED">Not-Quite-My-Tempo</text><text x="36" y="72" font-size="14" font-weight="normal" fill="#ECEFF4">Early-stage project for measuring algorithms and processes across multiple</text><text x="36" y="94" font-size="14" font-weight="normal" fill="#ECEFF4">programming languages.</text>
+  </g>
+</svg>

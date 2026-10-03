@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="115" height="36" viewBox="0 0 115 36" role="img" aria-labelledby="title" xml:lang="en" data-motion="static">
+  <title id="title">Discord</title>
+  <rect x=".5" y=".5" width="114" height="35" rx="6" fill="#0F1419" stroke="#2B3A45"/>
+  <style>.icon-fill { fill: #6BC5ED; stroke: none; }</style>
+  <g transform="translate(11 7) scale(.9)" fill="none" stroke="#6BC5ED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M8 5 5 6C3 10 2 14 3 17l5 2 1-2M16 5l3 1c2 4 3 8 2 11l-5 2-1-2M7 7c3-1 7-1 10 0M6 16c4 2 8 2 12 0"/><ellipse cx="8.5" cy="12" rx="1" ry="1.5" class="icon-fill"/><ellipse cx="15.5" cy="12" rx="1" ry="1.5" class="icon-fill"/>
+  </g>
+  <text x="43" y="23" font-family="DejaVu Sans Mono, Liberation Mono, monospace" font-size="13" fill="#ECEFF4">Discord</text>
+</svg>

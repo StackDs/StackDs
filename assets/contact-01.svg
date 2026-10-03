@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="131" height="36" viewBox="0 0 131 36" role="img" aria-labelledby="title" xml:lang="en" data-motion="static">
+  <title id="title">Instagram</title>
+  <rect x=".5" y=".5" width="130" height="35" rx="6" fill="#0F1419" stroke="#2B3A45"/>
+  <style>.icon-fill { fill: #6BC5ED; stroke: none; }</style>
+  <g transform="translate(11 7) scale(.9)" fill="none" stroke="#6BC5ED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-fill" cx="17.5" cy="6.8" r="1"/>
+  </g>
+  <text x="43" y="23" font-family="DejaVu Sans Mono, Liberation Mono, monospace" font-size="13" fill="#ECEFF4">Instagram</text>
+</svg>

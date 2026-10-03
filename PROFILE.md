@@ -10,11 +10,15 @@ terminal banners, identity, contact links, and color palette.
 
    | Source | What to change |
    | --- | --- |
-   | `content/about.md` | The three About Me paragraphs; Markdown is supported. |
+   | `content/about.md` | The About Me paragraphs; Markdown is supported. |
    | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, quotes, stats endpoint, and optional widgets. |
    | `config/theme.json` | Shared `#RRGGBB` colors, including the five contribution levels for each snake variant. |
    | `ascii.txt` | Default avatar; preserve spaces and line breaks. |
-   | `templates/README.md.tpl` | Section order, headings, quote summary, and the closing C snippet. |
+   | `templates/README.md.tpl` | Section order, headings, separators, and the C snippet before the final quotes. |
+   | `scripts/render_quotes.py` | Closing terminal layout and quote reveal timing. |
+   | `scripts/render_project_cards.py` | Static project card layout for desktop and mobile. |
+   | `scripts/render_contact_badges.py` | Static contact badge layout. |
+   | `scripts/profile_icons.py` | Contact glyphs shared by the badges and web card. |
    | `templates/site.html.tpl` | Web card structure and interface copy. |
    | `site/styles.css` | Web layout and spacing; palette values come from generated `site/theme.css`. |
 
@@ -40,7 +44,9 @@ only the standard library. No network request is made by `build_profile.py`.
 Configuration is validated and all outputs are rendered before any are written.
 
 Generated outputs are `README.md`, `site/index.html`, `site/theme.css`, the
-terminal and contribution SVGs (animated and static), and `assets/stats/github.svg`.
+terminal, quote, and contribution SVGs (animated and static), the contact badges
+(`assets/contact-NN.svg`), the project cards (`assets/project-NN.svg` and
+`assets/project-NN-mobile.svg`), and `assets/stats/github.svg`.
 Changes made directly to generated text or banners will be overwritten.
 The snake and stats snapshots keep their existing activity data during a local
 build; their colors and accessibility styling are reapplied offline.
@@ -64,13 +70,40 @@ encoded automatically. All badges use `flat`, the shared surface color, and
 the shared accent for supported logos.
 
 Add a project to `projects` with `name`, `url`, and a one-line `description`.
-Keep the table to two to four projects for readability. Add quotes to `quotes`
-with separate `text` and `author` fields. They appear inside a closed `<details>`
-section rather than in the animated banner.
+Each project becomes a static card with wrapped text and a link to its repository.
+Keep the list to two to four projects for readability. Cards are numbered by
+their position in the list and have separate desktop and mobile layouts.
 
-Contacts use `id`, `label`, and `url`. The `email` contact's `mailto:` address is
+Add quotes to `quotes` with separate `text` and `author` fields. They appear in
+the final Hall of Fame terminal, in configuration order. The command types once,
+then output appears line by line; all quotes remain visible after playback.
+Long quotes and authors wrap, and the panel height grows to fit the content.
+
+Contacts use `id`, `label`, and `url`. The README renders a local, static badge
+for each contact, with a glyph and label. Unknown IDs use a generic link glyph.
+Each badge and project card is wrapped in an ordinary link: links inside an SVG
+embedded as an image cannot be clicked individually on GitHub.
+The `email` contact's `mailto:` address is
 also used by the web card's copy button. The ordinary email link remains usable
 when JavaScript or the Clipboard API is unavailable.
+
+### README layout and motion
+
+The section order is opening terminal, Contact, About Me, Tech Stack,
+Featured Projects, Activity & Contributions, Code Philosophy, then Hall of Fame.
+Horizontal Markdown rules separate the blocks. Enabled optional widgets appear
+before Code Philosophy so the quotes always close the profile.
+
+Only the opening and closing terminals animate. The opening types its text and
+scans the avatar once, then keeps the completed text and cursor visible.
+The closing terminal reveals all quotes once and ends at a fresh prompt.
+Both use mobile layouts and static `<picture>` sources for reduced motion.
+Animation starts when the browser loads the image; GitHub does not provide a
+scroll-triggered playback mechanism for README images.
+
+About Me and Code Philosophy remain native Markdown. Contact badges, technology
+badges, project cards, the contribution calendar, and statistics are static.
+Optional externally hosted widgets control their own motion.
 
 ## Regenerate the banner from a photo
 
@@ -106,8 +139,8 @@ with the same script. Postprocessing is idempotent; in reduced-motion mode it
 shows the static contribution cells and hides the moving snake and progress bar.
 
 The light and dark SVGs and their static counterparts are stored in
-`assets/contributions/`. The README chooses between them with
-`prefers-color-scheme` and `prefers-reduced-motion`. Local generation only restyles those
+`assets/contributions/`. The README always selects a static version and chooses
+its palette with `prefers-color-scheme`. Local generation only restyles those
 snapshots; run **Actions → Update contribution snake → Run workflow** to refresh
 the contribution data.
 
@@ -190,5 +223,7 @@ and `git diff --check`. Tests cover malformed configuration, escaping, long
 banner values, theme propagation, optional widgets, idempotence, read-only
 checking, and successful/failed statistics refreshes.
 
-After changes to layout, also inspect desktop and mobile banners, keyboard focus,
-the email copy success/failure states, quote expansion, and reduced-motion mode.
+After changes to layout, inspect desktop and mobile banners and project cards,
+the beginning and end of both terminal animations, contact and project links,
+and reduced-motion mode. For the web card, also check keyboard focus and the
+email copy success/failure states.

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="134" viewBox="0 0 880 134" role="img" aria-labelledby="title desc" xml:lang="en" data-motion="static">
+  <title id="title">Basic-C-Without-Tears</title>
+  <desc id="desc">Helps Python programmers learn C through theory, exercises, and projects, including multimedia with SDL3.</desc>
+  <rect x="1" y="1" width="878" height="132" rx="8" fill="#0F1419" stroke="#2B3A45"/>
+  <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
+    <text x="36" y="36" font-size="18" font-weight="bold" fill="#6BC5ED">Basic-C-Without-Tears</text><text x="36" y="72" font-size="14" font-weight="normal" fill="#ECEFF4">Helps Python programmers learn C through theory, exercises, and projects,</text><text x="36" y="94" font-size="14" font-weight="normal" fill="#ECEFF4">including multimedia with SDL3.</text>
+  </g>
+</svg>
