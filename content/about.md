@@ -1,5 +1,3 @@
-I'm a Computer Engineering student who enjoys teaching mathematics and programming. My philosophy is simple: **the best way to learn something is to teach it.**
+I'm a Computer Engineering student with a passion for teaching. I enjoy teaching math and computer science, always guided by the philosophy that the best way to learn is by teaching. I love programming, although with AI around, I don't do it as much anymore XD. I like designing systems and tools for various topics, and I'm obsessed with customization because I use Arch, btw.
 
-I enjoy building custom tools and automating repetitive work. I'm especially interested in assessment platforms, programming judges, and development environments tailored to the people using them.
-
-Away from the keyboard, I play **guitar and bass**. I also make time for video games, basketball, and an arguably unreasonable amount of Arch Linux customization.
+AFK, I'm a musician and play several instruments. I definitely have more hours logged in video games than touching grass. I also love playing basketball because you have to move your ass every once in a while, and I'm a bit of an alcoholic, but what engineer isn't?

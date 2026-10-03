@@ -21,7 +21,9 @@
     {"id": "instagram", "label": "Instagram", "url": "https://www.instagram.com/_bryan.712/"},
     {"id": "psn", "label": "PSN Profiles", "url": "https://psnprofiles.com/StackDS"},
     {"id": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/bryan-aguirre-fuentes-1953642bb/"},
-    {"id": "email", "label": "Email", "url": "mailto:stackctrlz@gmail.com"}
+    {"id": "email", "label": "Email", "url": "mailto:stackctrlz@gmail.com"},
+    {"id": "discord", "label": "Discord", "url": "https://discord.com/users/468600348500688917"},
+    {"id": "steam", "label": "Steam", "url": "https://steamcommunity.com/id/StackDs/"}
   ],
   "stack": [
     {"category": "Languages", "items": [
