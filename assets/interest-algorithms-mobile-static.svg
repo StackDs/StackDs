@@ -84,15 +84,15 @@
       }
       .bq-0, .bq-1, .bq-2 { opacity: 0; }
       .bq-3 { opacity: 1; }
-      .bn-0 { animation: bfs-n0 6s infinite; }
-      .be-1 { animation: bfs-e1 6s infinite; }
-      .bn-1 { animation: bfs-n1 6s infinite; }
-      .be-2 { animation: bfs-e2 6s infinite; }
-      .bn-2 { animation: bfs-n2 6s infinite; }
-      .bq-0 { animation: bfs-q0 6s infinite; }
-      .bq-1 { animation: bfs-q1 6s infinite; }
-      .bq-2 { animation: bfs-q2 6s infinite; }
-      .bq-3 { animation: bfs-q3 6s infinite; }
+      .bn-0 { animation: bfs-n0 12s infinite; }
+      .be-1 { animation: bfs-e1 12s infinite; }
+      .bn-1 { animation: bfs-n1 12s infinite; }
+      .be-2 { animation: bfs-e2 12s infinite; }
+      .bn-2 { animation: bfs-n2 12s infinite; }
+      .bq-0 { animation: bfs-q0 12s infinite; }
+      .bq-1 { animation: bfs-q1 12s infinite; }
+      .bq-2 { animation: bfs-q2 12s infinite; }
+      .bq-3 { animation: bfs-q3 12s infinite; }
     </style>
     
     <g stroke="#2B3A45">

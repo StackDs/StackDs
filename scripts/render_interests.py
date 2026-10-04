@@ -1,7 +1,9 @@
 """Render interactive, responsive interest cards with standalone SVG animations."""
 
 from html import escape
+import math
 from textwrap import wrap
+
 
 from profile_config import ROOT
 
@@ -150,15 +152,15 @@ def _render_algorithms_canvas(theme):
       }}
       .bq-0, .bq-1, .bq-2 {{ opacity: 0; }}
       .bq-3 {{ opacity: 1; }}
-      .bn-0 {{ animation: bfs-n0 6s infinite; }}
-      .be-1 {{ animation: bfs-e1 6s infinite; }}
-      .bn-1 {{ animation: bfs-n1 6s infinite; }}
-      .be-2 {{ animation: bfs-e2 6s infinite; }}
-      .bn-2 {{ animation: bfs-n2 6s infinite; }}
-      .bq-0 {{ animation: bfs-q0 6s infinite; }}
-      .bq-1 {{ animation: bfs-q1 6s infinite; }}
-      .bq-2 {{ animation: bfs-q2 6s infinite; }}
-      .bq-3 {{ animation: bfs-q3 6s infinite; }}
+      .bn-0 {{ animation: bfs-n0 12s infinite; }}
+      .be-1 {{ animation: bfs-e1 12s infinite; }}
+      .bn-1 {{ animation: bfs-n1 12s infinite; }}
+      .be-2 {{ animation: bfs-e2 12s infinite; }}
+      .bn-2 {{ animation: bfs-n2 12s infinite; }}
+      .bq-0 {{ animation: bfs-q0 12s infinite; }}
+      .bq-1 {{ animation: bfs-q1 12s infinite; }}
+      .bq-2 {{ animation: bfs-q2 12s infinite; }}
+      .bq-3 {{ animation: bfs-q3 12s infinite; }}
     </style>
     <!-- Graph Edges -->
     <g stroke="{border}">
@@ -212,26 +214,31 @@ def _render_data_science_canvas(theme):
     border = theme["border"]
     control = theme["control"]
 
-    # Pre-calculated Gaussian curve coordinates (width 300, centered at 180, peak at y=48, baseline y=128)
-    path_points = [
-        (45, 127), (65, 126), (85, 124), (105, 118), (120, 111),
-        (135, 99), (150, 83), (165, 65), (180, 48), (195, 65),
-        (210, 83), (225, 99), (240, 111), (255, 118), (275, 124),
-        (295, 126), (315, 127)
-    ]
-    path_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in path_points)
-    area_d = f"{path_d} L 315.0,128 L 45.0,128 Z"
+    mu = 180.0
+    sigma = 42.0
+    base_y = 128.0
+    peak_y = 50.0
+    h_max = base_y - peak_y  # 78.0
 
-    # Animated histogram bins rising under the curve
-    bins = [
-        (60, 4, 124), (82, 8, 120), (104, 16, 112), (126, 32, 96),
-        (148, 52, 76), (170, 74, 54), (192, 74, 54), (214, 52, 76),
-        (236, 32, 96), (258, 16, 112), (280, 8, 120),
-    ]
+    # Mathematically continuous Gaussian bell curve with smooth rounded peak
+    path_points = []
+    for x_int in range(35, 326, 2):
+        x = float(x_int)
+        y = base_y - h_max * math.exp(-0.5 * ((x - mu) / sigma) ** 2)
+        path_points.append((x, round(y, 2)))
+
+    path_d = "M " + " L ".join(f"{x:.1f},{y:.2f}" for x, y in path_points)
+    area_d = f"{path_d} L 325.0,128.0 L 35.0,128.0 Z"
+
+    # Symmetric animated histogram bins rising under the curve
+    bin_xs = [180 - 8 + i * 20 for i in range(-5, 6)]
     bin_rects = []
-    for idx, (bx, target_h, target_y) in enumerate(bins):
+    for idx, bx in enumerate(bin_xs):
+        cx = bx + 8.0
+        h = max(3.0, round(h_max * math.exp(-0.5 * ((cx - mu) / sigma) ** 2) - 2.0, 1))
+        target_y = round(base_y - h, 1)
         bin_rects.append(
-            f'<rect class="ds-bin ds-b{idx}" x="{bx}" y="{target_y}" width="16" height="{target_h}" rx="2" '
+            f'<rect class="ds-bin ds-b{idx}" x="{bx}" y="{target_y}" width="16" height="{h}" rx="2" '
             f'fill="{control}" stroke="{border}"/>'
         )
 
@@ -276,19 +283,19 @@ def _render_data_science_canvas(theme):
     <path class="ds-line" d="{path_d}" fill="none" stroke="{accent_light}" stroke-width="2.5" stroke-linecap="round"/>
     <!-- Standard Deviation Vertical Guides -->
     <g stroke="{accent}" stroke-dasharray="2 2" stroke-width="1" opacity="0.6">
-      <line x1="180" y1="48" x2="180" y2="128"/>
-      <line x1="135" y1="99" x2="135" y2="128"/>
-      <line x1="225" y1="99" x2="225" y2="128"/>
+      <line x1="180" y1="50" x2="180" y2="128"/>
+      <line x1="138" y1="81" x2="138" y2="128"/>
+      <line x1="222" y1="81" x2="222" y2="128"/>
     </g>
     <!-- Baseline Axis -->
     <line x1="35" y1="128" x2="325" y2="128" stroke="{border}" stroke-width="1.5"/>
     <!-- Axis Ticks & Labels -->
     <g font-family="DejaVu Sans Mono, monospace" font-size="9" fill="{comment}" text-anchor="middle">
-      <text x="95" y="140">-2σ</text>
-      <text x="135" y="140">-1σ</text>
+      <text x="96" y="140">-2σ</text>
+      <text x="138" y="140">-1σ</text>
       <text x="180" y="140" fill="{accent_light}" font-weight="bold">μ</text>
-      <text x="225" y="140">+1σ</text>
-      <text x="265" y="140">+2σ</text>
+      <text x="222" y="140">+1σ</text>
+      <text x="264" y="140">+2σ</text>
     </g>
     <!-- Badge Indicator -->
     <g class="ds-stat" font-family="DejaVu Sans Mono, monospace" font-size="9">
