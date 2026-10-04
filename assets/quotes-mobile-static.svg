@@ -1,19 +1,554 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="942" viewBox="0 0 420 942" role="img" aria-labelledby="title desc" xml:lang="en" data-motion="static">
-  <title id="title">Hall of Fame — intercepted transmissions</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="270" viewBox="0 0 420 270" role="img" aria-labelledby="title desc" xml:lang="en" data-motion="static">
+  <title id="title">Gambling Phrase — intercepted transmissions</title>
   <desc id="desc">Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Wubba lubba dub dub! — Rick Sanchez. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Would you kindly? — Atlas. How's your sister? — Cayde-6. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can't be for nothing — Ellie. Gobernar es Educar - Pedro Aguirre Cerda.</desc>
   <style>
     text { font-family: 'DejaVu Sans Mono', 'Liberation Mono', monospace; font-variant-ligatures: none; }
+    .gp-round { opacity: 0; }
+    #round-1 { opacity: 1; }
+    [data-motion="static"] .gp-round { opacity: 0 !important; }
+    [data-motion="static"] #round-1 { opacity: 1 !important; }
+    [data-motion="static"] .gp-cs1-0, [data-motion="static"] .gp-cs2-0, [data-motion="static"] .gp-cs3-0, [data-motion="static"] .gp-quote-0 { opacity: 1 !important; transform: none !important; }
+    
+        @keyframes round-0 {
+          0%, 0.00% { opacity: 0; visibility: hidden; }
+          0.00%, 7.93% { opacity: 1; visibility: visible; }
+          8.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-0 {
+          0%, 1.50% { opacity: 0; transform: translateY(3px); }
+          1.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-0 {
+          0%, 1.83% { opacity: 0; }
+          3.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-0 {
+          0%, 3.75% { opacity: 0; }
+          5.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-0 {
+          0%, 5.17% { opacity: 0; }
+          6.50%, 100% { opacity: 1; }
+        }
+        .gp-round-0 {
+          animation: round-0 72.0s infinite;
+        }
+        .gp-quote-0 {
+          animation: quote-reveal-0 72.0s infinite;
+        }
+        .gp-cs1-0 {
+          animation: close-s1-0 72.0s infinite;
+        }
+        .gp-cs2-0 {
+          animation: close-s2-0 72.0s infinite;
+        }
+        .gp-cs3-0 {
+          animation: close-s3-0 72.0s infinite;
+        }
+        
+
+        @keyframes round-1 {
+          0%, 24.95% { opacity: 0; visibility: hidden; }
+          25.00%, 32.93% { opacity: 1; visibility: visible; }
+          33.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-1 {
+          0%, 26.50% { opacity: 0; transform: translateY(3px); }
+          26.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-1 {
+          0%, 26.83% { opacity: 0; }
+          28.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-1 {
+          0%, 28.75% { opacity: 0; }
+          30.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-1 {
+          0%, 30.17% { opacity: 0; }
+          31.50%, 100% { opacity: 1; }
+        }
+        .gp-round-1 {
+          animation: round-1 72.0s infinite;
+        }
+        .gp-quote-1 {
+          animation: quote-reveal-1 72.0s infinite;
+        }
+        .gp-cs1-1 {
+          animation: close-s1-1 72.0s infinite;
+        }
+        .gp-cs2-1 {
+          animation: close-s2-1 72.0s infinite;
+        }
+        .gp-cs3-1 {
+          animation: close-s3-1 72.0s infinite;
+        }
+        
+
+        @keyframes round-2 {
+          0%, 83.28% { opacity: 0; visibility: hidden; }
+          83.33%, 91.27% { opacity: 1; visibility: visible; }
+          91.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-2 {
+          0%, 84.83% { opacity: 0; transform: translateY(3px); }
+          85.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-2 {
+          0%, 85.16% { opacity: 0; }
+          87.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-2 {
+          0%, 87.08% { opacity: 0; }
+          88.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-2 {
+          0%, 88.50% { opacity: 0; }
+          89.83%, 100% { opacity: 1; }
+        }
+        .gp-round-2 {
+          animation: round-2 72.0s infinite;
+        }
+        .gp-quote-2 {
+          animation: quote-reveal-2 72.0s infinite;
+        }
+        .gp-cs1-2 {
+          animation: close-s1-2 72.0s infinite;
+        }
+        .gp-cs2-2 {
+          animation: close-s2-2 72.0s infinite;
+        }
+        .gp-cs3-2 {
+          animation: close-s3-2 72.0s infinite;
+        }
+        
+
+        @keyframes round-3 {
+          0%, 41.62% { opacity: 0; visibility: hidden; }
+          41.67%, 49.60% { opacity: 1; visibility: visible; }
+          50.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-3 {
+          0%, 43.17% { opacity: 0; transform: translateY(3px); }
+          43.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-3 {
+          0%, 43.50% { opacity: 0; }
+          45.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-3 {
+          0%, 45.42% { opacity: 0; }
+          46.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-3 {
+          0%, 46.84% { opacity: 0; }
+          48.17%, 100% { opacity: 1; }
+        }
+        .gp-round-3 {
+          animation: round-3 72.0s infinite;
+        }
+        .gp-quote-3 {
+          animation: quote-reveal-3 72.0s infinite;
+        }
+        .gp-cs1-3 {
+          animation: close-s1-3 72.0s infinite;
+        }
+        .gp-cs2-3 {
+          animation: close-s2-3 72.0s infinite;
+        }
+        .gp-cs3-3 {
+          animation: close-s3-3 72.0s infinite;
+        }
+        
+
+        @keyframes round-4 {
+          0%, 8.28% { opacity: 0; visibility: hidden; }
+          8.33%, 16.27% { opacity: 1; visibility: visible; }
+          16.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-4 {
+          0%, 9.83% { opacity: 0; transform: translateY(3px); }
+          10.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-4 {
+          0%, 10.16% { opacity: 0; }
+          12.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-4 {
+          0%, 12.08% { opacity: 0; }
+          13.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-4 {
+          0%, 13.50% { opacity: 0; }
+          14.83%, 100% { opacity: 1; }
+        }
+        .gp-round-4 {
+          animation: round-4 72.0s infinite;
+        }
+        .gp-quote-4 {
+          animation: quote-reveal-4 72.0s infinite;
+        }
+        .gp-cs1-4 {
+          animation: close-s1-4 72.0s infinite;
+        }
+        .gp-cs2-4 {
+          animation: close-s2-4 72.0s infinite;
+        }
+        .gp-cs3-4 {
+          animation: close-s3-4 72.0s infinite;
+        }
+        
+
+        @keyframes round-5 {
+          0%, 58.28% { opacity: 0; visibility: hidden; }
+          58.33%, 66.27% { opacity: 1; visibility: visible; }
+          66.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-5 {
+          0%, 59.83% { opacity: 0; transform: translateY(3px); }
+          60.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-5 {
+          0%, 60.16% { opacity: 0; }
+          62.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-5 {
+          0%, 62.08% { opacity: 0; }
+          63.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-5 {
+          0%, 63.50% { opacity: 0; }
+          64.83%, 100% { opacity: 1; }
+        }
+        .gp-round-5 {
+          animation: round-5 72.0s infinite;
+        }
+        .gp-quote-5 {
+          animation: quote-reveal-5 72.0s infinite;
+        }
+        .gp-cs1-5 {
+          animation: close-s1-5 72.0s infinite;
+        }
+        .gp-cs2-5 {
+          animation: close-s2-5 72.0s infinite;
+        }
+        .gp-cs3-5 {
+          animation: close-s3-5 72.0s infinite;
+        }
+        
+
+        @keyframes round-6 {
+          0%, 33.28% { opacity: 0; visibility: hidden; }
+          33.33%, 41.27% { opacity: 1; visibility: visible; }
+          41.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-6 {
+          0%, 34.83% { opacity: 0; transform: translateY(3px); }
+          35.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-6 {
+          0%, 35.16% { opacity: 0; }
+          37.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-6 {
+          0%, 37.08% { opacity: 0; }
+          38.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-6 {
+          0%, 38.50% { opacity: 0; }
+          39.83%, 100% { opacity: 1; }
+        }
+        .gp-round-6 {
+          animation: round-6 72.0s infinite;
+        }
+        .gp-quote-6 {
+          animation: quote-reveal-6 72.0s infinite;
+        }
+        .gp-cs1-6 {
+          animation: close-s1-6 72.0s infinite;
+        }
+        .gp-cs2-6 {
+          animation: close-s2-6 72.0s infinite;
+        }
+        .gp-cs3-6 {
+          animation: close-s3-6 72.0s infinite;
+        }
+        
+
+        @keyframes round-7 {
+          0%, 74.95% { opacity: 0; visibility: hidden; }
+          75.00%, 82.93% { opacity: 1; visibility: visible; }
+          83.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-7 {
+          0%, 76.50% { opacity: 0; transform: translateY(3px); }
+          76.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-7 {
+          0%, 76.83% { opacity: 0; }
+          78.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-7 {
+          0%, 78.75% { opacity: 0; }
+          80.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-7 {
+          0%, 80.17% { opacity: 0; }
+          81.50%, 100% { opacity: 1; }
+        }
+        .gp-round-7 {
+          animation: round-7 72.0s infinite;
+        }
+        .gp-quote-7 {
+          animation: quote-reveal-7 72.0s infinite;
+        }
+        .gp-cs1-7 {
+          animation: close-s1-7 72.0s infinite;
+        }
+        .gp-cs2-7 {
+          animation: close-s2-7 72.0s infinite;
+        }
+        .gp-cs3-7 {
+          animation: close-s3-7 72.0s infinite;
+        }
+        
+
+        @keyframes round-8 {
+          0%, 91.62% { opacity: 0; visibility: hidden; }
+          91.67%, 99.60% { opacity: 1; visibility: visible; }
+          100.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-8 {
+          0%, 93.17% { opacity: 0; transform: translateY(3px); }
+          93.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-8 {
+          0%, 93.50% { opacity: 0; }
+          95.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-8 {
+          0%, 95.42% { opacity: 0; }
+          96.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-8 {
+          0%, 96.84% { opacity: 0; }
+          98.17%, 100% { opacity: 1; }
+        }
+        .gp-round-8 {
+          animation: round-8 72.0s infinite;
+        }
+        .gp-quote-8 {
+          animation: quote-reveal-8 72.0s infinite;
+        }
+        .gp-cs1-8 {
+          animation: close-s1-8 72.0s infinite;
+        }
+        .gp-cs2-8 {
+          animation: close-s2-8 72.0s infinite;
+        }
+        .gp-cs3-8 {
+          animation: close-s3-8 72.0s infinite;
+        }
+        
+
+        @keyframes round-9 {
+          0%, 16.62% { opacity: 0; visibility: hidden; }
+          16.67%, 24.60% { opacity: 1; visibility: visible; }
+          25.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-9 {
+          0%, 18.17% { opacity: 0; transform: translateY(3px); }
+          18.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-9 {
+          0%, 18.50% { opacity: 0; }
+          20.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-9 {
+          0%, 20.42% { opacity: 0; }
+          21.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-9 {
+          0%, 21.84% { opacity: 0; }
+          23.17%, 100% { opacity: 1; }
+        }
+        .gp-round-9 {
+          animation: round-9 72.0s infinite;
+        }
+        .gp-quote-9 {
+          animation: quote-reveal-9 72.0s infinite;
+        }
+        .gp-cs1-9 {
+          animation: close-s1-9 72.0s infinite;
+        }
+        .gp-cs2-9 {
+          animation: close-s2-9 72.0s infinite;
+        }
+        .gp-cs3-9 {
+          animation: close-s3-9 72.0s infinite;
+        }
+        
+
+        @keyframes round-10 {
+          0%, 49.95% { opacity: 0; visibility: hidden; }
+          50.00%, 57.93% { opacity: 1; visibility: visible; }
+          58.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-10 {
+          0%, 51.50% { opacity: 0; transform: translateY(3px); }
+          51.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-10 {
+          0%, 51.83% { opacity: 0; }
+          53.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-10 {
+          0%, 53.75% { opacity: 0; }
+          55.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-10 {
+          0%, 55.17% { opacity: 0; }
+          56.50%, 100% { opacity: 1; }
+        }
+        .gp-round-10 {
+          animation: round-10 72.0s infinite;
+        }
+        .gp-quote-10 {
+          animation: quote-reveal-10 72.0s infinite;
+        }
+        .gp-cs1-10 {
+          animation: close-s1-10 72.0s infinite;
+        }
+        .gp-cs2-10 {
+          animation: close-s2-10 72.0s infinite;
+        }
+        .gp-cs3-10 {
+          animation: close-s3-10 72.0s infinite;
+        }
+        
+
+        @keyframes round-11 {
+          0%, 66.62% { opacity: 0; visibility: hidden; }
+          66.67%, 74.60% { opacity: 1; visibility: visible; }
+          75.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-11 {
+          0%, 68.17% { opacity: 0; transform: translateY(3px); }
+          68.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-11 {
+          0%, 68.50% { opacity: 0; }
+          70.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-11 {
+          0%, 70.42% { opacity: 0; }
+          71.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-11 {
+          0%, 71.84% { opacity: 0; }
+          73.17%, 100% { opacity: 1; }
+        }
+        .gp-round-11 {
+          animation: round-11 72.0s infinite;
+        }
+        .gp-quote-11 {
+          animation: quote-reveal-11 72.0s infinite;
+        }
+        .gp-cs1-11 {
+          animation: close-s1-11 72.0s infinite;
+        }
+        .gp-cs2-11 {
+          animation: close-s2-11 72.0s infinite;
+        }
+        .gp-cs3-11 {
+          animation: close-s3-11 72.0s infinite;
+        }
+        
     @media (prefers-reduced-motion: reduce) {
-      .typed-char, .quote-line { opacity: 1 !important; }
-      .motion { display: none; }
+      .gp-round { opacity: 0 !important; animation: none !important; }
+      #round-1 { opacity: 1 !important; visibility: visible !important; }
+      .gp-cs1-0, .gp-cs2-0, .gp-cs3-0, .gp-quote-0 { opacity: 1 !important; animation: none !important; }
     }
   </style>
-  <rect x="1" y="1" width="418" height="940" rx="12" fill="#0F1419" stroke="#088DDC" />
-  <path d="M1 45H419" stroke="#2B3A45" />
-  <g fill="#088DDC" aria-hidden="true">
-    <circle cx="25" cy="24" r="5" /><circle cx="43" cy="24" r="5" /><circle cx="61" cy="24" r="5" />
-  </g>
-  <text x="210.0" y="29" fill="#D3C6AA" font-size="12" text-anchor="middle">stack@arch: ~/quotes</text>
-  <path d="M24 859H396" stroke="#2B3A45" />
-  <text x="24" y="81" fill="#088DDC" font-size="14" font-weight="bold" xml:space="preserve"><tspan class="typed-char" x="24.000">~</tspan><tspan class="typed-char" x="32.428"> </tspan><tspan class="typed-char" x="40.856">$</tspan><tspan class="typed-char" x="49.284"> </tspan><tspan class="typed-char" x="57.712">c</tspan><tspan class="typed-char" x="66.140">a</tspan><tspan class="typed-char" x="74.568">t</tspan><tspan class="typed-char" x="82.996"> </tspan><tspan class="typed-char" x="91.424">h</tspan><tspan class="typed-char" x="99.852">a</tspan><tspan class="typed-char" x="108.280">l</tspan><tspan class="typed-char" x="116.708">l</tspan><tspan class="typed-char" x="125.136">-</tspan><tspan class="typed-char" x="133.564">o</tspan><tspan class="typed-char" x="141.992">f</tspan><tspan class="typed-char" x="150.420">-</tspan><tspan class="typed-char" x="158.848">f</tspan><tspan class="typed-char" x="167.276">a</tspan><tspan class="typed-char" x="175.704">m</tspan><tspan class="typed-char" x="184.132">e</tspan><tspan class="typed-char" x="192.560">.</tspan><tspan class="typed-char" x="200.988">t</tspan><tspan class="typed-char" x="209.416">x</tspan><tspan class="typed-char" x="217.844">t</tspan></text><g class="quote" id="quote-1"><text class="quote-line" x="24" y="120" font-size="14" fill="#ECEFF4">Talk is cheap. Show me the code</text><text class="quote-line" x="24" y="142" font-size="14" fill="#6BC5ED">— Linus Torvalds</text></g><g class="quote" id="quote-2"><text class="quote-line" x="24" y="182" font-size="14" fill="#ECEFF4">A wrong decision is better than indecision</text><text class="quote-line" x="24" y="204" font-size="14" fill="#6BC5ED">— Tony Soprano</text></g><g class="quote" id="quote-3"><text class="quote-line" x="24" y="244" font-size="14" fill="#ECEFF4">Wubba lubba dub dub!</text><text class="quote-line" x="24" y="266" font-size="14" fill="#6BC5ED">— Rick Sanchez</text></g><g class="quote" id="quote-4"><text class="quote-line" x="24" y="306" font-size="14" fill="#ECEFF4">Cadia stands, and we shall not fall</text><text class="quote-line" x="24" y="328" font-size="14" fill="#6BC5ED">— Imperial Creed</text></g><g class="quote" id="quote-5"><text class="quote-line" x="24" y="368" font-size="14" fill="#ECEFF4">War. War never changes.</text><text class="quote-line" x="24" y="390" font-size="14" fill="#6BC5ED">— Fallout</text></g><g class="quote" id="quote-6"><text class="quote-line" x="24" y="430" font-size="14" fill="#ECEFF4">Forget about Freeman</text><text class="quote-line" x="24" y="452" font-size="14" fill="#6BC5ED">— Half-Life</text></g><g class="quote" id="quote-7"><text class="quote-line" x="24" y="492" font-size="14" fill="#ECEFF4">The cake is a lie</text><text class="quote-line" x="24" y="514" font-size="14" fill="#6BC5ED">— Portal</text></g><g class="quote" id="quote-8"><text class="quote-line" x="24" y="554" font-size="14" fill="#ECEFF4">Would you kindly?</text><text class="quote-line" x="24" y="576" font-size="14" fill="#6BC5ED">— Atlas</text></g><g class="quote" id="quote-9"><text class="quote-line" x="24" y="616" font-size="14" fill="#ECEFF4">How's your sister?</text><text class="quote-line" x="24" y="638" font-size="14" fill="#6BC5ED">— Cayde-6</text></g><g class="quote" id="quote-10"><text class="quote-line" x="24" y="678" font-size="14" fill="#ECEFF4">SIC PARVIS MAGNA</text><text class="quote-line" x="24" y="700" font-size="14" fill="#6BC5ED">— Sir Francis Drake</text></g><g class="quote" id="quote-11"><text class="quote-line" x="24" y="740" font-size="14" fill="#ECEFF4">Kept you waiting, huh?</text><text class="quote-line" x="24" y="762" font-size="14" fill="#6BC5ED">— Big Boss</text></g><g class="quote" id="quote-12"><text class="quote-line" x="24" y="802" font-size="14" fill="#ECEFF4">It can't be for nothing</text><text class="quote-line" x="24" y="824" font-size="14" fill="#6BC5ED">— Ellie</text></g><text id="closing-prompt" x="24" y="888" font-size="14" fill="#088DDC" xml:space="preserve"><tspan class="typed-char" x="24.000" y="888">~</tspan><tspan class="typed-char" x="32.428" y="888"> </tspan><tspan class="typed-char" x="40.856" y="888">$</tspan><tspan class="typed-char" x="49.284" y="888"> </tspan><tspan class="typed-char" x="57.712" y="888">G</tspan><tspan class="typed-char" x="66.140" y="888">o</tspan><tspan class="typed-char" x="74.568" y="888">b</tspan><tspan class="typed-char" x="82.996" y="888">e</tspan><tspan class="typed-char" x="91.424" y="888">r</tspan><tspan class="typed-char" x="99.852" y="888">n</tspan><tspan class="typed-char" x="108.280" y="888">a</tspan><tspan class="typed-char" x="116.708" y="888">r</tspan><tspan class="typed-char" x="125.136" y="888"> </tspan><tspan class="typed-char" x="133.564" y="888">e</tspan><tspan class="typed-char" x="141.992" y="888">s</tspan><tspan class="typed-char" x="150.420" y="888"> </tspan><tspan class="typed-char" x="158.848" y="888">E</tspan><tspan class="typed-char" x="167.276" y="888">d</tspan><tspan class="typed-char" x="175.704" y="888">u</tspan><tspan class="typed-char" x="184.132" y="888">c</tspan><tspan class="typed-char" x="192.560" y="888">a</tspan><tspan class="typed-char" x="200.988" y="888">r</tspan><tspan class="typed-char" x="209.416" y="888"> </tspan><tspan class="typed-char" x="217.844" y="888">-</tspan><tspan class="typed-char" x="226.272" y="888"> </tspan><tspan class="typed-char" x="234.700" y="888">P</tspan><tspan class="typed-char" x="243.128" y="888">e</tspan><tspan class="typed-char" x="251.556" y="888">d</tspan><tspan class="typed-char" x="259.984" y="888">r</tspan><tspan class="typed-char" x="268.412" y="888">o</tspan><tspan class="typed-char" x="276.840" y="888"> </tspan><tspan class="typed-char" x="285.268" y="888">A</tspan><tspan class="typed-char" x="293.696" y="888">g</tspan><tspan class="typed-char" x="302.124" y="888">u</tspan><tspan class="typed-char" x="310.552" y="888">i</tspan><tspan class="typed-char" x="318.980" y="888">r</tspan><tspan class="typed-char" x="327.408" y="888">r</tspan><tspan class="typed-char" x="335.836" y="888">e</tspan><tspan class="typed-char" x="344.264" y="888"> </tspan><tspan class="typed-char" x="24.000" y="910">C</tspan><tspan class="typed-char" x="32.428" y="910">e</tspan><tspan class="typed-char" x="40.856" y="910">r</tspan><tspan class="typed-char" x="49.284" y="910">d</tspan><tspan class="typed-char" x="57.712" y="910">a</tspan><tspan class="typed-char" x="66.140" y="910">.</tspan></text>
-  <style id="static-motion">* { animation: none !important; } .typed-char { opacity: 1 !important; }</style></svg>
+  <rect x="1" y="1" width="418" height="268" rx="10" fill="#0F1419" stroke="#088DDC" />
+  
+  <path d="M1 38H419" stroke="#2B3A45" />
+  <circle cx="20" cy="19" r="4.5" fill="#EA2D2E" />
+  <circle cx="34" cy="19" r="4.5" fill="#E5C07B" />
+  <circle cx="48" cy="19" r="4.5" fill="#98C379" />
+  <text x="210.0" y="24" fill="#D3C6AA" font-size="11" text-anchor="middle">stack@arch: ~/gambling_phrase</text>
+
+  
+  
+    
+    <g class="gp-round gp-round-0" id="round-1">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [1/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-0"><g class="quote" id="quote-1"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Talk is cheap. Show me the code</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Linus Torvalds</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-0" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-0" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-1" id="round-2">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [4/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-1"><g class="quote" id="quote-2"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">A wrong decision is better than indecision</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Tony Soprano</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-2" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-1" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-1" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-2" id="round-3">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [11/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-2"><g class="quote" id="quote-3"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Wubba lubba dub dub!</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Rick Sanchez</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-3" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-2" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-2" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-3" id="round-4">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [6/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-3"><g class="quote" id="quote-4"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Cadia stands, and we shall not fall</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Imperial Creed</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-4" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-3" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-3" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-4" id="round-5">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [2/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-4"><g class="quote" id="quote-5"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">War. War never changes.</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Fallout</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-5" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-4" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-4" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-5" id="round-6">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [8/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-5"><g class="quote" id="quote-6"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Forget about Freeman</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Half-Life</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-6" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-5" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-5" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-6" id="round-7">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [5/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-6"><g class="quote" id="quote-7"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">The cake is a lie</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Portal</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-7" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-6" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-6" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-7" id="round-8">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [10/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-7"><g class="quote" id="quote-8"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Would you kindly?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Atlas</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-8" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-7" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-7" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-8" id="round-9">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [12/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-8"><g class="quote" id="quote-9"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">How's your sister?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Cayde-6</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-9" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-8" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-8" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-9" id="round-10">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [3/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-9"><g class="quote" id="quote-10"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">SIC PARVIS MAGNA</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Sir Francis Drake</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-10" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-9" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-9" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-10" id="round-11">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [7/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-10"><g class="quote" id="quote-11"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Kept you waiting, huh?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Big Boss</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-11" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-10" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-10" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    
+    <g class="gp-round gp-round-11" id="round-12">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45" /><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [9/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-11"><g class="quote" id="quote-12"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">It can't be for nothing</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Ellie</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-12" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-11" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-11" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+<style id="static-motion">* { animation: none !important; } .typed-char { opacity: 1 !important; }</style></svg>

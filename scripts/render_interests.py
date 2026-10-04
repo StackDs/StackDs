@@ -8,22 +8,29 @@ from textwrap import wrap
 from profile_config import ROOT
 
 
-def _pill_badges(tags, start_x, start_y, theme):
-    """Render a row of small pill badges for technology / topic tags."""
+def _pill_badges(tags, start_x, start_y, max_width, theme):
+    """Render small pill badges, automatically wrapping onto multiple rows if max_width is exceeded."""
     pills = []
     x = start_x
+    y = start_y
+    row_height = 24  # 18px badge + 6px vertical gap
     for tag in tags:
         tag_text = escape(tag)
         tag_width = len(tag) * 6.8 + 12
+        if x + tag_width > max_width and x > start_x:
+            x = start_x
+            y += row_height
         pills.append(
-            f'<rect x="{x:.1f}" y="{start_y:.1f}" width="{tag_width:.1f}" height="18" rx="4" '
+            f'<rect x="{x:.1f}" y="{y:.1f}" width="{tag_width:.1f}" height="18" rx="4" '
             f'fill="{theme["control"]}" stroke="{theme["border"]}"/>\n'
-            f'<text x="{x + tag_width / 2:.1f}" y="{start_y + 12.5:.1f}" font-size="10" '
+            f'<text x="{x + tag_width / 2:.1f}" y="{y + 12.5:.1f}" font-size="10" '
             f'fill="{theme["comment"]}" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">'
             f'{tag_text}</text>'
         )
         x += tag_width + 6
-    return "\n    ".join(pills)
+    bottom_y = y + 18
+    return "\n    ".join(pills), bottom_y
+
 
 
 def _render_programming_canvas(theme):
@@ -570,20 +577,24 @@ def render(interest, theme, mobile=False):
     description = interest.get("description", "")
     tags = interest.get("tags", [])
 
+    width = 420 if mobile else 880
+    height = 360 if mobile else 220
+
     if mobile:
         # Mobile stacked layout
-        # Top text section
         text_left = 22
-        subtitle_y = 30
-        title_y = 52
-        desc_start_y = 72
-        desc_lines = wrap(description, width=44, break_long_words=True, break_on_hyphens=False)
+        subtitle_y = 24
+        title_y = 44
+        desc_start_y = 60
+        desc_lines = wrap(description, width=48, break_long_words=True, break_on_hyphens=False)
+        line_height = 14 if len(desc_lines) > 4 else 15
         desc_svg = "\n    ".join(
-            f'<text x="{text_left}" y="{desc_start_y + idx * 16}" font-size="12" fill="{text_color}">{escape(line)}</text>'
+            f'<text x="{text_left}" y="{desc_start_y + idx * line_height}" font-size="12" fill="{text_color}">{escape(line)}</text>'
             for idx, line in enumerate(desc_lines)
         )
-        tag_y = desc_start_y + len(desc_lines) * 16 + 6
-        pills_svg = _pill_badges(tags[:4], text_left, tag_y, theme)
+        tag_y = desc_start_y + len(desc_lines) * line_height + 6
+        max_tag_w = width - text_left - 10
+        pills_svg, _ = _pill_badges(tags, text_left, tag_y, max_tag_w, theme)
 
         # Bottom visual canvas
         canvas_x = 22
@@ -594,22 +605,26 @@ def render(interest, theme, mobile=False):
     else:
         # Desktop 2-column side-by-side layout
         text_left = 32
-        subtitle_y = 36
-        title_y = 62
-        desc_start_y = 86
-        desc_lines = wrap(description, width=46, break_long_words=True, break_on_hyphens=False)
+        subtitle_y = 30
+        title_y = 52
+        desc_start_y = 72
+        desc_lines = wrap(description, width=54, break_long_words=True, break_on_hyphens=False)
+        line_height = 15 if len(desc_lines) > 4 else 17
         desc_svg = "\n    ".join(
-            f'<text x="{text_left}" y="{desc_start_y + idx * 18}" font-size="13" fill="{text_color}">{escape(line)}</text>'
+            f'<text x="{text_left}" y="{desc_start_y + idx * line_height}" font-size="13" fill="{text_color}">{escape(line)}</text>'
             for idx, line in enumerate(desc_lines)
         )
-        tag_y = desc_start_y + len(desc_lines) * 18 + 12
-        pills_svg = _pill_badges(tags[:5], text_left, tag_y, theme)
+        tag_y = desc_start_y + len(desc_lines) * line_height + 8
+        max_tag_w = 472  # width available before canvas_x=490
+        pills_svg, _ = _pill_badges(tags, text_left, tag_y, max_tag_w, theme)
 
         # Right visual canvas
         canvas_x = 490
         canvas_y = 20
         canvas_width = 358
         canvas_height = 180
+
+
 
     canvas_inner = canvas_fn(theme)
 

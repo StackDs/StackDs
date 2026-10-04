@@ -109,16 +109,16 @@ I'm trying to improve this, so... KISS. Keep it simple, stupid.
   <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-mathematics-mobile-static.svg">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-mathematics-static.svg">
   <source media="(max-width: 600px)" srcset="assets/interest-mathematics-mobile.svg">
-  <img src="assets/interest-mathematics.svg" width="100%" alt="Mathematics — Exploring multivariable calculus, vector fields, and differential forms. Analyzing curvature, gradient ascent/descent, and critical points on 3D manifolds.">
+  <img src="assets/interest-mathematics.svg" width="100%" alt="Mathematics — I love any type of maths even though I&#x27;m terrible at them. I enjoy the multivariable calculus, linear algebra, and differential equations. I also like to learn about the applications of mathematics in physics and computer science.">
 </picture>
 
 ---
 
-## Hall of Fame
+## Gambling Phrase
 
 <picture>
   <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/quotes-mobile-static.svg">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/quotes-static.svg">
   <source media="(max-width: 600px)" srcset="assets/quotes-mobile.svg">
-  <img src="assets/quotes.svg" width="100%" alt="Hall of Fame. Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Wubba lubba dub dub! — Rick Sanchez. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie. Gobernar es Educar - Pedro Aguirre Cerda.">
+  <img src="assets/quotes.svg" width="100%" alt="Gambling Phrase. Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Wubba lubba dub dub! — Rick Sanchez. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie. Gobernar es Educar - Pedro Aguirre Cerda.">
 </picture>

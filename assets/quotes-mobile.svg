@@ -1,26 +1,554 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="942" viewBox="0 0 420 942" role="img" aria-labelledby="title desc" xml:lang="en">
-  <title id="title">Hall of Fame — intercepted transmissions</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="270" viewBox="0 0 420 270" role="img" aria-labelledby="title desc" xml:lang="en">
+  <title id="title">Gambling Phrase — intercepted transmissions</title>
   <desc id="desc">Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Wubba lubba dub dub! — Rick Sanchez. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie. Gobernar es Educar - Pedro Aguirre Cerda.</desc>
   <style>
     text { font-family: 'DejaVu Sans Mono', 'Liberation Mono', monospace; font-variant-ligatures: none; }
+    .gp-round { opacity: 0; }
+    #round-1 { opacity: 1; }
+    [data-motion="static"] .gp-round { opacity: 0 !important; }
+    [data-motion="static"] #round-1 { opacity: 1 !important; }
+    [data-motion="static"] .gp-cs1-0, [data-motion="static"] .gp-cs2-0, [data-motion="static"] .gp-cs3-0, [data-motion="static"] .gp-quote-0 { opacity: 1 !important; transform: none !important; }
+    
+        @keyframes round-0 {
+          0%, 0.00% { opacity: 0; visibility: hidden; }
+          0.00%, 7.93% { opacity: 1; visibility: visible; }
+          8.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-0 {
+          0%, 1.50% { opacity: 0; transform: translateY(3px); }
+          1.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-0 {
+          0%, 1.83% { opacity: 0; }
+          3.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-0 {
+          0%, 3.75% { opacity: 0; }
+          5.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-0 {
+          0%, 5.17% { opacity: 0; }
+          6.50%, 100% { opacity: 1; }
+        }
+        .gp-round-0 {
+          animation: round-0 72.0s infinite;
+        }
+        .gp-quote-0 {
+          animation: quote-reveal-0 72.0s infinite;
+        }
+        .gp-cs1-0 {
+          animation: close-s1-0 72.0s infinite;
+        }
+        .gp-cs2-0 {
+          animation: close-s2-0 72.0s infinite;
+        }
+        .gp-cs3-0 {
+          animation: close-s3-0 72.0s infinite;
+        }
+        
+
+        @keyframes round-1 {
+          0%, 24.95% { opacity: 0; visibility: hidden; }
+          25.00%, 32.93% { opacity: 1; visibility: visible; }
+          33.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-1 {
+          0%, 26.50% { opacity: 0; transform: translateY(3px); }
+          26.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-1 {
+          0%, 26.83% { opacity: 0; }
+          28.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-1 {
+          0%, 28.75% { opacity: 0; }
+          30.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-1 {
+          0%, 30.17% { opacity: 0; }
+          31.50%, 100% { opacity: 1; }
+        }
+        .gp-round-1 {
+          animation: round-1 72.0s infinite;
+        }
+        .gp-quote-1 {
+          animation: quote-reveal-1 72.0s infinite;
+        }
+        .gp-cs1-1 {
+          animation: close-s1-1 72.0s infinite;
+        }
+        .gp-cs2-1 {
+          animation: close-s2-1 72.0s infinite;
+        }
+        .gp-cs3-1 {
+          animation: close-s3-1 72.0s infinite;
+        }
+        
+
+        @keyframes round-2 {
+          0%, 83.28% { opacity: 0; visibility: hidden; }
+          83.33%, 91.27% { opacity: 1; visibility: visible; }
+          91.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-2 {
+          0%, 84.83% { opacity: 0; transform: translateY(3px); }
+          85.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-2 {
+          0%, 85.16% { opacity: 0; }
+          87.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-2 {
+          0%, 87.08% { opacity: 0; }
+          88.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-2 {
+          0%, 88.50% { opacity: 0; }
+          89.83%, 100% { opacity: 1; }
+        }
+        .gp-round-2 {
+          animation: round-2 72.0s infinite;
+        }
+        .gp-quote-2 {
+          animation: quote-reveal-2 72.0s infinite;
+        }
+        .gp-cs1-2 {
+          animation: close-s1-2 72.0s infinite;
+        }
+        .gp-cs2-2 {
+          animation: close-s2-2 72.0s infinite;
+        }
+        .gp-cs3-2 {
+          animation: close-s3-2 72.0s infinite;
+        }
+        
+
+        @keyframes round-3 {
+          0%, 41.62% { opacity: 0; visibility: hidden; }
+          41.67%, 49.60% { opacity: 1; visibility: visible; }
+          50.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-3 {
+          0%, 43.17% { opacity: 0; transform: translateY(3px); }
+          43.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-3 {
+          0%, 43.50% { opacity: 0; }
+          45.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-3 {
+          0%, 45.42% { opacity: 0; }
+          46.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-3 {
+          0%, 46.84% { opacity: 0; }
+          48.17%, 100% { opacity: 1; }
+        }
+        .gp-round-3 {
+          animation: round-3 72.0s infinite;
+        }
+        .gp-quote-3 {
+          animation: quote-reveal-3 72.0s infinite;
+        }
+        .gp-cs1-3 {
+          animation: close-s1-3 72.0s infinite;
+        }
+        .gp-cs2-3 {
+          animation: close-s2-3 72.0s infinite;
+        }
+        .gp-cs3-3 {
+          animation: close-s3-3 72.0s infinite;
+        }
+        
+
+        @keyframes round-4 {
+          0%, 8.28% { opacity: 0; visibility: hidden; }
+          8.33%, 16.27% { opacity: 1; visibility: visible; }
+          16.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-4 {
+          0%, 9.83% { opacity: 0; transform: translateY(3px); }
+          10.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-4 {
+          0%, 10.16% { opacity: 0; }
+          12.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-4 {
+          0%, 12.08% { opacity: 0; }
+          13.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-4 {
+          0%, 13.50% { opacity: 0; }
+          14.83%, 100% { opacity: 1; }
+        }
+        .gp-round-4 {
+          animation: round-4 72.0s infinite;
+        }
+        .gp-quote-4 {
+          animation: quote-reveal-4 72.0s infinite;
+        }
+        .gp-cs1-4 {
+          animation: close-s1-4 72.0s infinite;
+        }
+        .gp-cs2-4 {
+          animation: close-s2-4 72.0s infinite;
+        }
+        .gp-cs3-4 {
+          animation: close-s3-4 72.0s infinite;
+        }
+        
+
+        @keyframes round-5 {
+          0%, 58.28% { opacity: 0; visibility: hidden; }
+          58.33%, 66.27% { opacity: 1; visibility: visible; }
+          66.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-5 {
+          0%, 59.83% { opacity: 0; transform: translateY(3px); }
+          60.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-5 {
+          0%, 60.16% { opacity: 0; }
+          62.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-5 {
+          0%, 62.08% { opacity: 0; }
+          63.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-5 {
+          0%, 63.50% { opacity: 0; }
+          64.83%, 100% { opacity: 1; }
+        }
+        .gp-round-5 {
+          animation: round-5 72.0s infinite;
+        }
+        .gp-quote-5 {
+          animation: quote-reveal-5 72.0s infinite;
+        }
+        .gp-cs1-5 {
+          animation: close-s1-5 72.0s infinite;
+        }
+        .gp-cs2-5 {
+          animation: close-s2-5 72.0s infinite;
+        }
+        .gp-cs3-5 {
+          animation: close-s3-5 72.0s infinite;
+        }
+        
+
+        @keyframes round-6 {
+          0%, 33.28% { opacity: 0; visibility: hidden; }
+          33.33%, 41.27% { opacity: 1; visibility: visible; }
+          41.67%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-6 {
+          0%, 34.83% { opacity: 0; transform: translateY(3px); }
+          35.16%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-6 {
+          0%, 35.16% { opacity: 0; }
+          37.08%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-6 {
+          0%, 37.08% { opacity: 0; }
+          38.50%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-6 {
+          0%, 38.50% { opacity: 0; }
+          39.83%, 100% { opacity: 1; }
+        }
+        .gp-round-6 {
+          animation: round-6 72.0s infinite;
+        }
+        .gp-quote-6 {
+          animation: quote-reveal-6 72.0s infinite;
+        }
+        .gp-cs1-6 {
+          animation: close-s1-6 72.0s infinite;
+        }
+        .gp-cs2-6 {
+          animation: close-s2-6 72.0s infinite;
+        }
+        .gp-cs3-6 {
+          animation: close-s3-6 72.0s infinite;
+        }
+        
+
+        @keyframes round-7 {
+          0%, 74.95% { opacity: 0; visibility: hidden; }
+          75.00%, 82.93% { opacity: 1; visibility: visible; }
+          83.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-7 {
+          0%, 76.50% { opacity: 0; transform: translateY(3px); }
+          76.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-7 {
+          0%, 76.83% { opacity: 0; }
+          78.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-7 {
+          0%, 78.75% { opacity: 0; }
+          80.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-7 {
+          0%, 80.17% { opacity: 0; }
+          81.50%, 100% { opacity: 1; }
+        }
+        .gp-round-7 {
+          animation: round-7 72.0s infinite;
+        }
+        .gp-quote-7 {
+          animation: quote-reveal-7 72.0s infinite;
+        }
+        .gp-cs1-7 {
+          animation: close-s1-7 72.0s infinite;
+        }
+        .gp-cs2-7 {
+          animation: close-s2-7 72.0s infinite;
+        }
+        .gp-cs3-7 {
+          animation: close-s3-7 72.0s infinite;
+        }
+        
+
+        @keyframes round-8 {
+          0%, 91.62% { opacity: 0; visibility: hidden; }
+          91.67%, 99.60% { opacity: 1; visibility: visible; }
+          100.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-8 {
+          0%, 93.17% { opacity: 0; transform: translateY(3px); }
+          93.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-8 {
+          0%, 93.50% { opacity: 0; }
+          95.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-8 {
+          0%, 95.42% { opacity: 0; }
+          96.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-8 {
+          0%, 96.84% { opacity: 0; }
+          98.17%, 100% { opacity: 1; }
+        }
+        .gp-round-8 {
+          animation: round-8 72.0s infinite;
+        }
+        .gp-quote-8 {
+          animation: quote-reveal-8 72.0s infinite;
+        }
+        .gp-cs1-8 {
+          animation: close-s1-8 72.0s infinite;
+        }
+        .gp-cs2-8 {
+          animation: close-s2-8 72.0s infinite;
+        }
+        .gp-cs3-8 {
+          animation: close-s3-8 72.0s infinite;
+        }
+        
+
+        @keyframes round-9 {
+          0%, 16.62% { opacity: 0; visibility: hidden; }
+          16.67%, 24.60% { opacity: 1; visibility: visible; }
+          25.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-9 {
+          0%, 18.17% { opacity: 0; transform: translateY(3px); }
+          18.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-9 {
+          0%, 18.50% { opacity: 0; }
+          20.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-9 {
+          0%, 20.42% { opacity: 0; }
+          21.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-9 {
+          0%, 21.84% { opacity: 0; }
+          23.17%, 100% { opacity: 1; }
+        }
+        .gp-round-9 {
+          animation: round-9 72.0s infinite;
+        }
+        .gp-quote-9 {
+          animation: quote-reveal-9 72.0s infinite;
+        }
+        .gp-cs1-9 {
+          animation: close-s1-9 72.0s infinite;
+        }
+        .gp-cs2-9 {
+          animation: close-s2-9 72.0s infinite;
+        }
+        .gp-cs3-9 {
+          animation: close-s3-9 72.0s infinite;
+        }
+        
+
+        @keyframes round-10 {
+          0%, 49.95% { opacity: 0; visibility: hidden; }
+          50.00%, 57.93% { opacity: 1; visibility: visible; }
+          58.33%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-10 {
+          0%, 51.50% { opacity: 0; transform: translateY(3px); }
+          51.83%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-10 {
+          0%, 51.83% { opacity: 0; }
+          53.75%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-10 {
+          0%, 53.75% { opacity: 0; }
+          55.17%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-10 {
+          0%, 55.17% { opacity: 0; }
+          56.50%, 100% { opacity: 1; }
+        }
+        .gp-round-10 {
+          animation: round-10 72.0s infinite;
+        }
+        .gp-quote-10 {
+          animation: quote-reveal-10 72.0s infinite;
+        }
+        .gp-cs1-10 {
+          animation: close-s1-10 72.0s infinite;
+        }
+        .gp-cs2-10 {
+          animation: close-s2-10 72.0s infinite;
+        }
+        .gp-cs3-10 {
+          animation: close-s3-10 72.0s infinite;
+        }
+        
+
+        @keyframes round-11 {
+          0%, 66.62% { opacity: 0; visibility: hidden; }
+          66.67%, 74.60% { opacity: 1; visibility: visible; }
+          75.00%, 100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes quote-reveal-11 {
+          0%, 68.17% { opacity: 0; transform: translateY(3px); }
+          68.50%, 100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes close-s1-11 {
+          0%, 68.50% { opacity: 0; }
+          70.42%, 100% { opacity: 1; }
+        }
+        @keyframes close-s2-11 {
+          0%, 70.42% { opacity: 0; }
+          71.84%, 100% { opacity: 1; }
+        }
+        @keyframes close-s3-11 {
+          0%, 71.84% { opacity: 0; }
+          73.17%, 100% { opacity: 1; }
+        }
+        .gp-round-11 {
+          animation: round-11 72.0s infinite;
+        }
+        .gp-quote-11 {
+          animation: quote-reveal-11 72.0s infinite;
+        }
+        .gp-cs1-11 {
+          animation: close-s1-11 72.0s infinite;
+        }
+        .gp-cs2-11 {
+          animation: close-s2-11 72.0s infinite;
+        }
+        .gp-cs3-11 {
+          animation: close-s3-11 72.0s infinite;
+        }
+        
     @media (prefers-reduced-motion: reduce) {
-      .typed-char, .quote-line { opacity: 1 !important; }
-      .motion { display: none; }
+      .gp-round { opacity: 0 !important; animation: none !important; }
+      #round-1 { opacity: 1 !important; visibility: visible !important; }
+      .gp-cs1-0, .gp-cs2-0, .gp-cs3-0, .gp-quote-0 { opacity: 1 !important; animation: none !important; }
     }
   </style>
-  <rect x="1" y="1" width="418" height="940" rx="12" fill="#0F1419" stroke="#088DDC"/>
-  <path d="M1 45H419" stroke="#2B3A45"/>
-  <g fill="#088DDC" aria-hidden="true">
-    <circle cx="25" cy="24" r="5"/><circle cx="43" cy="24" r="5"/><circle cx="61" cy="24" r="5"/>
-  </g>
-  <text x="210.0" y="29" fill="#D3C6AA" font-size="12" text-anchor="middle">stack@arch: ~/quotes</text>
-  <path d="M24 859H396" stroke="#2B3A45"/>
-  <text x="24" y="81" fill="#088DDC" font-size="14" font-weight="bold" xml:space="preserve"><tspan class="typed-char" x="24.000">~<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.225s" fill="remove"/></tspan><tspan class="typed-char" x="32.428"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.250s" fill="remove"/></tspan><tspan class="typed-char" x="40.856">$<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.275s" fill="remove"/></tspan><tspan class="typed-char" x="49.284"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.300s" fill="remove"/></tspan><tspan class="typed-char" x="57.712">c<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.325s" fill="remove"/></tspan><tspan class="typed-char" x="66.140">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.350s" fill="remove"/></tspan><tspan class="typed-char" x="74.568">t<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.375s" fill="remove"/></tspan><tspan class="typed-char" x="82.996"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.400s" fill="remove"/></tspan><tspan class="typed-char" x="91.424">h<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.425s" fill="remove"/></tspan><tspan class="typed-char" x="99.852">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.450s" fill="remove"/></tspan><tspan class="typed-char" x="108.280">l<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.475s" fill="remove"/></tspan><tspan class="typed-char" x="116.708">l<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.500s" fill="remove"/></tspan><tspan class="typed-char" x="125.136">-<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.525s" fill="remove"/></tspan><tspan class="typed-char" x="133.564">o<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.550s" fill="remove"/></tspan><tspan class="typed-char" x="141.992">f<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.575s" fill="remove"/></tspan><tspan class="typed-char" x="150.420">-<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.600s" fill="remove"/></tspan><tspan class="typed-char" x="158.848">f<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.625s" fill="remove"/></tspan><tspan class="typed-char" x="167.276">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.650s" fill="remove"/></tspan><tspan class="typed-char" x="175.704">m<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.675s" fill="remove"/></tspan><tspan class="typed-char" x="184.132">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.700s" fill="remove"/></tspan><tspan class="typed-char" x="192.560">.<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.725s" fill="remove"/></tspan><tspan class="typed-char" x="200.988">t<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.750s" fill="remove"/></tspan><tspan class="typed-char" x="209.416">x<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.775s" fill="remove"/></tspan><tspan class="typed-char" x="217.844">t<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="0.800s" fill="remove"/></tspan></text><g class="quote" id="quote-1"><text class="quote-line" x="24" y="120" font-size="14" fill="#ECEFF4">Talk is cheap. Show me the code<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="1.160s" fill="remove"/></text><text class="quote-line" x="24" y="142" font-size="14" fill="#6BC5ED">— Linus Torvalds<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="1.320s" fill="remove"/></text></g><g class="quote" id="quote-2"><text class="quote-line" x="24" y="182" font-size="14" fill="#ECEFF4">A wrong decision is better than indecision<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="1.600s" fill="remove"/></text><text class="quote-line" x="24" y="204" font-size="14" fill="#6BC5ED">— Tony Soprano<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="1.760s" fill="remove"/></text></g><g class="quote" id="quote-3"><text class="quote-line" x="24" y="244" font-size="14" fill="#ECEFF4">Wubba lubba dub dub!<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="2.040s" fill="remove"/></text><text class="quote-line" x="24" y="266" font-size="14" fill="#6BC5ED">— Rick Sanchez<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="2.200s" fill="remove"/></text></g><g class="quote" id="quote-4"><text class="quote-line" x="24" y="306" font-size="14" fill="#ECEFF4">Cadia stands, and we shall not fall<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="2.480s" fill="remove"/></text><text class="quote-line" x="24" y="328" font-size="14" fill="#6BC5ED">— Imperial Creed<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="2.640s" fill="remove"/></text></g><g class="quote" id="quote-5"><text class="quote-line" x="24" y="368" font-size="14" fill="#ECEFF4">War. War never changes.<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="2.920s" fill="remove"/></text><text class="quote-line" x="24" y="390" font-size="14" fill="#6BC5ED">— Fallout<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="3.080s" fill="remove"/></text></g><g class="quote" id="quote-6"><text class="quote-line" x="24" y="430" font-size="14" fill="#ECEFF4">Forget about Freeman<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="3.360s" fill="remove"/></text><text class="quote-line" x="24" y="452" font-size="14" fill="#6BC5ED">— Half-Life<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="3.520s" fill="remove"/></text></g><g class="quote" id="quote-7"><text class="quote-line" x="24" y="492" font-size="14" fill="#ECEFF4">The cake is a lie<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="3.800s" fill="remove"/></text><text class="quote-line" x="24" y="514" font-size="14" fill="#6BC5ED">— Portal<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="3.960s" fill="remove"/></text></g><g class="quote" id="quote-8"><text class="quote-line" x="24" y="554" font-size="14" fill="#ECEFF4">Would you kindly?<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="4.240s" fill="remove"/></text><text class="quote-line" x="24" y="576" font-size="14" fill="#6BC5ED">— Atlas<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="4.400s" fill="remove"/></text></g><g class="quote" id="quote-9"><text class="quote-line" x="24" y="616" font-size="14" fill="#ECEFF4">How&#x27;s your sister?<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="4.680s" fill="remove"/></text><text class="quote-line" x="24" y="638" font-size="14" fill="#6BC5ED">— Cayde-6<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="4.840s" fill="remove"/></text></g><g class="quote" id="quote-10"><text class="quote-line" x="24" y="678" font-size="14" fill="#ECEFF4">SIC PARVIS MAGNA<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="5.120s" fill="remove"/></text><text class="quote-line" x="24" y="700" font-size="14" fill="#6BC5ED">— Sir Francis Drake<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="5.280s" fill="remove"/></text></g><g class="quote" id="quote-11"><text class="quote-line" x="24" y="740" font-size="14" fill="#ECEFF4">Kept you waiting, huh?<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="5.560s" fill="remove"/></text><text class="quote-line" x="24" y="762" font-size="14" fill="#6BC5ED">— Big Boss<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="5.720s" fill="remove"/></text></g><g class="quote" id="quote-12"><text class="quote-line" x="24" y="802" font-size="14" fill="#ECEFF4">It can&#x27;t be for nothing<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.000s" fill="remove"/></text><text class="quote-line" x="24" y="824" font-size="14" fill="#6BC5ED">— Ellie<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.160s" fill="remove"/></text></g><text id="closing-prompt" x="24" y="888" font-size="14" fill="#088DDC" xml:space="preserve"><tspan class="typed-char" x="24.000" y="888">~<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.315s" fill="remove"/></tspan><tspan class="typed-char" x="32.428" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.350s" fill="remove"/></tspan><tspan class="typed-char" x="40.856" y="888">$<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.385s" fill="remove"/></tspan><tspan class="typed-char" x="49.284" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.420s" fill="remove"/></tspan><tspan class="typed-char" x="57.712" y="888">G<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.455s" fill="remove"/></tspan><tspan class="typed-char" x="66.140" y="888">o<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.490s" fill="remove"/></tspan><tspan class="typed-char" x="74.568" y="888">b<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.525s" fill="remove"/></tspan><tspan class="typed-char" x="82.996" y="888">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.560s" fill="remove"/></tspan><tspan class="typed-char" x="91.424" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.595s" fill="remove"/></tspan><tspan class="typed-char" x="99.852" y="888">n<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.630s" fill="remove"/></tspan><tspan class="typed-char" x="108.280" y="888">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.665s" fill="remove"/></tspan><tspan class="typed-char" x="116.708" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.700s" fill="remove"/></tspan><tspan class="typed-char" x="125.136" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.735s" fill="remove"/></tspan><tspan class="typed-char" x="133.564" y="888">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.770s" fill="remove"/></tspan><tspan class="typed-char" x="141.992" y="888">s<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.805s" fill="remove"/></tspan><tspan class="typed-char" x="150.420" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.840s" fill="remove"/></tspan><tspan class="typed-char" x="158.848" y="888">E<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.875s" fill="remove"/></tspan><tspan class="typed-char" x="167.276" y="888">d<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.910s" fill="remove"/></tspan><tspan class="typed-char" x="175.704" y="888">u<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.945s" fill="remove"/></tspan><tspan class="typed-char" x="184.132" y="888">c<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="6.980s" fill="remove"/></tspan><tspan class="typed-char" x="192.560" y="888">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.015s" fill="remove"/></tspan><tspan class="typed-char" x="200.988" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.050s" fill="remove"/></tspan><tspan class="typed-char" x="209.416" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.085s" fill="remove"/></tspan><tspan class="typed-char" x="217.844" y="888">-<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.120s" fill="remove"/></tspan><tspan class="typed-char" x="226.272" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.155s" fill="remove"/></tspan><tspan class="typed-char" x="234.700" y="888">P<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.190s" fill="remove"/></tspan><tspan class="typed-char" x="243.128" y="888">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.225s" fill="remove"/></tspan><tspan class="typed-char" x="251.556" y="888">d<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.260s" fill="remove"/></tspan><tspan class="typed-char" x="259.984" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.295s" fill="remove"/></tspan><tspan class="typed-char" x="268.412" y="888">o<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.330s" fill="remove"/></tspan><tspan class="typed-char" x="276.840" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.365s" fill="remove"/></tspan><tspan class="typed-char" x="285.268" y="888">A<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.400s" fill="remove"/></tspan><tspan class="typed-char" x="293.696" y="888">g<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.435s" fill="remove"/></tspan><tspan class="typed-char" x="302.124" y="888">u<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.470s" fill="remove"/></tspan><tspan class="typed-char" x="310.552" y="888">i<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.505s" fill="remove"/></tspan><tspan class="typed-char" x="318.980" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.540s" fill="remove"/></tspan><tspan class="typed-char" x="327.408" y="888">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.575s" fill="remove"/></tspan><tspan class="typed-char" x="335.836" y="888">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.610s" fill="remove"/></tspan><tspan class="typed-char" x="344.264" y="888"> <animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.645s" fill="remove"/></tspan><tspan class="typed-char" x="24.000" y="910">C<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.760s" fill="remove"/></tspan><tspan class="typed-char" x="32.428" y="910">e<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.795s" fill="remove"/></tspan><tspan class="typed-char" x="40.856" y="910">r<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.830s" fill="remove"/></tspan><tspan class="typed-char" x="49.284" y="910">d<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.865s" fill="remove"/></tspan><tspan class="typed-char" x="57.712" y="910">a<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.900s" fill="remove"/></tspan><tspan class="typed-char" x="66.140" y="910">.<animate class="reveal" attributeName="opacity" values="0;1" keyTimes="0;1" calcMode="discrete" begin="0s" dur="7.935s" fill="remove"/></tspan></text>
-  <rect id="terminal-cursor" class="cursor motion" x="76.068" y="898.100" width="6.742" height="16.000" fill="#088DDC" opacity="1" aria-hidden="true">
-<animate attributeName="x" values="25.500;25.500;33.928;42.356;50.784;59.212;67.640;76.068;84.496;92.924;101.352;109.780;118.208;126.636;135.064;143.492;151.920;160.348;168.776;177.204;185.632;194.060;202.488;210.916;219.344;227.772;286.768;160.348;379.476;143.492;194.060;143.492;320.480;160.348;219.344;101.352;194.060;118.208;168.776;92.924;168.776;84.496;177.204;101.352;160.348;185.632;210.916;109.780;219.344;84.496;25.500;33.928;42.356;50.784;59.212;67.640;76.068;84.496;92.924;101.352;109.780;118.208;126.636;135.064;143.492;151.920;160.348;168.776;177.204;185.632;194.060;202.488;210.916;219.344;227.772;236.200;244.628;253.056;261.484;269.912;278.340;286.768;295.196;303.624;312.052;320.480;328.908;337.336;345.764;354.192;25.500;33.928;42.356;50.784;59.212;67.640;76.068;76.068" keyTimes="0.00000000;0.02520161;0.02835181;0.03150202;0.03465222;0.03780242;0.04095262;0.04410282;0.04725302;0.05040323;0.05355343;0.05670363;0.05985383;0.06300403;0.06615423;0.06930444;0.07245464;0.07560484;0.07875504;0.08190524;0.08505544;0.08820565;0.09135585;0.09450605;0.09765625;0.10080645;0.14616935;0.16633065;0.20161290;0.22177419;0.25705645;0.27721774;0.31250000;0.33266129;0.36794355;0.38810484;0.42338710;0.44354839;0.47883065;0.49899194;0.53427419;0.55443548;0.58971774;0.60987903;0.64516129;0.66532258;0.70060484;0.72076613;0.75604839;0.77620968;0.79133065;0.79574093;0.80015121;0.80456149;0.80897177;0.81338206;0.81779234;0.82220262;0.82661290;0.83102319;0.83543347;0.83984375;0.84425403;0.84866431;0.85307460;0.85748488;0.86189516;0.86630544;0.87071573;0.87512601;0.87953629;0.88394657;0.88835685;0.89276714;0.89717742;0.90158770;0.90599798;0.91040827;0.91481855;0.91922883;0.92363911;0.92804940;0.93245968;0.93686996;0.94128024;0.94569052;0.95010081;0.95451109;0.95892137;0.96333165;0.97341230;0.97782258;0.98223286;0.98664315;0.99105343;0.99546371;0.99987399;1.00000000" calcMode="discrete" begin="0s" dur="7.936s" fill="remove"/>
-<animate attributeName="y" values="69.100;69.100;108.100;130.100;170.100;192.100;232.100;254.100;294.100;316.100;356.100;378.100;418.100;440.100;480.100;502.100;542.100;564.100;604.100;626.100;666.100;688.100;728.100;750.100;790.100;812.100;876.100;898.100;898.100" keyTimes="0.00000000;0.02520161;0.14616935;0.16633065;0.20161290;0.22177419;0.25705645;0.27721774;0.31250000;0.33266129;0.36794355;0.38810484;0.42338710;0.44354839;0.47883065;0.49899194;0.53427419;0.55443548;0.58971774;0.60987903;0.64516129;0.66532258;0.70060484;0.72076613;0.75604839;0.77620968;0.79133065;0.97341230;1.00000000" calcMode="discrete" begin="0s" dur="7.936s" fill="remove"/>
-<animate attributeName="width" values="6.742;6.742;6.742" keyTimes="0.00000000;0.02520161;1.00000000" calcMode="discrete" begin="0s" dur="7.936s" fill="remove"/>
-<animate attributeName="height" values="16.000;16.000;16.000" keyTimes="0.00000000;0.02520161;1.00000000" calcMode="discrete" begin="0s" dur="7.936s" fill="remove"/>
-<animate attributeName="opacity" values="0.000;1.000;1.000" keyTimes="0.00000000;0.02520161;1.00000000" calcMode="discrete" begin="0s" dur="7.936s" fill="remove"/>
-</rect>
+  <rect x="1" y="1" width="418" height="268" rx="10" fill="#0F1419" stroke="#088DDC"/>
+  <!-- Window Header -->
+  <path d="M1 38H419" stroke="#2B3A45"/>
+  <circle cx="20" cy="19" r="4.5" fill="#EA2D2E"/>
+  <circle cx="34" cy="19" r="4.5" fill="#E5C07B"/>
+  <circle cx="48" cy="19" r="4.5" fill="#98C379"/>
+  <text x="210.0" y="24" fill="#D3C6AA" font-size="11" text-anchor="middle">stack@arch: ~/gambling_phrase</text>
+
+  <!-- Animated Rounds -->
+  
+    <!-- Round 1 (Roll 1): Linus Torvalds -->
+    <g class="gp-round gp-round-0" id="round-1">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [1/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-0"><g class="quote" id="quote-1"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Talk is cheap. Show me the code</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Linus Torvalds</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-0" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-0" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 2 (Roll 4): Tony Soprano -->
+    <g class="gp-round gp-round-1" id="round-2">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [4/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-1"><g class="quote" id="quote-2"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">A wrong decision is better than indecision</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Tony Soprano</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-2" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-1" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-1" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 3 (Roll 11): Rick Sanchez -->
+    <g class="gp-round gp-round-2" id="round-3">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [11/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-2"><g class="quote" id="quote-3"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Wubba lubba dub dub!</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Rick Sanchez</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-3" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-2" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-2" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 4 (Roll 6): Imperial Creed -->
+    <g class="gp-round gp-round-3" id="round-4">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [6/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-3"><g class="quote" id="quote-4"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Cadia stands, and we shall not fall</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Imperial Creed</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-4" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-3" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-3" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 5 (Roll 2): Fallout -->
+    <g class="gp-round gp-round-4" id="round-5">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [2/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-4"><g class="quote" id="quote-5"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">War. War never changes.</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Fallout</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-5" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-4" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-4" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 6 (Roll 8): Half-Life -->
+    <g class="gp-round gp-round-5" id="round-6">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [8/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-5"><g class="quote" id="quote-6"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Forget about Freeman</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Half-Life</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-6" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-5" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-5" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 7 (Roll 5): Portal -->
+    <g class="gp-round gp-round-6" id="round-7">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [5/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-6"><g class="quote" id="quote-7"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">The cake is a lie</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Portal</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-7" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-6" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-6" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 8 (Roll 10): Atlas -->
+    <g class="gp-round gp-round-7" id="round-8">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [10/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-7"><g class="quote" id="quote-8"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Would you kindly?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Atlas</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-8" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-7" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-7" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 9 (Roll 12): Cayde-6 -->
+    <g class="gp-round gp-round-8" id="round-9">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [12/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-8"><g class="quote" id="quote-9"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">How&#x27;s your sister?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Cayde-6</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-9" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-8" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-8" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 10 (Roll 3): Sir Francis Drake -->
+    <g class="gp-round gp-round-9" id="round-10">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [3/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-9"><g class="quote" id="quote-10"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">SIC PARVIS MAGNA</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Sir Francis Drake</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-10" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-9" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-9" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 11 (Roll 7): Big Boss -->
+    <g class="gp-round gp-round-10" id="round-11">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [7/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-10"><g class="quote" id="quote-11"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Kept you waiting, huh?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Big Boss</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-11" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-10" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-10" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
+
+    <!-- Round 12 (Roll 9): Ellie -->
+    <g class="gp-round gp-round-11" id="round-12">
+      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [9/12]</text></g>
+      <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-11"><g class="quote" id="quote-12"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">It can&#x27;t be for nothing</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Ellie</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-12" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-11" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-11" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
+    </g>
 </svg>

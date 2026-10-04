@@ -80,7 +80,7 @@ def render(profile, theme, about, template):
                            for index, item in enumerate(profile["projects"], 1))
     interests = "\n\n".join(render_interest(item)
                             for item in profile.get("interests", []))
-    quotes_alt = "Hall of Fame. " + " ".join(
+    quotes_alt = "Gambling Phrase. " + " ".join(
         f'{item["text"]} — {item["author"]}.' for item in profile["quotes"])
     quotes_alt += " " + CLOSING_MESSAGE
     if "caption" in profile["stats"]:

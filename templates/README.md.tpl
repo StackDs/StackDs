@@ -53,7 +53,7 @@ $INTERESTS
 
 ---
 
-## Hall of Fame
+## Gambling Phrase
 
 <picture>
   <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/quotes-mobile-static.svg">

@@ -1,25 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="360" viewBox="0 0 420 360" role="img" aria-label="Mathematics: Exploring multivariable calculus, vector fields, and differential forms. Analyzing curvature, gradient ascent/descent, and critical points on 3D manifolds." xml:lang="en" data-motion="static">
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="360" viewBox="0 0 420 360" role="img" aria-label="Mathematics: I love any type of maths even though I'm terrible at them. I enjoy the multivariable calculus, linear algebra, and differential equations. I also like to learn about the applications of mathematics in physics and computer science." xml:lang="en" data-motion="static">
   <title>Mathematics</title>
-  <desc>Exploring multivariable calculus, vector fields, and differential forms. Analyzing curvature, gradient ascent/descent, and critical points on 3D manifolds.</desc>
+  <desc>I love any type of maths even though I'm terrible at them. I enjoy the multivariable calculus, linear algebra, and differential equations. I also like to learn about the applications of mathematics in physics and computer science.</desc>
   
   <rect x="1" y="1" width="418" height="358" rx="8" fill="#0F1419" stroke="#2B3A45" />
 
   
   <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
-    <text x="22" y="30" font-size="11" fill="#088DDC" font-weight="bold">// MULTIVARIABLE CALCULUS &amp; GEOMETRY</text>
-    <text x="22" y="52" font-size="19" fill="#6BC5ED" font-weight="bold">Mathematics</text>
-    <text x="22" y="72" font-size="12" fill="#ECEFF4">Exploring multivariable calculus, vector</text>
-    <text x="22" y="88" font-size="12" fill="#ECEFF4">fields, and differential forms. Analyzing</text>
-    <text x="22" y="104" font-size="12" fill="#ECEFF4">curvature, gradient ascent/descent, and</text>
-    <text x="22" y="120" font-size="12" fill="#ECEFF4">critical points on 3D manifolds.</text>
-    <rect x="22.0" y="142.0" width="66.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
-<text x="55.2" y="154.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Calculus</text>
-    <rect x="94.4" y="142.0" width="86.8" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
-<text x="137.8" y="154.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Gradient ∇f</text>
-    <rect x="187.2" y="142.0" width="100.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
-<text x="237.4" y="154.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Vector Fields</text>
-    <rect x="293.6" y="142.0" width="93.6" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
-<text x="340.4" y="154.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Optimization</text>
+    <text x="22" y="24" font-size="11" fill="#088DDC" font-weight="bold">// MULTIVARIABLE CALCULUS &amp; GEOMETRY</text>
+    <text x="22" y="44" font-size="19" fill="#6BC5ED" font-weight="bold">Mathematics</text>
+    <text x="22" y="60" font-size="12" fill="#ECEFF4">I love any type of maths even though I'm</text>
+    <text x="22" y="74" font-size="12" fill="#ECEFF4">terrible at them. I enjoy the multivariable</text>
+    <text x="22" y="88" font-size="12" fill="#ECEFF4">calculus, linear algebra, and differential</text>
+    <text x="22" y="102" font-size="12" fill="#ECEFF4">equations. I also like to learn about the</text>
+    <text x="22" y="116" font-size="12" fill="#ECEFF4">applications of mathematics in physics and</text>
+    <text x="22" y="130" font-size="12" fill="#ECEFF4">computer science.</text>
+    <rect x="22.0" y="150.0" width="66.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="55.2" y="162.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Calculus</text>
+    <rect x="94.4" y="150.0" width="107.2" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="148.0" y="162.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Linear Algebra</text>
+    <rect x="207.6" y="150.0" width="100.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="257.8" y="162.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Vector Fields</text>
+    <rect x="22.0" y="174.0" width="161.6" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="102.8" y="186.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Differential Equations</text>
   </g>
 
   
