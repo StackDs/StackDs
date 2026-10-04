@@ -6,8 +6,8 @@
   source blob `6ca0eac4522ecce7dd8de07b435560dd38c41582`.
   See the [upstream license](https://github.com/kovidgoyal/kitty/blob/master/LICENSE).
 
-These source SVGs are embedded directly into the generated badges. The Kitty
-badge adds a light tile behind the artwork so its dark details remain visible.
+These source SVGs are embedded into the generated badges and styled dynamically
+with the repository's theme palette to match the rest of the tech stack badges.
 
 ## Devicon license
 

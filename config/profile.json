@@ -37,6 +37,7 @@
     ]},
     {"category": "Environment & OS", "items": [
       {"name": "Arch Linux", "logo": "archlinux", "url": "https://archlinux.org/"},
+      {"name": "Hyprland", "logo": "hyprland", "url": "https://hyprland.org/"},
       {"name": "Kitty", "logo": "kitty", "url": "https://sw.kovidgoyal.net/kitty/"},
       {"name": "Docker", "logo": "docker", "url": "https://www.docker.com/"}
     ]},

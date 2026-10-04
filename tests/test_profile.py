@@ -155,10 +155,8 @@ class ProfileTests(unittest.TestCase):
             before, after = ET.fromstring(original), ET.fromstring(first)
             self.assertEqual([e.attrib for e in before.findall(f"{SVG}rect")],
                              [e.attrib for e in after.findall(f"{SVG}rect")])
-            style = after.find(f'{SVG}style[@id="profile-reduced-motion"]')
-            self.assertIn("animation: none !important", style.text)
-            self.assertIn(".s, .u { display: none !important; }", style.text)
-            self.assertEqual(1, len(after.findall(f'{SVG}style[@id="profile-reduced-motion"]')))
+            self.assertIsNone(after.find(f'{SVG}style[@id="profile-reduced-motion"]'))
+            self.assertTrue(after.findall(f'{SVG}rect[@class="s s0"]'))
 
     def test_stats_reject_error_cards_even_when_valid_svg(self):
         for source in ("<html>Unavailable</html>", f'<svg xmlns="{SVG[1:-1]}"><text>Something went wrong!</text></svg>', "not XML"):

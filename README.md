@@ -31,7 +31,7 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 
 **Environment &amp; OS**
 
-[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/)
+[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Hyprland](https://img.shields.io/static/v1?style=flat&label=&message=Hyprland&color=0F1419&logoColor=088DDC&logo=hyprland)](https://hyprland.org/) [![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/)
 
 **Frameworks &amp; Tools**
 
@@ -71,10 +71,8 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 ## Activity & Contributions
 
 <picture>
-  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
-  <source media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg">
-  <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake; a static calendar is shown with reduced motion.">
+  <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake.">
 </picture>
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)](https://github.com/StackDs)

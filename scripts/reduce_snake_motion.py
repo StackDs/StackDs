@@ -33,15 +33,8 @@ def render(source, theme, dark=False):
         if count != 1:
             raise ValueError(f"Expected one --{name} color in the Platane/snk SVG")
     style.text = css
-    reduced = ET.SubElement(root, f"{{{SVG}}}style", {"id": MOTION_STYLE})
-    reduced.text = (
-        "@media (prefers-reduced-motion: reduce) {"
-        "* { animation: none !important; }"
-        ".s, .u { display: none !important; }"
-        "}"
-    )
     root.set("role", "img")
-    root.set("aria-label", "GitHub contribution calendar; animated snake with a static reduced-motion view")
+    root.set("aria-label", "GitHub contribution calendar; animated snake")
     return ET.tostring(root, encoding="unicode") + "\n"
 
 

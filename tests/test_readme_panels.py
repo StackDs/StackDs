@@ -178,8 +178,9 @@ class TerminalPanelTests(unittest.TestCase):
         root = ET.fromstring(source)
         self.assertEqual("Java", root.find(f"{SVG}title").text)
         colors = {node.get("fill") for node in root.iter(f"{SVG}path")}
-        self.assertIn("#0074BD", colors)
-        self.assertIn("#EA2D2E", colors)
+        self.assertIn("#ABCDEF", colors)
+        self.assertNotIn("#0074BD", colors)
+        self.assertNotIn("#EA2D2E", colors)
         self.assertEqual("18", root.find(f"{SVG}svg").get("height"))
         self.assertFalse(list(root.iter(f"{SVG}image")))
         kitty = next(item for group in self.profile["stack"] for item in group["items"]
@@ -187,7 +188,7 @@ class TerminalPanelTests(unittest.TestCase):
         self.assertEqual('[![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/)',
                          render_readme.render_badge(kitty, self.theme))
         root = ET.fromstring(render_tech_badges.render(kitty, self.theme))
-        self.assertIsNotNone(root.find(f'{SVG}rect[@fill="#F4F4F4"]'))
+        self.assertIsNone(root.find(f'{SVG}rect[@fill="#F4F4F4"]'))
         self.assertTrue(list(root.find(f"{SVG}svg").iter(f"{SVG}path")))
         self.assertFalse(list(root.iter(f"{SVG}image")))
 
@@ -208,11 +209,8 @@ class TerminalPanelTests(unittest.TestCase):
             self.assertIn(f'src="assets/project-{index:02d}.svg"', source)
             self.assertIn(f'srcset="assets/project-{index:02d}-mobile.svg"', source)
         self.assertIn("A biography.", source)
-        self.assertIn("snake-static.svg", source)
-        self.assertIn("snake-dark-static.svg", source)
         self.assertIn('src="assets/contributions/snake.svg"', source)
         self.assertIn('media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg"', source)
-        self.assertIn('media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg"', source)
         self.assertNotIn("Code Philosophy", source)
         self.assertNotIn("opening_brace_on_same_line", source)
         self.assertIn("Gobernar es Educar - Pedro Aguirre Cerda.", source)

@@ -19,7 +19,7 @@ terminal banners, identity, contact links, and color palette.
    | `scripts/render_project_cards.py` | Static project card layout for desktop and mobile. |
    | `scripts/render_contact_badges.py` | Static contact badge layout. |
    | `scripts/render_tech_badges.py` | Local Java and Kitty badge layout. |
-   | `assets/icons/` | Original-color Java and Kitty artwork and source credits. |
+   | `assets/icons/` | Java and Kitty artwork and source credits. |
    | `scripts/profile_icons.py` | Logo artwork shared by the badges and web card. |
    | `templates/site.html.tpl` | Web card structure and interface copy. |
    | `site/styles.css` | Web layout and spacing; palette values come from generated `site/theme.css`. |
@@ -92,11 +92,10 @@ Add a technology to the appropriate `stack[].items` list:
 
 `logo` is a Shields.io / Simple Icons identifier. Use an empty string for a
 text-only badge, as with SDL3. `"logo": "java"` and `"logo": "kitty"` select local
-badges using the SVG artwork in `assets/icons/`, embedded at 18px with original
-colors. Java uses a blue cup with red steam; Kitty uses its upstream cat/terminal
-logo on a light tile for contrast. URLs and
-names, including `C++`, are encoded automatically. Badges use a flat style, the
-shared surface color, and the shared accent for provider-hosted logos.
+badges using the SVG artwork in `assets/icons/`, embedded at 18px and themed
+with the repository's palette (accent and accent-light) to harmonize with the rest
+of the stack. URLs and names, including `C++`, are encoded automatically.
+Badges use a flat style, the shared surface color, and the shared accent for logos.
 
 Add a project to `projects` with `name`, `url`, and a one-line `description`.
 Each project becomes a static card with wrapped text and a link to its repository.
@@ -180,14 +179,12 @@ The avatar's aspect ratio is controlled by
 `.github/workflows/contributions.yml` runs Platane/snk at **06:23 UTC daily**, on
 relevant changes to `main`, and through manual dispatch. It reads the palette
 using `scripts/reduce_snake_motion.py --outputs`, then postprocesses the result
-with the same script. Postprocessing is idempotent; in reduced-motion mode it
-shows the static contribution cells and hides the moving snake and progress bar.
+with the same script. Postprocessing is idempotent and themes the animated snake
+with the repository palette.
 
-The light and dark SVGs and their static counterparts are stored in
-`assets/contributions/`. The README selects the animated snake by default,
-uses a static calendar with `prefers-reduced-motion: reduce`, and chooses
-its palette with `prefers-color-scheme`. Local generation only restyles those
-snapshots; run **Actions → Update contribution snake → Run workflow** to refresh
+The light and dark SVGs are stored in `assets/contributions/`. The README displays
+the animated snake and chooses its palette with `prefers-color-scheme`. Local
+generation only restyles those snapshots; run **Actions → Update contribution snake → Run workflow** to refresh
 the contribution data.
 
 ### GitHub statistics
