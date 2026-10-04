@@ -254,7 +254,7 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(["false"], params["include_all_commits"])
 
     def copy_build_inputs(self):
-        for name in ("config", "content", "templates", "assets/contributions", "assets/icons"):
+        for name in ("config", "content", "templates", "assets/contributions", "assets/icons", "assets/images"):
             shutil.copytree(ROOT / name, self.root / name)
         shutil.copyfile(ROOT / "ascii.txt", self.root / "ascii.txt")
 

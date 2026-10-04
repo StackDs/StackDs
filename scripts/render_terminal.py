@@ -90,6 +90,57 @@ def photo_grid_size():
     return columns, rows
 
 
+_IMAGE_CACHE = {}
+
+
+def get_avatar_image(root=None):
+    """Load and base64-encode the original avatar image from assets/images.
+    Crops the outer black border frame if PIL is available, and resizes for crisp rendering.
+    Falls back to reading raw image bytes without any third-party dependencies.
+    """
+    base_root = Path(root) if root is not None else ROOT
+    key = str(base_root)
+    if key in _IMAGE_CACHE:
+        return _IMAGE_CACHE[key]
+
+    target = base_root / "assets" / "images" / DEFAULT_IMAGE
+    if not target.is_file():
+        target = ROOT / "assets" / "images" / DEFAULT_IMAGE
+    if not target.is_file():
+        return None
+
+    import base64
+    try:
+        from PIL import Image
+        import io
+        with Image.open(target) as im:
+            sw, sh = im.size
+            spix = im.load()
+            if sum(spix[0, 0][:3]) < 30 and sum(spix[sw - 1, sh - 1][:3]) < 30:
+                x_in, y_in = 0, 0
+                while x_in < sw // 8 and sum(spix[x_in, sh // 2][:3]) < 30:
+                    x_in += 1
+                while y_in < sh // 8 and sum(spix[sw // 2, y_in][:3]) < 30:
+                    y_in += 1
+                x_out, y_out = sw - 1, sh - 1
+                while x_out > 7 * sw // 8 and sum(spix[x_out, sh // 2][:3]) < 30:
+                    x_out -= 1
+                while y_out > 7 * sh // 8 and sum(spix[sw // 2, y_out][:3]) < 30:
+                    y_out -= 1
+                if x_out > x_in and y_out > y_in:
+                    im = im.crop((x_in + 2, y_in + 2, x_out - 1, y_out - 1))
+            im = im.resize((800, 800), Image.Resampling.LANCZOS)
+            buf = io.BytesIO()
+            im.save(buf, format="JPEG", quality=88, optimize=True)
+            result = base64.b64encode(buf.getvalue()).decode("ascii")
+            _IMAGE_CACHE[key] = result
+            return result
+    except ImportError:
+        result = base64.b64encode(target.read_bytes()).decode("ascii")
+        _IMAGE_CACHE[key] = result
+        return result
+
+
 def image_to_ascii(path, columns, rows, theme=None):
     """Convert a photo into preserved-whitespace SVG text rows.
 
@@ -182,7 +233,7 @@ def image_to_ascii(path, columns, rows, theme=None):
         return art
 
 
-def render(mobile=False, art=None, image_name="", profile=None, theme=None):
+def render(mobile=False, art=None, image_name="", profile=None, theme=None, root=None, use_image=True):
     profile = profile if profile is not None else load_profile()
     theme = theme if theme is not None else load_theme()
     terminal = profile["terminal"]
@@ -197,38 +248,40 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     PHOTO_DEEP = theme.get("photo_deep", "#1A3A50")
     PHOTO_WHITE = theme.get("photo_white", "#FFFFFF")
     PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE)
-    if art is None:
-        art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
-    if not art or not any(art):
-        raise ValueError("ASCII artwork must not be empty")
-    # Build a lookup: character → tone index (0-4) based on position in
-    # the density ramp.  Characters at the dense (dark) end of the ramp
-    # map to tone 0 (deepest colour) and those at the sparse (bright) end
-    # to tone 4 (white / highlight).  The 70-char ramp is split into 5
-    # equal bands of 14 characters each.
-    _NUM_TONES = len(PHOTO_TONES)
-    _ramp_len = len(DENSITY_RAMP)
-    _band = max(_ramp_len // _NUM_TONES, 1)
-    _CHAR_TONE = {}
-    for _idx, _ch in enumerate(ASCII_RAMP):          # densest → sparsest
-        _CHAR_TONE[_ch] = min(_idx // _band, _NUM_TONES - 1)
-    parsed_art = []
-    for row in art:
-        if isinstance(row, (tuple, list)) and len(row) == len(PHOTO_TONES):
-            parsed_art.append(row)
-        else:
-            layers = [[] for _ in range(_NUM_TONES)]
-            for ch in row:
-                tone = _CHAR_TONE.get(ch, -1)
-                if tone < 0:                          # space or unknown
-                    for layer in layers:
-                        layer.append(" ")
-                else:
-                    for t, layer in enumerate(layers):
-                        layer.append(ch if t == tone else " ")
-            parsed_art.append(tuple("".join(layer) for layer in layers))
-    art = parsed_art
-    columns = max(len(layer) for row in art for layer in row)
+
+    image_b64 = None
+    if use_image:
+        image_b64 = get_avatar_image(root)
+
+    if not image_b64:
+        if art is None:
+            art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
+        if not art or not any(art):
+            raise ValueError("ASCII artwork must not be empty")
+        _NUM_TONES = len(PHOTO_TONES)
+        _ramp_len = len(DENSITY_RAMP)
+        _band = max(_ramp_len // _NUM_TONES, 1)
+        _CHAR_TONE = {}
+        for _idx, _ch in enumerate(ASCII_RAMP):
+            _CHAR_TONE[_ch] = min(_idx // _band, _NUM_TONES - 1)
+        parsed_art = []
+        for row in art:
+            if isinstance(row, (tuple, list)) and len(row) == len(PHOTO_TONES):
+                parsed_art.append(row)
+            else:
+                layers = [[] for _ in range(_NUM_TONES)]
+                for ch in row:
+                    tone = _CHAR_TONE.get(ch, -1)
+                    if tone < 0:
+                        for layer in layers:
+                            layer.append(" ")
+                    else:
+                        for t, layer in enumerate(layers):
+                            layer.append(ch if t == tone else " ")
+                parsed_art.append(tuple("".join(layer) for layer in layers))
+        art = parsed_art
+        columns = max(len(layer) for row in art for layer in row)
+
     width = 420 if mobile else 880
     left = 24 if mobile else 36
     command_y = 81
@@ -237,15 +290,20 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     art_x = left + art_padding
     art_y = command_y + 27 + art_padding
     art_inner_width = art_width - 2 * art_padding
-    cell_width = art_inner_width / columns
     art_top = command_y + 27
     art_height = art_width / REFERENCE_ASPECT_RATIO
     art_inner_height = art_height - 2 * art_padding
-    line_height = art_inner_height / len(art)
-    art_size = cell_width / .602
     art_bottom = ceil(art_top + art_height)
     info_x = left if mobile else 490
     info_y = art_bottom + 40 if mobile else art_top + 33
+
+    if not image_b64:
+        cell_width = art_inner_width / columns
+        line_height = art_inner_height / len(art)
+        art_size = cell_width / .602
+    else:
+        columns = cell_width = line_height = art_size = 0
+
     clock = 200
     cursor_frames = {}
     typed_segments = []
@@ -350,10 +408,10 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
                 'repeatCount="indefinite" fill="remove"/>')
 
     avatar_description = (
-        f"an ASCII avatar based on {escape(image_name)}"
-        if image_name else "a custom ASCII avatar"
+        f"an avatar based on {escape(image_name)}"
+        if image_name else "Bryan's portrait"
     )
-    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="en">
+    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="en">
   <title id="title">{escape(profile["title"])}</title>
     <desc id="desc">A terminal with {avatar_description}. {escape(profile["description"])}</desc>
   <style>
@@ -399,6 +457,11 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
 
     parts.append('<g id="ascii-art" aria-hidden="true">')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{ACCENT}"/>')
+    if image_b64:
+        parts.append(
+            f'<image href="data:image/jpeg;base64,{image_b64}" xlink:href="data:image/jpeg;base64,{image_b64}" '
+            f'x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" '
+            f'clip-path="url(#art-clip)" preserveAspectRatio="xMidYMid slice"/>')
     beam_h = 16
     scan_start_y = art_top - beam_h
     scan_end_y = art_bottom
@@ -412,17 +475,18 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
         <animate attributeName="y2" values="{scan_start_y + beam_h // 2};{scan_end_y + beam_h // 2}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
       </line>
     </g>''')
-    for i, layers in enumerate(art):
-        parts.append(f'<g class="ascii-row" data-row="{i}">')
-        for tone, line in enumerate(layers):
-            color = PHOTO_TONES[tone]
-            parts.append(
-                f'<text class="ascii-shade tone-{tone}" x="{art_x}" '
-                f'y="{art_y + art_size + i * line_height:.3f}" '
-                f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve" '
-                f'textLength="{columns * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
-                f'{escape(line)}</text>')
-        parts.append('</g>')
+    if not image_b64 and art:
+        for i, layers in enumerate(art):
+            parts.append(f'<g class="ascii-row" data-row="{i}">')
+            for tone, line in enumerate(layers):
+                color = PHOTO_TONES[tone]
+                parts.append(
+                    f'<text class="ascii-shade tone-{tone}" x="{art_x}" '
+                    f'y="{art_y + art_size + i * line_height:.3f}" '
+                    f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve" '
+                    f'textLength="{columns * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
+                    f'{escape(line)}</text>')
+            parts.append('</g>')
     parts.append('</g>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')

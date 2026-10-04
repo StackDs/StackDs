@@ -33,7 +33,7 @@ def artifacts(root=ROOT):
         "site/theme.css": render_theme.render(theme),
     }
     for suffix, mobile in (("", False), ("-mobile", True)):
-        banner = render_terminal.render(mobile, art=art, profile=profile, theme=theme)
+        banner = render_terminal.render(mobile, art=art, profile=profile, theme=theme, root=root)
         result[f"assets/terminal{suffix}.svg"] = banner
         result[f"assets/terminal{suffix}-static.svg"] = static_svg(banner)
         quotes = render_quotes.render(profile, theme, mobile)
