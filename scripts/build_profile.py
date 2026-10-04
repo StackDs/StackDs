@@ -16,6 +16,7 @@ import render_terminal
 import render_theme
 import render_tech_badges
 import render_interests
+import render_basketball
 import update_stats
 from svg_motion import static_svg
 
@@ -72,6 +73,12 @@ def artifacts(root=ROOT):
             fallback_gen(profile, theme) if fallback
             else applier(source, theme)
         )
+    try:
+        result["assets/basketball.gif"] = render_basketball.render_gif(theme)
+    except Exception:
+        gif_file = root / "assets/basketball.gif"
+        if gif_file.is_file():
+            result["assets/basketball.gif"] = gif_file.read_bytes()
     return result
 
 
@@ -80,13 +87,22 @@ def build(root=ROOT, check=False):
     stale = []
     for name, content in generated.items():
         path = root / name
-        if path.is_file() and path.read_text(encoding="utf-8") == content:
-            continue
-        stale.append(name)
-        if not check:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding="utf-8")
-        print(f'{"Out of date" if check else "Generated"}: {name}')
+        if isinstance(content, bytes):
+            is_same = path.is_file() and path.read_bytes() == content
+            if not is_same:
+                stale.append(name)
+                if not check:
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(content)
+        else:
+            is_same = path.is_file() and path.read_text(encoding="utf-8") == content
+            if not is_same:
+                stale.append(name)
+                if not check:
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text(content, encoding="utf-8")
+        if not is_same:
+            print(f'{"Out of date" if check else "Generated"}: {name}')
     return not stale if check else True
 
 

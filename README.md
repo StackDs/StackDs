@@ -21,6 +21,10 @@ I'm a Computer Engineering student with a passion for teaching. I enjoy teaching
 
 AFK, I'm a musician and play several instruments. I definitely have more hours logged in video games than touching grass. I also love playing basketball because you have to move your ass every once in a while, and I'm a bit of an alcoholic, but what engineer isn't?
 
+<p align="center">
+  <img src="assets/basketball.gif" alt="Pixel art streetball player slam dunking a basketball">
+</p>
+
 ---
 
 ## Tech Stack
