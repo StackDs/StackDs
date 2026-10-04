@@ -126,6 +126,11 @@ def load_profile(root=ROOT):
     _url(stats.get("endpoint"), f"{path}:stats.endpoint")
     _require(isinstance(stats.get("include_all_commits"), bool),
              f"{path}:stats.include_all_commits", "expected a boolean")
+    if "streak_endpoint" in stats:
+        _url(stats["streak_endpoint"], f"{path}:stats.streak_endpoint")
+    if "langs_count" in stats:
+        _require(isinstance(stats["langs_count"], int) and stats["langs_count"] > 0,
+                 f"{path}:stats.langs_count", "expected a positive integer")
     if "caption" in stats:
         _string(stats["caption"], f"{path}:stats.caption", empty=True)
     widgets = profile.get("widgets")

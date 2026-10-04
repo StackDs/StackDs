@@ -33,6 +33,14 @@ VALID_STATS = f'''<svg xmlns="{SVG[1:-1]}" viewBox="0 0 450 150">
 <g data-testid="rank-circle"><text>B</text></g>
 <text data-testid="commits">123</text><text data-testid="prs">4</text>
 </svg>'''
+VALID_LANGS = f'''<svg xmlns="{SVG[1:-1]}" viewBox="0 0 450 165">
+<rect data-testid="card-bg"/><text class="header">Most Used Languages</text>
+<text class="lang-name">C++</text>
+</svg>'''
+VALID_STREAK = f'''<svg xmlns="{SVG[1:-1]}" viewBox="0 0 495 195">
+<rect width="494" height="194"/>
+<text>Total Contributions</text><text>Current Streak</text>
+</svg>'''
 
 
 class ProfileTests(unittest.TestCase):
@@ -136,8 +144,19 @@ class ProfileTests(unittest.TestCase):
         self.assertIn("logoColor=AB1234", render_readme.render_badge(self.profile["stack"][0]["items"][0], theme))
         self.assertIn("--cs:#AB1234", reduce_snake_motion.render((ROOT / "assets/contributions/snake.svg").read_text(), theme))
         self.assertIn("#AB1234", update_stats.apply_theme(VALID_STATS, theme))
+        self.assertIn("#AB1234", update_stats.apply_languages_theme(VALID_LANGS, theme))
         params = parse_qs(urlsplit(update_stats.stats_url(self.profile, theme)).query)
         self.assertEqual(["AB1234"], params["ring_color"])
+        lang_params = parse_qs(urlsplit(update_stats.languages_url(self.profile, theme)).query)
+        self.assertEqual(["AB1234"], lang_params["title_color"])
+        streak_params = parse_qs(urlsplit(update_stats.streak_url(self.profile, theme)).query)
+        self.assertEqual(["AB1234"], streak_params["stroke"])
+
+    def test_languages_and_streak_fallbacks_produce_unavailable_cards(self):
+        root_lang = ET.fromstring(update_stats.render_languages_fallback(self.profile, self.theme))
+        self.assertEqual("unavailable", root_lang.get("data-profile-stats"))
+        root_streak = ET.fromstring(update_stats.render_streak_fallback(self.profile, self.theme))
+        self.assertEqual("unavailable", root_streak.get("data-profile-stats"))
 
     def test_site_uses_configured_email_and_escaped_identity(self):
         next(item for item in self.profile["contacts"] if item["id"] == "email")["url"] = "mailto:example@example.org"

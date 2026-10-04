@@ -39,7 +39,7 @@ jobs:
 
       - name: Save updated statistics
         run: |
-          git add assets/stats/github.svg
+          git add assets/stats/*.svg
           if git diff --cached --quiet; then
             echo 'Statistics are already up to date.'
             exit 0

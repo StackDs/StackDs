@@ -57,16 +57,21 @@ def artifacts(root=ROOT):
         path = f"assets/contributions/snake{suffix}.svg"
         result[path] = reduce_snake_motion.render(read(path), theme, dark)
         result[f"assets/contributions/snake{suffix}-static.svg"] = static_svg(result[path], {"s", "u"})
-    stats = root / "assets/stats/github.svg"
-    if stats.is_file():
-        source = stats.read_text(encoding="utf-8")
-        fallback = ET.fromstring(source).get("data-profile-stats") == "unavailable"
-    else:
-        fallback = True
-    result["assets/stats/github.svg"] = (
-        update_stats.render_fallback(profile, theme) if fallback
-        else update_stats.apply_theme(source, theme)
-    )
+    for name, applier, fallback_gen in (
+        ("github.svg", update_stats.apply_theme, update_stats.render_fallback),
+        ("languages.svg", update_stats.apply_languages_theme, update_stats.render_languages_fallback),
+        ("streak.svg", update_stats.apply_streak_theme, update_stats.render_streak_fallback),
+    ):
+        target = root / f"assets/stats/{name}"
+        if target.is_file():
+            source = target.read_text(encoding="utf-8")
+            fallback = ET.fromstring(source).get("data-profile-stats") == "unavailable"
+        else:
+            fallback = True
+        result[f"assets/stats/{name}"] = (
+            fallback_gen(profile, theme) if fallback
+            else applier(source, theme)
+        )
     return result
 
 

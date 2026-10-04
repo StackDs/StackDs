@@ -104,7 +104,9 @@
   ],
   "stats": {
     "endpoint": "https://github-readme-stats.vercel.app/api",
+    "streak_endpoint": "https://streak-stats.demolab.com",
     "include_all_commits": false,
+    "langs_count": 6,
     "caption": "I'm trying to improve this, so... KISS. Keep it simple, stupid."
   },
   "widgets": {

@@ -40,7 +40,20 @@ $PROJECTS
   <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake.">
 </picture>
 
-[![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)]($GITHUB_URL)
+<p align="center">
+  <a href="$GITHUB_URL">
+    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits and pull requests">
+  </a>
+  <a href="$GITHUB_URL">
+    <img src="assets/stats/languages.svg" alt="Most used programming languages">
+  </a>
+</p>
+
+<p align="center">
+  <a href="$GITHUB_URL">
+    <img src="assets/stats/streak.svg" alt="GitHub contribution streak">
+  </a>
+</p>
 
 $STATS_CAPTION
 $WIDGETS

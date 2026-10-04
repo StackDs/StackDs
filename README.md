@@ -75,7 +75,20 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
   <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake.">
 </picture>
 
-[![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)](https://github.com/StackDs)
+<p align="center">
+  <a href="https://github.com/StackDs">
+    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits and pull requests">
+  </a>
+  <a href="https://github.com/StackDs">
+    <img src="assets/stats/languages.svg" alt="Most used programming languages">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/StackDs">
+    <img src="assets/stats/streak.svg" alt="GitHub contribution streak">
+  </a>
+</p>
 
 I'm trying to improve this, so... KISS. Keep it simple, stupid.
 
