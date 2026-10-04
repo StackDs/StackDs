@@ -103,6 +103,23 @@ def image_to_ascii(path, columns, rows, theme=None):
     background_rgb = tuple(int(background[i:i + 2], 16) for i in (1, 3, 5))
     with Image.open(path) as source:
         source = ImageOps.exif_transpose(source).convert("RGBA")
+        # Crop outer black border frame if present (e.g. Final.jpeg)
+        sw, sh = source.size
+        spix = source.load()
+        if sum(spix[0, 0][:3]) < 30 and sum(spix[sw - 1, sh - 1][:3]) < 30:
+            x_in, y_in = 0, 0
+            while x_in < sw // 8 and sum(spix[x_in, sh // 2][:3]) < 30:
+                x_in += 1
+            while y_in < sh // 8 and sum(spix[sw // 2, y_in][:3]) < 30:
+                y_in += 1
+            x_out, y_out = sw - 1, sh - 1
+            while x_out > 7 * sw // 8 and sum(spix[x_out, sh // 2][:3]) < 30:
+                x_out -= 1
+            while y_out > 7 * sh // 8 and sum(spix[sw // 2, y_out][:3]) < 30:
+                y_out -= 1
+            if x_out > x_in and y_out > y_in:
+                source = source.crop((x_in + 2, y_in + 2, x_out - 1, y_out - 1))
+
         source = ImageOps.fit(source, (720, 720), method=Image.Resampling.LANCZOS,
                               centering=(.5, .48))
 
@@ -118,6 +135,9 @@ def image_to_ascii(path, columns, rows, theme=None):
         backdrop = Image.new("RGBA", source.size, (*background_rgb, 255))
         grayscale = Image.alpha_composite(backdrop, source).convert("L")
         grayscale = grayscale.resize((columns, rows), Image.Resampling.LANCZOS)
+        # Adaptive shadow lifting: reveal hoodie folds, hair strands, and fretboard
+        lut = [int((i / 255.0) ** 0.72 * 255) for i in range(256)]
+        grayscale = grayscale.point(lut)
         grayscale = ImageOps.autocontrast(grayscale, cutoff=1)
         grayscale = ImageEnhance.Contrast(grayscale).enhance(1.35)
 
@@ -179,9 +199,23 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
         art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
     if not art or not any(art):
         raise ValueError("ASCII artwork must not be empty")
-    photo_art = image_name != ""
-    if not photo_art:
-        art = [(line, " " * len(line), " " * len(line)) for line in art]
+    parsed_art = []
+    for row in art:
+        if isinstance(row, (tuple, list)) and len(row) == 3:
+            parsed_art.append(row)
+        else:
+            t0, t1, t2 = [], [], []
+            for ch in row:
+                if ch in "@%#":
+                    t0.append(ch); t1.append(" "); t2.append(" ")
+                elif ch in "*+=-":
+                    t0.append(" "); t1.append(ch); t2.append(" ")
+                elif ch in ":.":
+                    t0.append(" "); t1.append(" "); t2.append(ch)
+                else:
+                    t0.append(" "); t1.append(" "); t2.append(" ")
+            parsed_art.append(("".join(t0), "".join(t1), "".join(t2)))
+    art = parsed_art
     columns = max(len(layer) for row in art for layer in row)
     width = 420 if mobile else 880
     left = 24 if mobile else 36
@@ -192,11 +226,11 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     art_y = command_y + 27 + art_padding
     art_inner_width = art_width - 2 * art_padding
     cell_width = art_inner_width / columns
-    art_size = cell_width / .602
     art_top = command_y + 27
     art_height = art_width / REFERENCE_ASPECT_RATIO
     art_inner_height = art_height - 2 * art_padding
     line_height = art_inner_height / len(art)
+    art_size = cell_width / .602
     art_bottom = ceil(art_top + art_height)
     info_x = left if mobile else 490
     info_y = art_bottom + 40 if mobile else art_top + 33
@@ -328,6 +362,14 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     <filter id="neon-glow" x="-15%" y="-15%" width="130%" height="130%">
       <feGaussianBlur stdDeviation="2.5"/>
     </filter>
+    <linearGradient id="scanline-beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{ACCENT}" stop-opacity="0"/>
+      <stop offset="50%" stop-color="{ACCENT}" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="{ACCENT}" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="art-clip">
+      <rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8"/>
+    </clipPath>
   </defs>
   <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="12" fill="{BACKGROUND}" stroke="{ACCENT}"/>
   <path d="M1 45H{width - 1}" stroke="{RULE}"/>
@@ -343,17 +385,20 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
 
     parts.append('<g id="ascii-art" aria-hidden="true">')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{ACCENT}"/>')
-    final_scan_y = art_y + (len(art) - 1) * line_height
-    parts.append(f'''<rect class="scanline motion" x="{art_x}" y="{art_y}" width="{art_inner_width}" height="{line_height:.3f}" fill="{ACCENT}" opacity="0">
-      <animate attributeName="y" values="{art_y};{art_y};{final_scan_y:.3f};{final_scan_y:.3f}" keyTimes="0;.02;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}"/>
-      <animate attributeName="opacity" values="0;.14;.14;0" keyTimes="0;.025;.96;1" begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}"/>
-    </rect>''')
+    beam_h = 16
+    scan_start_y = art_top - beam_h
+    scan_end_y = art_bottom
+    scan_dur = 4.0
+    parts.append(f'''<g class="scanline-group motion" clip-path="url(#art-clip)" aria-hidden="true">
+      <rect class="scanline" x="{left}" y="{scan_start_y}" width="{art_width}" height="{beam_h}" fill="url(#scanline-beam)">
+        <animate attributeName="y" values="{scan_start_y};{scan_end_y}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
+      </rect>
+      <line x1="{left}" y1="{scan_start_y + beam_h // 2}" x2="{left + art_width}" y2="{scan_start_y + beam_h // 2}" stroke="{ACCENT}" stroke-width="1.5" opacity="0.65" filter="url(#neon-glow)">
+        <animate attributeName="y1" values="{scan_start_y + beam_h // 2};{scan_end_y + beam_h // 2}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
+        <animate attributeName="y2" values="{scan_start_y + beam_h // 2};{scan_end_y + beam_h // 2}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
+      </line>
+    </g>''')
     for i, layers in enumerate(art):
-        # Keep one cell width across every row, including spaces. Fitting each
-        # row independently to the full width would distort the supplied art.
-        highlight_start = .02 + i * .94 / len(art)
-        highlight_end = highlight_start + .65 / len(art)
-        highlight_trail = min(highlight_end + .01, .985)
         parts.append(f'<g class="ascii-row" data-row="{i}">')
         for tone, line in enumerate(layers):
             color = PHOTO_TONES[tone]
@@ -362,12 +407,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
                 f'y="{art_y + art_size + i * line_height:.3f}" '
                 f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve" '
                 f'textLength="{columns * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
-                f'{escape(line)}<animate class="motion" attributeName="fill" '
-                f'values="{color};{color};{TEXT_PRIMARY};{ACCENT};{color}" '
-                f'keyTimes="0;{highlight_start:.8f};{highlight_end:.8f};'
-                f'{highlight_trail:.8f};1" '
-                f'begin="{seconds(scan_start)}" dur="{seconds(scan_duration)}" '
-                'fill="remove"/></text>')
+                f'{escape(line)}</text>')
         parts.append('</g>')
     parts.append('</g>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
