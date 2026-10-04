@@ -38,14 +38,14 @@
     {"category": "Environment & OS", "items": [
       {"name": "Arch Linux", "logo": "archlinux", "url": "https://archlinux.org/"},
       {"name": "Hyprland", "logo": "hyprland", "url": "https://hyprland.org/"},
-      {"name": "Kitty", "logo": "kitty", "url": "https://sw.kovidgoyal.net/kitty/"},
-      {"name": "Docker", "logo": "docker", "url": "https://www.docker.com/"}
+      {"name": "Kitty", "logo": "kitty", "url": "https://sw.kovidgoyal.net/kitty/"}
     ]},
     {"category": "Frameworks & Tools", "items": [
       {"name": "LaTeX", "logo": "latex", "url": "https://www.latex-project.org/"},
       {"name": "Flutter", "logo": "flutter", "url": "https://flutter.dev/"},
       {"name": "Django", "logo": "django", "url": "https://www.djangoproject.com/"},
       {"name": "Git", "logo": "git", "url": "https://git-scm.com/"},
+       {"name": "Docker", "logo": "docker", "url": "https://www.docker.com/"},
       {"name": "Opencode", "logo": "opencode", "url": "https://opencode.ai/"}
     ]},
     {"category": "Databases", "items": [
@@ -75,7 +75,7 @@
   "stats": {
     "endpoint": "https://github-readme-stats.vercel.app/api",
     "include_all_commits": false,
-    "caption": "Commit year is shown on the card; rank and PR totals are reported by GitHub Readme Stats. Updated daily when the provider is available."
+    "caption": "I'm trying to improve this, so... KISS. Keep it simple, stupid."
   },
   "widgets": {
     "spotify": {"enabled": false, "title": "Now Playing", "image_url": "", "url": "", "caption": "Currently playing, or the last track when offline. Updates may be cached."},

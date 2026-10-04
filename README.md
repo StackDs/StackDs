@@ -9,7 +9,7 @@
 
 ---
 
-## Contact
+## My Profiles
 
 [![Instagram](assets/contact-01.svg)](https://www.instagram.com/_bryan.712/) [![PSN Profiles](assets/contact-02.svg)](https://psnprofiles.com/StackDS) [![LinkedIn](assets/contact-03.svg)](https://www.linkedin.com/in/bryan-aguirre-fuentes-1953642bb/) [![Email](assets/contact-04.svg)](mailto:stackctrlz@gmail.com) [![Discord](assets/contact-05.svg)](https://discord.com/users/468600348500688917) [![Steam](assets/contact-06.svg)](https://steamcommunity.com/id/StackDs/)
 
