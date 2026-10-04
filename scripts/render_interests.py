@@ -59,44 +59,31 @@ def _render_programming_canvas(theme):
     <g font-family="DejaVu Sans Mono, monospace" font-size="11">
       <!-- Line 1 -->
       <g class="p-l1">
-        <text x="16" y="44" fill="{comment}">1</text>
-        <text x="36" y="44" fill="{accent}">#include </text>
-        <text x="96" y="44" fill="{accent_light}">&lt;stdio.h&gt;</text>
+        <text x="16" y="44"><tspan fill="{comment}">1   </tspan><tspan fill="{accent}">#include </tspan><tspan fill="{accent_light}">&lt;stdio.h&gt;</tspan></text>
       </g>
       <!-- Line 2 -->
       <g class="p-l2">
-        <text x="16" y="62" fill="{comment}">2</text>
-        <text x="36" y="62" fill="{accent}">int </text>
-        <text x="63" y="62" fill="{accent_light}">main</text>
-        <text x="90" y="62" fill="{text}">(void) {{</text>
+        <text x="16" y="62"><tspan fill="{comment}">2   </tspan><tspan fill="{accent}">int </tspan><tspan fill="{accent_light}">main</tspan><tspan fill="{text}">(void) {{</tspan></text>
       </g>
       <!-- Line 3 -->
       <g class="p-l3">
-        <text x="16" y="80" fill="{comment}">3</text>
-        <text x="48" y="80" fill="{accent_light}">printf</text>
-        <text x="90" y="80" fill="{text}">(</text>
-        <text x="97" y="80" fill="{text_sec}">&quot;Hello, World!\\n&quot;</text>
-        <text x="219" y="80" fill="{text}">);</text>
+        <text x="16" y="80"><tspan fill="{comment}">3     </tspan><tspan fill="{accent_light}">printf</tspan><tspan fill="{text}">(</tspan><tspan fill="{text_sec}">&quot;This shit isn't gonna compile\\n&quot;</tspan><tspan fill="{text}">)</tspan></text>
       </g>
       <!-- Line 4 -->
       <g class="p-l4">
-        <text x="16" y="98" fill="{comment}">4</text>
-        <text x="48" y="98" fill="{accent}">return </text>
-        <text x="97" y="98" fill="{text}">0;</text>
+        <text x="16" y="98"><tspan fill="{comment}">4     </tspan><tspan fill="{accent}">return </tspan><tspan fill="{text}">0;</tspan></text>
       </g>
       <!-- Line 5 -->
       <g class="p-l5">
-        <text x="16" y="116" fill="{comment}">5</text>
-        <text x="36" y="116" fill="{text}">}}</text>
+        <text x="16" y="116"><tspan fill="{comment}">5   </tspan><tspan fill="{text}">}}</tspan></text>
       </g>
       <!-- Terminal Execution Divider -->
       <line x1="12" y1="126" x2="348" y2="126" stroke="{border}" stroke-dasharray="3 3"/>
       <!-- Terminal Output -->
       <g class="p-out">
-        <text x="16" y="142" fill="{accent}">~ $ </text>
-        <text x="42" y="142" fill="{text}">./main</text>
-        <text x="16" y="158" fill="{accent_light}">Hello, World!</text>
-        <rect class="p-cur" x="110" y="148" width="6" height="12" fill="{accent_light}"/>
+        <text x="16" y="142"><tspan fill="{accent}">~ $ </tspan><tspan fill="{text}">gcc main.c -o And Justice For All</tspan></text>
+        <text x="16" y="158" fill="{accent_light}">You forgot a semicolon!... stupid</text>
+        <rect class="p-cur" x="240" y="148" width="6" height="12" fill="{accent_light}"/>
       </g>
     </g>
 '''
@@ -161,6 +148,8 @@ def _render_algorithms_canvas(theme):
         88%, 98% {{ opacity: 1; }}
         100% {{ opacity: 0; }}
       }}
+      .bq-0, .bq-1, .bq-2 {{ opacity: 0; }}
+      .bq-3 {{ opacity: 1; }}
       .bn-0 {{ animation: bfs-n0 6s infinite; }}
       .be-1 {{ animation: bfs-e1 6s infinite; }}
       .bn-1 {{ animation: bfs-n1 6s infinite; }}
@@ -205,10 +194,10 @@ def _render_algorithms_canvas(theme):
     <!-- Queue Status Box -->
     <g font-family="DejaVu Sans Mono, monospace" font-size="10" text-anchor="middle">
       <rect x="35" y="136" width="290" height="22" rx="4" fill="{control}" stroke="{border}"/>
-      <text class="bq-0" x="180" y="151" fill="{accent}">Queue: [ 0 ] → Root Discovery</text>
-      <text class="bq-1" x="180" y="151" fill="{accent_light}">Queue: [ 1, 2 ] → Level 1 Enqueued</text>
-      <text class="bq-2" x="180" y="151" fill="{accent_light}">Queue: [ 3, 4, 5, 6 ] → Level 2 Enqueued</text>
-      <text class="bq-3" x="180" y="151" fill="{accent}">BFS Traversal Complete (7 Nodes ✓)</text>
+      <text class="bq-0" x="180" y="151" fill="{accent}">Initializing search...</text>
+      <text class="bq-1" x="180" y="151" fill="{accent_light}">Searching the best path...</text>
+      <text class="bq-2" x="180" y="151" fill="{accent_light}">Drinking a beer...</text>
+      <text class="bq-3" x="180" y="151" fill="{accent}">Yep, the liqour store is over here.</text>
     </g>
 '''
 

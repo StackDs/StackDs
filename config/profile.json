@@ -68,17 +68,17 @@
     },
     {
       "id": "algorithms",
-      "title": "Algorithms and Eds",
-      "subtitle": "Efficiency & Graph Theory",
-      "description": "Exploring graph traversals, data structures, and algorithmic complexity. Benchmarking performance across multiple languages.",
-      "tags": ["BFS / DFS", "Graphs", "Trees", "Complexity"]
+      "title": "Algorithms & Data Structures",
+      "subtitle": "Big O Complexity",
+      "description": "Studying diferent algorithms and data structures, analyzing their time and space complexity, and implementing them in C++.",
+      "tags": ["Search", "Graphs", "Trees", "Complexity"]
     },
     {
       "id": "data_science",
       "title": "Data Science",
       "subtitle": "Statistics & Modeling",
       "description": "Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.",
-      "tags": ["Probability", "Distributions", "PostgreSQL", "Analytics"]
+      "tags": ["Probability", "Distributions", "PostgreSQL", "Jupyter"]
     }
   ],
   "quotes": [

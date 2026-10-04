@@ -60,44 +60,31 @@
     <g font-family="DejaVu Sans Mono, monospace" font-size="11">
       <!-- Line 1 -->
       <g class="p-l1">
-        <text x="16" y="44" fill="#5C6370">1</text>
-        <text x="36" y="44" fill="#088DDC">#include </text>
-        <text x="96" y="44" fill="#6BC5ED">&lt;stdio.h&gt;</text>
+        <text x="16" y="44"><tspan fill="#5C6370">1   </tspan><tspan fill="#088DDC">#include </tspan><tspan fill="#6BC5ED">&lt;stdio.h&gt;</tspan></text>
       </g>
       <!-- Line 2 -->
       <g class="p-l2">
-        <text x="16" y="62" fill="#5C6370">2</text>
-        <text x="36" y="62" fill="#088DDC">int </text>
-        <text x="63" y="62" fill="#6BC5ED">main</text>
-        <text x="90" y="62" fill="#ECEFF4">(void) {</text>
+        <text x="16" y="62"><tspan fill="#5C6370">2   </tspan><tspan fill="#088DDC">int </tspan><tspan fill="#6BC5ED">main</tspan><tspan fill="#ECEFF4">(void) {</tspan></text>
       </g>
       <!-- Line 3 -->
       <g class="p-l3">
-        <text x="16" y="80" fill="#5C6370">3</text>
-        <text x="48" y="80" fill="#6BC5ED">printf</text>
-        <text x="90" y="80" fill="#ECEFF4">(</text>
-        <text x="97" y="80" fill="#D3C6AA">&quot;Hello, World!\n&quot;</text>
-        <text x="219" y="80" fill="#ECEFF4">);</text>
+        <text x="16" y="80"><tspan fill="#5C6370">3     </tspan><tspan fill="#6BC5ED">printf</tspan><tspan fill="#ECEFF4">(</tspan><tspan fill="#D3C6AA">&quot;This shit isn't gonna compile\n&quot;</tspan><tspan fill="#ECEFF4">)</tspan></text>
       </g>
       <!-- Line 4 -->
       <g class="p-l4">
-        <text x="16" y="98" fill="#5C6370">4</text>
-        <text x="48" y="98" fill="#088DDC">return </text>
-        <text x="97" y="98" fill="#ECEFF4">0;</text>
+        <text x="16" y="98"><tspan fill="#5C6370">4     </tspan><tspan fill="#088DDC">return </tspan><tspan fill="#ECEFF4">0;</tspan></text>
       </g>
       <!-- Line 5 -->
       <g class="p-l5">
-        <text x="16" y="116" fill="#5C6370">5</text>
-        <text x="36" y="116" fill="#ECEFF4">}</text>
+        <text x="16" y="116"><tspan fill="#5C6370">5   </tspan><tspan fill="#ECEFF4">}</tspan></text>
       </g>
       <!-- Terminal Execution Divider -->
       <line x1="12" y1="126" x2="348" y2="126" stroke="#2B3A45" stroke-dasharray="3 3"/>
       <!-- Terminal Output -->
       <g class="p-out">
-        <text x="16" y="142" fill="#088DDC">~ $ </text>
-        <text x="42" y="142" fill="#ECEFF4">./main</text>
-        <text x="16" y="158" fill="#6BC5ED">Hello, World!</text>
-        <rect class="p-cur" x="110" y="148" width="6" height="12" fill="#6BC5ED"/>
+        <text x="16" y="142"><tspan fill="#088DDC">~ $ </tspan><tspan fill="#ECEFF4">gcc main.c -o And Justice For All</tspan></text>
+        <text x="16" y="158" fill="#6BC5ED">You forgot a semicolon!... stupid</text>
+        <rect class="p-cur" x="240" y="148" width="6" height="12" fill="#6BC5ED"/>
       </g>
     </g>
 

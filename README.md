@@ -95,7 +95,7 @@ I'm trying to improve this, so... KISS. Keep it simple, stupid.
   <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-algorithms-mobile-static.svg">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-algorithms-static.svg">
   <source media="(max-width: 600px)" srcset="assets/interest-algorithms-mobile.svg">
-  <img src="assets/interest-algorithms.svg" width="100%" alt="Algorithms and Eds — Exploring graph traversals, data structures, and algorithmic complexity. Benchmarking performance across multiple languages.">
+  <img src="assets/interest-algorithms.svg" width="100%" alt="Algorithms &amp; Data Structures — Studying diferent algorithms and data structures, analyzing their time and space complexity, and implementing them in C++.">
 </picture>
 
 <picture>
