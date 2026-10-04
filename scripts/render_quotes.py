@@ -1,5 +1,6 @@
 """Render the Gambling Phrase terminal: random phrase generator cycling through quotes."""
 
+import random
 from html import escape
 from textwrap import wrap
 
@@ -10,6 +11,7 @@ def render(profile, theme, mobile=False):
     width, left = (420, 24) if mobile else (880, 36)
     size, line_height = 13.5, 20
     test_advance = 14 * 0.602
+    advance = size * 0.602
     columns = min(78, int((width - 2 * left) / test_advance))
 
     quotes = profile.get("quotes", [])
@@ -17,11 +19,15 @@ def render(profile, theme, mobile=False):
     round_sec = 6.0
     total_sec = total_rounds * round_sec
 
-    # Shuffled order of indices for pseudo-random playback
-    if len(quotes) >= 12:
-        shuffle_order = [0, 4, 9, 1, 6, 3, 10, 5, 11, 7, 2, 8]
+    # Deterministic pseudo-random shuffle so ANY number of quotes in profile.json is included.
+    # Quote 0 stays in slot 0 to guarantee the static SVG fallback and first playback frame match.
+    if total_rounds > 1:
+        rng = random.Random(42)
+        rest = list(range(1, total_rounds))
+        rng.shuffle(rest)
+        shuffle_order = [0] + rest
     else:
-        shuffle_order = list(range(total_rounds))
+        shuffle_order = [0]
     time_slots = {quote_idx: slot_idx for slot_idx, quote_idx in enumerate(shuffle_order)}
 
     css_keyframes = []
@@ -96,19 +102,30 @@ def render(profile, theme, mobile=False):
         y += 26
         q_lines = wrap(quote["text"], width=columns, break_long_words=True, break_on_hyphens=False)
         quote_elements = []
-        for ql in q_lines:
+        author_text = f'— {quote["author"]}'
+        spacing = 3
+
+        # Place author inline to the right if it fits on the last line of the quote
+        inline_author = bool(q_lines and (len(q_lines[-1]) + spacing + len(author_text) <= columns))
+
+        for idx, ql in enumerate(q_lines):
             quote_elements.append(
                 f'<text class="quote-line" x="{left}" y="{y}" fill="{theme["text"]}" font-size="{size}">{escape(ql)}</text>'
             )
+            if idx == len(q_lines) - 1 and inline_author:
+                author_x = round(left + (len(ql) + spacing) * advance, 2)
+                quote_elements.append(
+                    f'<text class="quote-author" x="{author_x}" y="{y}" fill="{theme["accent_light"]}" font-size="{size}">{escape(author_text)}</text>'
+                )
             y += line_height
 
-        author_text = f'— {quote["author"]}'
-        a_lines = wrap(author_text, width=columns, break_long_words=True, break_on_hyphens=False)
-        for al in a_lines:
-            quote_elements.append(
-                f'<text class="quote-author" x="{left}" y="{y}" fill="{theme["accent_light"]}" font-size="{size}">{escape(al)}</text>'
-            )
-            y += line_height
+        if not inline_author:
+            a_lines = wrap(author_text, width=columns, break_long_words=True, break_on_hyphens=False)
+            for al in a_lines:
+                quote_elements.append(
+                    f'<text class="quote-author" x="{left}" y="{y}" fill="{theme["accent_light"]}" font-size="{size}">{escape(al)}</text>'
+                )
+                y += line_height
 
         round_content.append(f'<g class="gp-quote-{r_idx}"><g class="quote" id="quote-{r_idx + 1}">{"".join(quote_elements)}</g></g>')
         y += 6

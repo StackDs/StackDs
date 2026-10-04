@@ -48,25 +48,25 @@
         
 
         @keyframes round-1 {
-          0%, 24.95% { opacity: 0; visibility: hidden; }
-          25.00%, 32.93% { opacity: 1; visibility: visible; }
-          33.33%, 100% { opacity: 0; visibility: hidden; }
+          0%, 74.95% { opacity: 0; visibility: hidden; }
+          75.00%, 82.93% { opacity: 1; visibility: visible; }
+          83.33%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-1 {
-          0%, 26.50% { opacity: 0; transform: translateY(3px); }
-          26.83%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 76.50% { opacity: 0; transform: translateY(3px); }
+          76.83%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-1 {
-          0%, 26.83% { opacity: 0; }
-          28.75%, 100% { opacity: 1; }
+          0%, 76.83% { opacity: 0; }
+          78.75%, 100% { opacity: 1; }
         }
         @keyframes close-s2-1 {
-          0%, 28.75% { opacity: 0; }
-          30.17%, 100% { opacity: 1; }
+          0%, 78.75% { opacity: 0; }
+          80.17%, 100% { opacity: 1; }
         }
         @keyframes close-s3-1 {
-          0%, 30.17% { opacity: 0; }
-          31.50%, 100% { opacity: 1; }
+          0%, 80.17% { opacity: 0; }
+          81.50%, 100% { opacity: 1; }
         }
         .gp-round-1 {
           animation: round-1 72.0s infinite;
@@ -124,25 +124,25 @@
         
 
         @keyframes round-3 {
-          0%, 41.62% { opacity: 0; visibility: hidden; }
-          41.67%, 49.60% { opacity: 1; visibility: visible; }
-          50.00%, 100% { opacity: 0; visibility: hidden; }
+          0%, 24.95% { opacity: 0; visibility: hidden; }
+          25.00%, 32.93% { opacity: 1; visibility: visible; }
+          33.33%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-3 {
-          0%, 43.17% { opacity: 0; transform: translateY(3px); }
-          43.50%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 26.50% { opacity: 0; transform: translateY(3px); }
+          26.83%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-3 {
-          0%, 43.50% { opacity: 0; }
-          45.42%, 100% { opacity: 1; }
+          0%, 26.83% { opacity: 0; }
+          28.75%, 100% { opacity: 1; }
         }
         @keyframes close-s2-3 {
-          0%, 45.42% { opacity: 0; }
-          46.84%, 100% { opacity: 1; }
+          0%, 28.75% { opacity: 0; }
+          30.17%, 100% { opacity: 1; }
         }
         @keyframes close-s3-3 {
-          0%, 46.84% { opacity: 0; }
-          48.17%, 100% { opacity: 1; }
+          0%, 30.17% { opacity: 0; }
+          31.50%, 100% { opacity: 1; }
         }
         .gp-round-3 {
           animation: round-3 72.0s infinite;
@@ -162,25 +162,25 @@
         
 
         @keyframes round-4 {
-          0%, 8.28% { opacity: 0; visibility: hidden; }
-          8.33%, 16.27% { opacity: 1; visibility: visible; }
-          16.67%, 100% { opacity: 0; visibility: hidden; }
+          0%, 16.62% { opacity: 0; visibility: hidden; }
+          16.67%, 24.60% { opacity: 1; visibility: visible; }
+          25.00%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-4 {
-          0%, 9.83% { opacity: 0; transform: translateY(3px); }
-          10.16%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 18.17% { opacity: 0; transform: translateY(3px); }
+          18.50%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-4 {
-          0%, 10.16% { opacity: 0; }
-          12.08%, 100% { opacity: 1; }
+          0%, 18.50% { opacity: 0; }
+          20.42%, 100% { opacity: 1; }
         }
         @keyframes close-s2-4 {
-          0%, 12.08% { opacity: 0; }
-          13.50%, 100% { opacity: 1; }
+          0%, 20.42% { opacity: 0; }
+          21.84%, 100% { opacity: 1; }
         }
         @keyframes close-s3-4 {
-          0%, 13.50% { opacity: 0; }
-          14.83%, 100% { opacity: 1; }
+          0%, 21.84% { opacity: 0; }
+          23.17%, 100% { opacity: 1; }
         }
         .gp-round-4 {
           animation: round-4 72.0s infinite;
@@ -200,25 +200,25 @@
         
 
         @keyframes round-5 {
-          0%, 58.28% { opacity: 0; visibility: hidden; }
-          58.33%, 66.27% { opacity: 1; visibility: visible; }
-          66.67%, 100% { opacity: 0; visibility: hidden; }
+          0%, 66.62% { opacity: 0; visibility: hidden; }
+          66.67%, 74.60% { opacity: 1; visibility: visible; }
+          75.00%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-5 {
-          0%, 59.83% { opacity: 0; transform: translateY(3px); }
-          60.16%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 68.17% { opacity: 0; transform: translateY(3px); }
+          68.50%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-5 {
-          0%, 60.16% { opacity: 0; }
-          62.08%, 100% { opacity: 1; }
+          0%, 68.50% { opacity: 0; }
+          70.42%, 100% { opacity: 1; }
         }
         @keyframes close-s2-5 {
-          0%, 62.08% { opacity: 0; }
-          63.50%, 100% { opacity: 1; }
+          0%, 70.42% { opacity: 0; }
+          71.84%, 100% { opacity: 1; }
         }
         @keyframes close-s3-5 {
-          0%, 63.50% { opacity: 0; }
-          64.83%, 100% { opacity: 1; }
+          0%, 71.84% { opacity: 0; }
+          73.17%, 100% { opacity: 1; }
         }
         .gp-round-5 {
           animation: round-5 72.0s infinite;
@@ -238,25 +238,25 @@
         
 
         @keyframes round-6 {
-          0%, 33.28% { opacity: 0; visibility: hidden; }
-          33.33%, 41.27% { opacity: 1; visibility: visible; }
-          41.67%, 100% { opacity: 0; visibility: hidden; }
+          0%, 41.62% { opacity: 0; visibility: hidden; }
+          41.67%, 49.60% { opacity: 1; visibility: visible; }
+          50.00%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-6 {
-          0%, 34.83% { opacity: 0; transform: translateY(3px); }
-          35.16%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 43.17% { opacity: 0; transform: translateY(3px); }
+          43.50%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-6 {
-          0%, 35.16% { opacity: 0; }
-          37.08%, 100% { opacity: 1; }
+          0%, 43.50% { opacity: 0; }
+          45.42%, 100% { opacity: 1; }
         }
         @keyframes close-s2-6 {
-          0%, 37.08% { opacity: 0; }
-          38.50%, 100% { opacity: 1; }
+          0%, 45.42% { opacity: 0; }
+          46.84%, 100% { opacity: 1; }
         }
         @keyframes close-s3-6 {
-          0%, 38.50% { opacity: 0; }
-          39.83%, 100% { opacity: 1; }
+          0%, 46.84% { opacity: 0; }
+          48.17%, 100% { opacity: 1; }
         }
         .gp-round-6 {
           animation: round-6 72.0s infinite;
@@ -276,25 +276,25 @@
         
 
         @keyframes round-7 {
-          0%, 74.95% { opacity: 0; visibility: hidden; }
-          75.00%, 82.93% { opacity: 1; visibility: visible; }
-          83.33%, 100% { opacity: 0; visibility: hidden; }
+          0%, 49.95% { opacity: 0; visibility: hidden; }
+          50.00%, 57.93% { opacity: 1; visibility: visible; }
+          58.33%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-7 {
-          0%, 76.50% { opacity: 0; transform: translateY(3px); }
-          76.83%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 51.50% { opacity: 0; transform: translateY(3px); }
+          51.83%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-7 {
-          0%, 76.83% { opacity: 0; }
-          78.75%, 100% { opacity: 1; }
+          0%, 51.83% { opacity: 0; }
+          53.75%, 100% { opacity: 1; }
         }
         @keyframes close-s2-7 {
-          0%, 78.75% { opacity: 0; }
-          80.17%, 100% { opacity: 1; }
+          0%, 53.75% { opacity: 0; }
+          55.17%, 100% { opacity: 1; }
         }
         @keyframes close-s3-7 {
-          0%, 80.17% { opacity: 0; }
-          81.50%, 100% { opacity: 1; }
+          0%, 55.17% { opacity: 0; }
+          56.50%, 100% { opacity: 1; }
         }
         .gp-round-7 {
           animation: round-7 72.0s infinite;
@@ -314,25 +314,25 @@
         
 
         @keyframes round-8 {
-          0%, 91.62% { opacity: 0; visibility: hidden; }
-          91.67%, 99.60% { opacity: 1; visibility: visible; }
-          100.00%, 100% { opacity: 0; visibility: hidden; }
+          0%, 8.28% { opacity: 0; visibility: hidden; }
+          8.33%, 16.27% { opacity: 1; visibility: visible; }
+          16.67%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-8 {
-          0%, 93.17% { opacity: 0; transform: translateY(3px); }
-          93.50%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 9.83% { opacity: 0; transform: translateY(3px); }
+          10.16%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-8 {
-          0%, 93.50% { opacity: 0; }
-          95.42%, 100% { opacity: 1; }
+          0%, 10.16% { opacity: 0; }
+          12.08%, 100% { opacity: 1; }
         }
         @keyframes close-s2-8 {
-          0%, 95.42% { opacity: 0; }
-          96.84%, 100% { opacity: 1; }
+          0%, 12.08% { opacity: 0; }
+          13.50%, 100% { opacity: 1; }
         }
         @keyframes close-s3-8 {
-          0%, 96.84% { opacity: 0; }
-          98.17%, 100% { opacity: 1; }
+          0%, 13.50% { opacity: 0; }
+          14.83%, 100% { opacity: 1; }
         }
         .gp-round-8 {
           animation: round-8 72.0s infinite;
@@ -352,25 +352,25 @@
         
 
         @keyframes round-9 {
-          0%, 16.62% { opacity: 0; visibility: hidden; }
-          16.67%, 24.60% { opacity: 1; visibility: visible; }
-          25.00%, 100% { opacity: 0; visibility: hidden; }
+          0%, 33.28% { opacity: 0; visibility: hidden; }
+          33.33%, 41.27% { opacity: 1; visibility: visible; }
+          41.67%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-9 {
-          0%, 18.17% { opacity: 0; transform: translateY(3px); }
-          18.50%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 34.83% { opacity: 0; transform: translateY(3px); }
+          35.16%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-9 {
-          0%, 18.50% { opacity: 0; }
-          20.42%, 100% { opacity: 1; }
+          0%, 35.16% { opacity: 0; }
+          37.08%, 100% { opacity: 1; }
         }
         @keyframes close-s2-9 {
-          0%, 20.42% { opacity: 0; }
-          21.84%, 100% { opacity: 1; }
+          0%, 37.08% { opacity: 0; }
+          38.50%, 100% { opacity: 1; }
         }
         @keyframes close-s3-9 {
-          0%, 21.84% { opacity: 0; }
-          23.17%, 100% { opacity: 1; }
+          0%, 38.50% { opacity: 0; }
+          39.83%, 100% { opacity: 1; }
         }
         .gp-round-9 {
           animation: round-9 72.0s infinite;
@@ -390,25 +390,25 @@
         
 
         @keyframes round-10 {
-          0%, 49.95% { opacity: 0; visibility: hidden; }
-          50.00%, 57.93% { opacity: 1; visibility: visible; }
-          58.33%, 100% { opacity: 0; visibility: hidden; }
+          0%, 58.28% { opacity: 0; visibility: hidden; }
+          58.33%, 66.27% { opacity: 1; visibility: visible; }
+          66.67%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-10 {
-          0%, 51.50% { opacity: 0; transform: translateY(3px); }
-          51.83%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 59.83% { opacity: 0; transform: translateY(3px); }
+          60.16%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-10 {
-          0%, 51.83% { opacity: 0; }
-          53.75%, 100% { opacity: 1; }
+          0%, 60.16% { opacity: 0; }
+          62.08%, 100% { opacity: 1; }
         }
         @keyframes close-s2-10 {
-          0%, 53.75% { opacity: 0; }
-          55.17%, 100% { opacity: 1; }
+          0%, 62.08% { opacity: 0; }
+          63.50%, 100% { opacity: 1; }
         }
         @keyframes close-s3-10 {
-          0%, 55.17% { opacity: 0; }
-          56.50%, 100% { opacity: 1; }
+          0%, 63.50% { opacity: 0; }
+          64.83%, 100% { opacity: 1; }
         }
         .gp-round-10 {
           animation: round-10 72.0s infinite;
@@ -428,25 +428,25 @@
         
 
         @keyframes round-11 {
-          0%, 66.62% { opacity: 0; visibility: hidden; }
-          66.67%, 74.60% { opacity: 1; visibility: visible; }
-          75.00%, 100% { opacity: 0; visibility: hidden; }
+          0%, 91.62% { opacity: 0; visibility: hidden; }
+          91.67%, 99.60% { opacity: 1; visibility: visible; }
+          100.00%, 100% { opacity: 0; visibility: hidden; }
         }
         @keyframes quote-reveal-11 {
-          0%, 68.17% { opacity: 0; transform: translateY(3px); }
-          68.50%, 100% { opacity: 1; transform: translateY(0); }
+          0%, 93.17% { opacity: 0; transform: translateY(3px); }
+          93.50%, 100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes close-s1-11 {
-          0%, 68.50% { opacity: 0; }
-          70.42%, 100% { opacity: 1; }
+          0%, 93.50% { opacity: 0; }
+          95.42%, 100% { opacity: 1; }
         }
         @keyframes close-s2-11 {
-          0%, 70.42% { opacity: 0; }
-          71.84%, 100% { opacity: 1; }
+          0%, 95.42% { opacity: 0; }
+          96.84%, 100% { opacity: 1; }
         }
         @keyframes close-s3-11 {
-          0%, 71.84% { opacity: 0; }
-          73.17%, 100% { opacity: 1; }
+          0%, 96.84% { opacity: 0; }
+          98.17%, 100% { opacity: 1; }
         }
         .gp-round-11 {
           animation: round-11 72.0s infinite;
@@ -482,61 +482,61 @@
   
     
     <g class="gp-round gp-round-0" id="round-1">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-0"><g class="quote" id="quote-1"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Talk is cheap. Show me the code</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Linus Torvalds</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-0">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-0">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-0">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-0"><g class="quote" id="quote-1"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Talk is cheap. Show me the code</text><text class="quote-author" x="312.32" y="101" fill="#6BC5ED" font-size="13.5">— Linus Torvalds</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-0">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-0">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-0">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-1" id="round-2">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-1"><g class="quote" id="quote-2"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">A wrong decision is better than indecision</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Tony Soprano</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-2" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-1">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-1">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-1">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-1"><g class="quote" id="quote-2"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">A wrong decision is better than indecision</text><text class="quote-author" x="401.71" y="101" fill="#6BC5ED" font-size="13.5">— Tony Soprano</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-2" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-1">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-1">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-1">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-2" id="round-3">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-2"><g class="quote" id="quote-3"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Wubba lubba dub dub!</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Rick Sanchez</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-3" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-2">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-2">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-2">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-2"><g class="quote" id="quote-3"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Wubba lubba dub dub!</text><text class="quote-author" x="222.92" y="101" fill="#6BC5ED" font-size="13.5">— Rick Sanchez</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-3" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-2">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-2">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-2">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-3" id="round-4">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-3"><g class="quote" id="quote-4"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Cadia stands, and we shall not fall</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Imperial Creed</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-4" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-3">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-3">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-3">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-3"><g class="quote" id="quote-4"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Cadia stands, and we shall not fall</text><text class="quote-author" x="344.83" y="101" fill="#6BC5ED" font-size="13.5">— Imperial Creed</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-4" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-3">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-3">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-3">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-4" id="round-5">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-4"><g class="quote" id="quote-5"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">War. War never changes.</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Fallout</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-5" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-4">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-4">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-4">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-4"><g class="quote" id="quote-5"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">War. War never changes.</text><text class="quote-author" x="247.3" y="101" fill="#6BC5ED" font-size="13.5">— Fallout</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-5" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-4">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-4">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-4">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-5" id="round-6">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-5"><g class="quote" id="quote-6"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Forget about Freeman</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Half-Life</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-6" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-5">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-5">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-5">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-5"><g class="quote" id="quote-6"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Forget about Freeman</text><text class="quote-author" x="222.92" y="101" fill="#6BC5ED" font-size="13.5">— Half-Life</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-6" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-5">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-5">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-5">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-6" id="round-7">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-6"><g class="quote" id="quote-7"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">The cake is a lie</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Portal</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-7" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-6">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-6">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-6">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-6"><g class="quote" id="quote-7"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">The cake is a lie</text><text class="quote-author" x="198.54" y="101" fill="#6BC5ED" font-size="13.5">— Portal</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-7" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-6">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-6">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-6">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-7" id="round-8">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-7"><g class="quote" id="quote-8"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Would you kindly?</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Atlas</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-8" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-7">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-7">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-7">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-7"><g class="quote" id="quote-8"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Would you kindly?</text><text class="quote-author" x="198.54" y="101" fill="#6BC5ED" font-size="13.5">— Atlas</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-8" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-7">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-7">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-7">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-8" id="round-9">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-8"><g class="quote" id="quote-9"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">How's your sister?</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Cayde-6</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-9" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-8">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-8">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-8">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-8"><g class="quote" id="quote-9"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">How's your sister?</text><text class="quote-author" x="206.67" y="101" fill="#6BC5ED" font-size="13.5">— Cayde-6</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-9" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-8">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-8">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-8">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-9" id="round-10">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-9"><g class="quote" id="quote-10"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">SIC PARVIS MAGNA</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Sir Francis Drake</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-10" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-9">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-9">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-9">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-9"><g class="quote" id="quote-10"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">SIC PARVIS MAGNA</text><text class="quote-author" x="190.41" y="101" fill="#6BC5ED" font-size="13.5">— Sir Francis Drake</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-10" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-9">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-9">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-9">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-10" id="round-11">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-10"><g class="quote" id="quote-11"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Kept you waiting, huh?</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Big Boss</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-11" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-10">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-10">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-10">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-10"><g class="quote" id="quote-11"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">Kept you waiting, huh?</text><text class="quote-author" x="239.17" y="101" fill="#6BC5ED" font-size="13.5">— Big Boss</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-11" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-10">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-10">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-10">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 
     
     <g class="gp-round gp-round-11" id="round-12">
-      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-11"><g class="quote" id="quote-12"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">It can't be for nothing</text><text class="quote-author" x="36" y="121" fill="#6BC5ED" font-size="13.5">— Ellie</text></g></g> <line x1="36" y1="143" x2="844" y2="143" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-12" x="36" y="161" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-11">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-11">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-11">- Pedro Aguirre Cerda.</tspan></text>
+      <text class="terminal-cmd" x="36" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-11"><g class="quote" id="quote-12"><text class="quote-line" x="36" y="101" fill="#ECEFF4" font-size="13.5">It can't be for nothing</text><text class="quote-author" x="247.3" y="101" fill="#6BC5ED" font-size="13.5">— Ellie</text></g></g> <line x1="36" y1="123" x2="844" y2="123" stroke="#2B3A45" stroke-dasharray="2 2" /> <text class="closing-prompt" id="closing-prompt-12" x="36" y="141" font-size="13.5" xml:space="preserve"><tspan fill="#088DDC" class="gp-cs1-11">~ $ Gobernar </tspan><tspan fill="#D3C6AA" class="gp-cs2-11">es Educar </tspan><tspan fill="#D3C6AA" class="gp-cs3-11">- Pedro Aguirre Cerda.</tspan></text>
     </g>
 <style id="static-motion">* { animation: none !important; } .typed-char { opacity: 1 !important; }</style></svg>
