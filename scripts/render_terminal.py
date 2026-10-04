@@ -194,33 +194,39 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     RULE = theme["border"]
     PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR = (
         theme["photo_shadow"], theme["photo_mid"], theme["photo_light"])
-    PHOTO_DEEP = theme.get("photo_deep", "#0E1C28")
+    PHOTO_DEEP = theme.get("photo_deep", "#1A3A50")
     PHOTO_WHITE = theme.get("photo_white", "#FFFFFF")
     PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE)
     if art is None:
         art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
     if not art or not any(art):
         raise ValueError("ASCII artwork must not be empty")
+    # Build a lookup: character → tone index (0-4) based on position in
+    # the density ramp.  Characters at the dense (dark) end of the ramp
+    # map to tone 0 (deepest colour) and those at the sparse (bright) end
+    # to tone 4 (white / highlight).  The 70-char ramp is split into 5
+    # equal bands of 14 characters each.
+    _NUM_TONES = len(PHOTO_TONES)
+    _ramp_len = len(DENSITY_RAMP)
+    _band = max(_ramp_len // _NUM_TONES, 1)
+    _CHAR_TONE = {}
+    for _idx, _ch in enumerate(ASCII_RAMP):          # densest → sparsest
+        _CHAR_TONE[_ch] = min(_idx // _band, _NUM_TONES - 1)
     parsed_art = []
     for row in art:
         if isinstance(row, (tuple, list)) and len(row) == len(PHOTO_TONES):
             parsed_art.append(row)
         else:
-            t0, t1, t2, t3, t4 = [], [], [], [], []
+            layers = [[] for _ in range(_NUM_TONES)]
             for ch in row:
-                if ch == "=":
-                    t0.append(ch); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(" ")
-                elif ch in "-:.":
-                    t0.append(" "); t1.append(ch); t2.append(" "); t3.append(" "); t4.append(" ")
-                elif ch in "*+":
-                    t0.append(" "); t1.append(" "); t2.append(ch); t3.append(" "); t4.append(" ")
-                elif ch in "#%":
-                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(ch); t4.append(" ")
-                elif ch == "@":
-                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(ch)
+                tone = _CHAR_TONE.get(ch, -1)
+                if tone < 0:                          # space or unknown
+                    for layer in layers:
+                        layer.append(" ")
                 else:
-                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(" ")
-            parsed_art.append(("".join(t0), "".join(t1), "".join(t2), "".join(t3), "".join(t4)))
+                    for t, layer in enumerate(layers):
+                        layer.append(ch if t == tone else " ")
+            parsed_art.append(tuple("".join(layer) for layer in layers))
     art = parsed_art
     columns = max(len(layer) for row in art for layer in row)
     width = 420 if mobile else 880
