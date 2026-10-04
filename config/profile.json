@@ -72,7 +72,11 @@
     {"text": "Kept you waiting, huh?", "author": "Big Boss"},
     {"text": "It can't be for nothing", "author": "Ellie"}
   ],
-  "stats": {"endpoint": "https://github-readme-stats.vercel.app/api", "include_all_commits": false},
+  "stats": {
+    "endpoint": "https://github-readme-stats.vercel.app/api",
+    "include_all_commits": false,
+    "caption": "Commit year is shown on the card; rank and PR totals are reported by GitHub Readme Stats. Updated daily when the provider is available."
+  },
   "widgets": {
     "spotify": {"enabled": false, "title": "Now Playing", "image_url": "", "url": "", "caption": "Currently playing, or the last track when offline. Updates may be cached."},
     "wakatime": {"enabled": false, "title": "Coding Activity", "image_url": "", "url": "", "caption": "Recorded coding time by language over the last 7 days."}

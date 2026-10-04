@@ -110,6 +110,8 @@ def load_profile(root=ROOT):
     _url(stats.get("endpoint"), f"{path}:stats.endpoint")
     _require(isinstance(stats.get("include_all_commits"), bool),
              f"{path}:stats.include_all_commits", "expected a boolean")
+    if "caption" in stats:
+        _string(stats["caption"], f"{path}:stats.caption", empty=True)
     widgets = profile.get("widgets")
     _object(widgets, f"{path}:widgets")
     for name in ("spotify", "wakatime"):

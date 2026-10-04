@@ -35,6 +35,34 @@ def render(source, theme, dark=False):
     style.text = css
     root.set("role", "img")
     root.set("aria-label", "GitHub contribution calendar; animated snake")
+
+    calendar_cells = [
+        (idx, child) for idx, child in enumerate(list(root))
+        if child.tag == f"{{{SVG}}}rect" and child.get("class", "").split() and child.get("class", "").split()[0] == "c"
+    ]
+    if calendar_cells:
+        existing = {
+            (int(child.get("x")), int(child.get("y")))
+            for _, child in calendar_cells
+        }
+        all_xs = sorted(set(x for x, y in existing))
+        standard_ys = sorted(set(y for x, y in existing))
+        last_idx = calendar_cells[-1][0]
+        insert_pos = last_idx + 1
+        for x in all_xs:
+            for y in standard_ys:
+                if (x, y) not in existing:
+                    new_rect = ET.Element(f"{{{SVG}}}rect", {
+                        "class": "c",
+                        "x": str(x),
+                        "y": str(y),
+                        "rx": "2",
+                        "ry": "2",
+                    })
+                    root.insert(insert_pos, new_rect)
+                    insert_pos += 1
+                    existing.add((x, y))
+
     return ET.tostring(root, encoding="unicode") + "\n"
 
 

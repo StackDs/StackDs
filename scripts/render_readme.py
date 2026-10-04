@@ -70,13 +70,17 @@ def render(profile, theme, about, template):
     quotes_alt = "Hall of Fame. " + " ".join(
         f'{item["text"]} — {item["author"]}.' for item in profile["quotes"])
     quotes_alt += " " + CLOSING_MESSAGE
-    period = "All-time commits" if profile["stats"]["include_all_commits"] else "Commit year is shown on the card"
+    if "caption" in profile["stats"]:
+        stats_caption = markdown(profile["stats"]["caption"])
+    else:
+        period = "All-time commits" if profile["stats"]["include_all_commits"] else "Commit year is shown on the card"
+        stats_caption = (f"{period}; rank and PR totals are reported by GitHub Readme Stats. "
+                         "Updated daily when the provider is available.")
     return Template(template).substitute(
         BANNER_ALT=escape(profile["description"], quote=True), CONTACTS=contacts,
         ABOUT=about.strip(), STACK=stack, PROJECTS=projects,
         QUOTES_ALT=escape(quotes_alt, quote=True),
         GITHUB_URL=f'https://github.com/{profile["username"]}',
-        STATS_CAPTION=f"{period}; rank and PR totals are reported by GitHub Readme Stats. "
-                      "Updated daily when the provider is available.",
+        STATS_CAPTION=stats_caption,
         WIDGETS=render_widgets(profile["widgets"]),
     )

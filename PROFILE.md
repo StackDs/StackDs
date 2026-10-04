@@ -201,6 +201,8 @@ Readme Stats card showing rank, commits, and PRs, with explicit shared colors.
 By default, `commits_year` is the current UTC calendar year when the card is
 fetched; the year remains printed on the cached card. Set
 `stats.include_all_commits` to `true` for all-time commits.
+Use `stats.caption` to customize the explanatory caption below the card, or set
+it to an empty string to omit it.
 
 The response must be an SVG containing the expected stats and rank elements.
 Timeouts, HTML responses, malformed XML, and provider error cards cannot replace

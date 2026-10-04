@@ -157,6 +157,27 @@ class ProfileTests(unittest.TestCase):
                              [e.attrib for e in after.findall(f"{SVG}rect")])
             self.assertIsNone(after.find(f'{SVG}style[@id="profile-reduced-motion"]'))
             self.assertTrue(after.findall(f'{SVG}rect[@class="s s0"]'))
+            self.assertEqual(371, len([e for e in after.findall(f"{SVG}rect") if e.get("class", "").split() and e.get("class", "").split()[0] == "c"]))
+
+    def test_stats_caption_is_configurable_and_escaped(self):
+        template = (ROOT / "templates/README.md.tpl").read_text()
+        self.profile["stats"]["caption"] = "Custom caption with <tags> & symbols"
+        source = render_readme.render(self.profile, self.theme, "Bio", template)
+        self.assertIn("Custom caption with &lt;tags&gt; &amp; symbols", source)
+
+        self.profile["stats"]["caption"] = ""
+        source = render_readme.render(self.profile, self.theme, "Bio", template)
+        self.assertNotIn("Custom caption", source)
+        self.assertNotIn("GitHub Readme Stats", source)
+
+        del self.profile["stats"]["caption"]
+        self.profile["stats"]["include_all_commits"] = False
+        source = render_readme.render(self.profile, self.theme, "Bio", template)
+        self.assertIn("Commit year is shown on the card", source)
+
+        self.profile["stats"]["include_all_commits"] = True
+        source = render_readme.render(self.profile, self.theme, "Bio", template)
+        self.assertIn("All-time commits", source)
 
     def test_stats_reject_error_cards_even_when_valid_svg(self):
         for source in ("<html>Unavailable</html>", f'<svg xmlns="{SVG[1:-1]}"><text>Something went wrong!</text></svg>', "not XML"):
