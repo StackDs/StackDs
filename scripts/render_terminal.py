@@ -15,7 +15,7 @@ from svg_motion import static_svg
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
-DEFAULT_IMAGE = "Final.jpeg"
+DEFAULT_IMAGE = "bryan.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
@@ -194,27 +194,33 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     RULE = theme["border"]
     PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR = (
         theme["photo_shadow"], theme["photo_mid"], theme["photo_light"])
-    PHOTO_TONES = (PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR)
+    PHOTO_DEEP = theme.get("photo_deep", "#0E1C28")
+    PHOTO_WHITE = theme.get("photo_white", "#FFFFFF")
+    PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE)
     if art is None:
         art = (ROOT / "ascii.txt").read_text(encoding="utf-8").splitlines()
     if not art or not any(art):
         raise ValueError("ASCII artwork must not be empty")
     parsed_art = []
     for row in art:
-        if isinstance(row, (tuple, list)) and len(row) == 3:
+        if isinstance(row, (tuple, list)) and len(row) == len(PHOTO_TONES):
             parsed_art.append(row)
         else:
-            t0, t1, t2 = [], [], []
+            t0, t1, t2, t3, t4 = [], [], [], [], []
             for ch in row:
-                if ch in "@%#":
-                    t0.append(ch); t1.append(" "); t2.append(" ")
-                elif ch in "*+=-":
-                    t0.append(" "); t1.append(ch); t2.append(" ")
-                elif ch in ":.":
-                    t0.append(" "); t1.append(" "); t2.append(ch)
+                if ch == "=":
+                    t0.append(ch); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(" ")
+                elif ch in "-:.":
+                    t0.append(" "); t1.append(ch); t2.append(" "); t3.append(" "); t4.append(" ")
+                elif ch in "*+":
+                    t0.append(" "); t1.append(" "); t2.append(ch); t3.append(" "); t4.append(" ")
+                elif ch in "#%":
+                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(ch); t4.append(" ")
+                elif ch == "@":
+                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(ch)
                 else:
-                    t0.append(" "); t1.append(" "); t2.append(" ")
-            parsed_art.append(("".join(t0), "".join(t1), "".join(t2)))
+                    t0.append(" "); t1.append(" "); t2.append(" "); t3.append(" "); t4.append(" ")
+            parsed_art.append(("".join(t0), "".join(t1), "".join(t2), "".join(t3), "".join(t4)))
     art = parsed_art
     columns = max(len(layer) for row in art for layer in row)
     width = 420 if mobile else 880
@@ -349,12 +355,14 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     text {{ font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
       font-weight: 400; font-feature-settings: "calt" 1, "liga" 1;
       font-variant-ligatures: contextual; }}
-    .ascii-shade {{ font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }}
+    .ascii-shade {{ font-weight: 500; font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }}
     @media (prefers-reduced-motion: reduce) {{
       .typed-char {{ opacity: 1 !important; }}
-      .tone-0 {{ fill: {PHOTO_SHADOW} !important; }}
-      .tone-1 {{ fill: {PHOTO_MID} !important; }}
-      .tone-2 {{ fill: {PHOTO_COLOR} !important; }}
+      .tone-0 {{ fill: {PHOTO_DEEP} !important; }}
+      .tone-1 {{ fill: {PHOTO_SHADOW} !important; }}
+      .tone-2 {{ fill: {PHOTO_MID} !important; }}
+      .tone-3 {{ fill: {PHOTO_COLOR} !important; }}
+      .tone-4 {{ fill: {PHOTO_WHITE} !important; }}
       .motion {{ display: none; }}
     }}
   </style>
