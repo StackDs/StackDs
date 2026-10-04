@@ -42,10 +42,10 @@ $PROJECTS
 
 <p align="center">
   <a href="$GITHUB_URL">
-    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits, stars and pull requests" width="49%">
+    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits, stars and pull requests" width="53.5%">
   </a>
   <a href="$GITHUB_URL">
-    <img src="assets/stats/streak.svg" alt="GitHub contribution streak" width="49%">
+    <img src="assets/stats/streak.svg" alt="GitHub contribution streak" width="45%">
   </a>
 </p>
 
