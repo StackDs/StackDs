@@ -151,20 +151,9 @@ def render(profile, theme, mobile=False):
 
         max_content_y = max(max_content_y, y)
 
-        # Roll number badge
-        badge_x = width - 94
-        roll_num = f"{slot + 1}/{total_rounds}"
-        roll_badge = (
-            f'<g font-family="DejaVu Sans Mono, monospace" font-size="9">'
-            f'<rect x="{badge_x}" y="10" width="76" height="18" rx="3" fill="{theme["control"]}" stroke="{theme["border"]}"/>'
-            f'<text x="{badge_x + 38}" y="22" fill="{theme["accent_light"]}" text-anchor="middle">🎲 roll: [{roll_num}]</text>'
-            f'</g>'
-        )
-
         rounds_svg.append(f'''
-    <!-- Round {r_idx + 1} (Roll {slot + 1}): {escape(quote["author"])} -->
+    <!-- Round {r_idx + 1}: {escape(quote["author"])} -->
     <g class="gp-round gp-round-{r_idx}" id="round-{r_idx + 1}">
-      {roll_badge}
       {' '.join(round_content)}
     </g>''')
 

@@ -480,75 +480,63 @@
 
   <!-- Animated Rounds -->
   
-    <!-- Round 1 (Roll 1): Linus Torvalds -->
+    <!-- Round 1: Linus Torvalds -->
     <g class="gp-round gp-round-0" id="round-1">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [1/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-0"><g class="quote" id="quote-1"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Talk is cheap. Show me the code</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Linus Torvalds</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-0" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-0" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 2 (Roll 4): Tony Soprano -->
+    <!-- Round 2: Tony Soprano -->
     <g class="gp-round gp-round-1" id="round-2">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [4/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-1"><g class="quote" id="quote-2"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">A wrong decision is better than indecision</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Tony Soprano</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-2" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-1" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-1" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 3 (Roll 11): Rick Sanchez -->
+    <!-- Round 3: Rick Sanchez -->
     <g class="gp-round gp-round-2" id="round-3">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [11/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-2"><g class="quote" id="quote-3"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Wubba lubba dub dub!</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Rick Sanchez</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-3" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-2" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-2" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 4 (Roll 6): Imperial Creed -->
+    <!-- Round 4: Imperial Creed -->
     <g class="gp-round gp-round-3" id="round-4">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [6/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-3"><g class="quote" id="quote-4"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Cadia stands, and we shall not fall</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Imperial Creed</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-4" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-3" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-3" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 5 (Roll 2): Fallout -->
+    <!-- Round 5: Fallout -->
     <g class="gp-round gp-round-4" id="round-5">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [2/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-4"><g class="quote" id="quote-5"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">War. War never changes.</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Fallout</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-5" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-4" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-4" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 6 (Roll 8): Half-Life -->
+    <!-- Round 6: Half-Life -->
     <g class="gp-round gp-round-5" id="round-6">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [8/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-5"><g class="quote" id="quote-6"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Forget about Freeman</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Half-Life</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-6" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-5" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-5" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 7 (Roll 5): Portal -->
+    <!-- Round 7: Portal -->
     <g class="gp-round gp-round-6" id="round-7">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [5/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-6"><g class="quote" id="quote-7"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">The cake is a lie</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Portal</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-7" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-6" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-6" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 8 (Roll 10): Atlas -->
+    <!-- Round 8: Atlas -->
     <g class="gp-round gp-round-7" id="round-8">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [10/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-7"><g class="quote" id="quote-8"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Would you kindly?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Atlas</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-8" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-7" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-7" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 9 (Roll 12): Cayde-6 -->
+    <!-- Round 9: Cayde-6 -->
     <g class="gp-round gp-round-8" id="round-9">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [12/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-8"><g class="quote" id="quote-9"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">How&#x27;s your sister?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Cayde-6</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-9" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-8" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-8" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 10 (Roll 3): Sir Francis Drake -->
+    <!-- Round 10: Sir Francis Drake -->
     <g class="gp-round gp-round-9" id="round-10">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [3/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-9"><g class="quote" id="quote-10"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">SIC PARVIS MAGNA</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Sir Francis Drake</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-10" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-9" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-9" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 11 (Roll 7): Big Boss -->
+    <!-- Round 11: Big Boss -->
     <g class="gp-round gp-round-10" id="round-11">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [7/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-10"><g class="quote" id="quote-11"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">Kept you waiting, huh?</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Big Boss</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-11" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-10" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-10" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 
-    <!-- Round 12 (Roll 9): Ellie -->
+    <!-- Round 12: Ellie -->
     <g class="gp-round gp-round-11" id="round-12">
-      <g font-family="DejaVu Sans Mono, monospace" font-size="9"><rect x="326" y="10" width="76" height="18" rx="3" fill="#0B1117" stroke="#2B3A45"/><text x="364" y="22" fill="#6BC5ED" text-anchor="middle">🎲 roll: [9/12]</text></g>
       <text class="terminal-cmd" x="24" y="75" fill="#088DDC" font-size="13.5" font-weight="bold">~ $ ./gambling_phrase</text> <g class="gp-quote-11"><g class="quote" id="quote-12"><text class="quote-line" x="24" y="101" fill="#ECEFF4" font-size="13.5">It can&#x27;t be for nothing</text><text class="quote-author" x="24" y="121" fill="#6BC5ED" font-size="13.5">— Ellie</text></g></g> <line x1="24" y1="143" x2="396" y2="143" stroke="#2B3A45" stroke-dasharray="2 2"/> <text class="closing-prompt" id="closing-prompt-12" x="24" y="161" font-size="13.5" xml:space="preserve"><tspan class="gp-cs1-11" x="24" y="161" fill="#088DDC">~ $ Gobernar es Educar - Pedro Aguirre </tspan><tspan class="gp-cs2-11" x="24" y="181" fill="#D3C6AA">Cerda.</tspan></text>
     </g>
 </svg>
