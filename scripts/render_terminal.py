@@ -2,6 +2,7 @@
 """Render compact, self-contained profile banners from shared configuration."""
 
 import argparse
+import json
 import random
 from html import escape
 from math import ceil
@@ -19,6 +20,8 @@ IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
 PHOTO_GRID_SCALE = 1.25
+HOLD_MS = 4000
+RESTART_PAUSE_MS = 700
 
 
 def text(x, y, value, fill, size=15, extra=""):
@@ -30,7 +33,7 @@ def seconds(milliseconds):
     return f"{milliseconds / 1000:.3f}s"
 
 
-def discrete_animation(attribute, events, duration):
+def discrete_animation(attribute, events, duration, repeat=False):
     """Use absolute timeline events, collapsing unchanged values."""
     changes = []
     for time, value in sorted(events):
@@ -42,25 +45,27 @@ def discrete_animation(attribute, events, duration):
         changes.append((duration, changes[-1][1]))
     values = ";".join(f"{value:.3f}" for _, value in changes)
     times = ";".join(f"{time / duration:.8f}" for time, _ in changes)
+    repeating = ' repeatCount="indefinite"' if repeat else ""
     return (f'<animate attributeName="{attribute}" values="{values}" '
             f'keyTimes="{times}" calcMode="discrete" begin="0s" '
-            f'dur="{seconds(duration)}" fill="remove"/>')
+            f'dur="{seconds(duration)}" fill="remove"{repeating}/>')
 
 
-def terminal_cursor(frames, duration, accent):
-    """Follow a single typing pass, then rest at the last character."""
+def terminal_cursor(frames, duration, accent, repeat=False, hide_at=None):
+    """Follow the shared timeline; optionally hide after erasing and repeat."""
     start = min(frames)
     final = frames[max(frames)]
     parts = [f'<rect id="terminal-cursor" class="cursor motion" '
              f'x="{final[0]:.3f}" y="{final[1]:.3f}" '
              f'width="{final[2]:.3f}" height="{final[3]:.3f}" '
-             f'fill="{accent}" opacity="1" aria-hidden="true">']
+             f'fill="{accent}" opacity="{0 if repeat else 1}" aria-hidden="true">']
     for i, attribute in enumerate(("x", "y", "width", "height")):
         parts.append(discrete_animation(
-            attribute, [(time, frame[i]) for time, frame in frames.items()], duration))
-    parts.append(discrete_animation("opacity", [
-        (0, 0), (start, 1), (duration, 1),
-    ], duration))
+            attribute, [(time, frame[i]) for time, frame in frames.items()], duration, repeat))
+    visibility = [(0, 0), (start, 1)]
+    if hide_at is not None:
+        visibility.append((hide_at, 0))
+    parts.append(discrete_animation("opacity", visibility, duration, repeat))
     parts.append("</rect>")
     return "\n".join(parts)
 
@@ -202,8 +207,8 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
               speed=17, pause=0, extra=""):
         """Reveal whole characters on one shared millisecond timeline.
 
-        Each character is visible by default. SMIL hides it only until its
-        reveal time, so unsupported animation and reduced motion remain useful.
+        Each character is visible by default. SMIL controls its visibility
+        during playback, so unsupported animation and reduced motion remain useful.
         """
         nonlocal clock
         clock += pause
@@ -252,43 +257,51 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
 
     divider = max(art_bottom, row_y) + 24
     parts_width = max(12, int((width - 2 * left) / (14 * .602)))
-    command_lines = wrap(terminal["footer"],
-                         width=parts_width, break_long_words=True,
-                         break_on_hyphens=False)
     prompt = []
-    for line_index, line in enumerate(command_lines):
-        prompt.append(typed(f"footer-command-{line_index}", left,
-                            divider + 27 + line_index * 19, line,
-                            ACCENT, pause=200 if line_index == 0 else 80,
-                            extra='font-weight="bold"'))
-    interests_lines = []
-    for interest in terminal["interests"]:
-        interests_lines.extend(wrap(interest, width=parts_width,
-                                    break_long_words=True,
-                                    break_on_hyphens=False))
-    interest_start = divider + 27 + len(command_lines) * 19 + 17
-    interests = []
-    for line_index, line in enumerate(interests_lines):
-        interests.append(typed(f"interests-{line_index}", left,
-                               interest_start + line_index * 19, line,
-                               ACCENT,
-                               speed=12, pause=140 if line_index == 0 else 80))
-    height = interest_start + len(interests_lines) * 19 + 30
+    push_y = divider + 27
+    for index, message in enumerate(terminal["push_messages"]):
+        command_value = f'~ $ stack.push({json.dumps(message, ensure_ascii=False)});'
+        command_lines = wrap(command_value, width=parts_width, break_long_words=True,
+                             break_on_hyphens=False, drop_whitespace=False)
+        prompt.append(f'<g class="push-command" id="push-command-{index}">')
+        for line_index, line in enumerate(command_lines):
+            prompt.append(typed(f"push-{index}-line-{line_index}", left, push_y, line,
+                                ACCENT, pause=200 if line_index == 0 else 80,
+                                extra='font-weight="bold"'))
+            push_y += 19
+        prompt.append('</g>')
+        push_y += 10
+    height = push_y + 20
 
-    duration = clock + 1
+    erase_clock = clock + HOLD_MS
+    erase_times = {}
+    for segment_index in reversed(range(len(typed_segments))):
+        segment = typed_segments[segment_index]
+        for char_index in reversed(range(len(segment["value"]))):
+            erase_clock += segment["speed"]
+            erase_times[segment_index, char_index] = erase_clock
+            cursor_frames[erase_clock] = (
+                segment["x"] + char_index * segment["advance"] + 1.5,
+                segment["y"] - segment["size"] * .85,
+                segment["advance"] * .8, segment["size"] + 2,
+            )
+        if segment_index:
+            erase_clock += 120
+    duration = erase_clock + RESTART_PAUSE_MS
     scan_duration = 8000
 
-    # Base text is visible. Animation only hides it until its reveal time;
-    # the completed pass and viewers without SMIL both show the entire card.
+    # Every glyph shares one cycle: type, hold, erase in reverse, pause.
+    # Base text stays visible in viewers without SMIL and in static variants.
     animations = {}
     for segment_index, segment in enumerate(typed_segments):
         for char_index in range(len(segment["value"])):
             reveal_at = segment["start"] + (char_index + 1) * segment["speed"]
+            erase_at = erase_times[segment_index, char_index]
             animations[f"__CHAR_ANIMATION_{segment_index}_{char_index}__"] = (
-                f'<animate class="reveal" attributeName="opacity" '
-                f'values="0;1;1" keyTimes="0;{reveal_at / duration:.8f};1" '
+                f'<animate class="typing-cycle" attributeName="opacity" '
+                f'values="0;1;0;0" keyTimes="0;{reveal_at / duration:.8f};{erase_at / duration:.8f};1" '
                 f'calcMode="discrete" begin="0s" dur="{seconds(duration)}" '
-                'fill="remove"/>')
+                'repeatCount="indefinite" fill="remove"/>')
 
     avatar_description = (
         f"an ASCII avatar based on {escape(image_name)}"
@@ -363,8 +376,8 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     parts.extend(info)
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
     parts.extend(prompt)
-    parts.extend(interests)
-    parts.append(terminal_cursor(cursor_frames, duration, ACCENT))
+    parts.append(terminal_cursor(cursor_frames, duration, ACCENT,
+                                 repeat=True, hide_at=erase_clock))
     if not mobile:
         parts.append(text(width-left, command_y, terminal["aside"], ACCENT, 12,
                           'text-anchor="end"'))

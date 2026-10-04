@@ -77,11 +77,11 @@ def load_profile(root=ROOT):
              f"{path}:username", "expected a GitHub username")
     terminal = profile.get("terminal")
     _object(terminal, f"{path}:terminal")
-    for key in ("title", "command", "aside", "footer"):
+    for key in ("title", "command", "aside"):
         _string(terminal.get(key), f"{path}:terminal.{key}")
-    _list(terminal.get("interests"), f"{path}:terminal.interests")
-    for i, value in enumerate(terminal["interests"]):
-        _string(value, f"{path}:terminal.interests[{i}]")
+    _list(terminal.get("push_messages"), f"{path}:terminal.push_messages")
+    for i, value in enumerate(terminal["push_messages"]):
+        _string(value, f"{path}:terminal.push_messages[{i}]")
 
     collections = [
         ("terminal.fields", terminal.get("fields"), ("label", "value")),

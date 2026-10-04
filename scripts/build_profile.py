@@ -14,6 +14,7 @@ import render_quotes
 import render_site
 import render_terminal
 import render_theme
+import render_tech_badges
 import update_stats
 from svg_motion import static_svg
 
@@ -42,6 +43,11 @@ def artifacts(root=ROOT):
                 project, theme, mobile)
     for index, contact in enumerate(profile["contacts"], 1):
         result[f"assets/contact-{index:02d}.svg"] = render_contact_badges.render(contact, theme)
+    for group in profile["stack"]:
+        for item in group["items"]:
+            path = render_tech_badges.asset_path(item)
+            if path:
+                result[path] = render_tech_badges.render(item, theme, read(f'assets/icons/{item["logo"]}.svg'))
     for suffix, dark in (("", False), ("-dark", True)):
         path = f"assets/contributions/snake{suffix}.svg"
         result[path] = reduce_snake_motion.render(read(path), theme, dark)

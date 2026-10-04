@@ -36,26 +36,16 @@ $PROJECTS
 ## Activity & Contributions
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
-  <img src="assets/contributions/snake-static.svg" width="100%" alt="GitHub contribution calendar, from empty days to highest activity.">
+  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg">
+  <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake; a static calendar is shown with reduced motion.">
 </picture>
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)]($GITHUB_URL)
 
 $STATS_CAPTION
 $WIDGETS
-
----
-
-## Code Philosophy
-
-```c
-if (opening_brace_on_same_line) {
-    respect++;
-}
-```
-
-*Last in, first out.*
 
 ---
 

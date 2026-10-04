@@ -5,6 +5,8 @@ from textwrap import wrap
 
 from render_terminal import seconds, terminal_cursor, text
 
+CLOSING_MESSAGE = "Gobernar es Educar - Pedro Aguirre Cerda."
+
 
 def reveal(at):
     """Hide only during playback; the base SVG always contains visible text."""
@@ -57,12 +59,26 @@ def render(profile, theme, mobile=False):
 
     divider = y - 5
     y += 24
-    content.append(f'<text class="quote-line" x="{left}" y="{y}" font-size="{size}" '
-                   f'fill="{theme["accent"]}">~ $ {reveal(clock)}</text>')
-    cursor(left + 4 * advance, y)
+    prompt_y = y
+    spans = []
+    closing_lines = wrap("~ $ " + CLOSING_MESSAGE, width=columns - 1,
+                         break_on_hyphens=False, drop_whitespace=False)
+    for line_index, line in enumerate(closing_lines):
+        if line_index:
+            y += line_height
+            clock += 80
+        cursor(left, y)
+        for i, character in enumerate(line):
+            clock += 35
+            spans.append(f'<tspan class="typed-char" x="{left + i * advance:.3f}" y="{y}">'
+                         f'{escape(character)}{reveal(clock)}</tspan>')
+            cursor(left + (i + 1) * advance, y)
+    content.append(f'<text id="closing-prompt" x="{left}" y="{prompt_y}" font-size="{size}" '
+                   f'fill="{theme["accent"]}" xml:space="preserve">{"".join(spans)}</text>')
     height = y + 32
     description = " ".join(f'{quote["text"]} — {quote["author"]}.'
                            for quote in profile["quotes"])
+    description += " " + CLOSING_MESSAGE
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc" xml:lang="en">
   <title id="title">Hall of Fame — intercepted transmissions</title>
   <desc id="desc">{escape(description)}</desc>

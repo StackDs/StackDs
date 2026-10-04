@@ -77,6 +77,17 @@ class ProfileTests(unittest.TestCase):
         self.assertIn("logoColor=088DDC", badge)
         self.assertIn("](https://isocpp.org/)", badge)
 
+    def test_push_messages_require_nonempty_list_of_single_line_strings(self):
+        self.config_copy()
+        path = self.root / "config/profile.json"
+        for messages in (None, [], "a string", [""], [42], ["line\nbreak"]):
+            with self.subTest(messages=messages):
+                profile = copy.deepcopy(self.profile)
+                profile["terminal"]["push_messages"] = messages
+                path.write_text(json.dumps(profile))
+                with self.assertRaisesRegex(ValueError, r"terminal.push_messages"):
+                    load_profile(self.root)
+
     def test_plain_text_is_escaped_in_markdown_and_html(self):
         self.profile["projects"][0]["name"] = "Demo | [link] <tag>"
         self.profile["quotes"][0]["text"] = "<script> & *not italic*"
@@ -201,7 +212,7 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(["false"], params["include_all_commits"])
 
     def copy_build_inputs(self):
-        for name in ("config", "content", "templates", "assets/contributions"):
+        for name in ("config", "content", "templates", "assets/contributions", "assets/icons"):
             shutil.copytree(ROOT / name, self.root / name)
         shutil.copyfile(ROOT / "ascii.txt", self.root / "ascii.txt")
 

@@ -7,14 +7,15 @@
     "title": "stack@arch: ~",
     "command": "~ $ fastfetch --Stack",
     "aside": "I use Arch, btw.",
-    "footer": "~ $ stack.push(\"Last in, first out.\");",
-    "interests": ["Learn. Teach. Build.", "Code / Guitar / Bass"],
+    "push_messages": ["Wtf are you looking at?", "You can't get a hangover if you don't stop drinking", "I'm the son of rage and love"],
     "fields": [
       {"label": "name", "value": "Bryan Aguirre"},
+      {"label": "age", "value": "21"},
       {"label": "role", "value": "Computer Engineering Student"},
-      {"label": "school", "value": "Universidad de Concepción"},
+      {"label": "school", "value": "Udec (Unfortunately)"},
       {"label": "loc", "value": "Chile"},
-      {"label": "os", "value": "Arch Linux"}
+      {"label": "os", "value": "Arch Linux"},
+      {"label": "bio", "value": "Programmer, Musician, Software Engineer and Alcoholic in training."}
     ]
   },
   "contacts": [
@@ -30,20 +31,25 @@
       {"name": "C", "logo": "c", "url": "https://en.cppreference.com/w/c"},
       {"name": "C++", "logo": "cplusplus", "url": "https://isocpp.org/"},
       {"name": "Python", "logo": "python", "url": "https://www.python.org/"},
-      {"name": "Java", "logo": "", "url": "https://dev.java/"}
+      {"name": "Java", "logo": "java", "url": "https://dev.java/"},
+      {"name": "Dart", "logo": "dart", "url": "https://dart.dev/"},
+      {"name": "Bash", "logo": "gnubash", "url": "https://www.gnu.org/software/bash/"}
     ]},
     {"category": "Environment & OS", "items": [
       {"name": "Arch Linux", "logo": "archlinux", "url": "https://archlinux.org/"},
-      {"name": "Bash", "logo": "gnubash", "url": "https://www.gnu.org/software/bash/"},
+      {"name": "Kitty", "logo": "kitty", "url": "https://sw.kovidgoyal.net/kitty/"},
       {"name": "Docker", "logo": "docker", "url": "https://www.docker.com/"}
     ]},
-    {"category": "Libraries & Tools", "items": [
-      {"name": "SDL3", "logo": "", "url": "https://wiki.libsdl.org/SDL3/FrontPage"},
+    {"category": "Frameworks & Tools", "items": [
       {"name": "LaTeX", "logo": "latex", "url": "https://www.latex-project.org/"},
-      {"name": "Git", "logo": "git", "url": "https://git-scm.com/"}
+      {"name": "Flutter", "logo": "flutter", "url": "https://flutter.dev/"},
+      {"name": "Django", "logo": "django", "url": "https://www.djangoproject.com/"},
+      {"name": "Git", "logo": "git", "url": "https://git-scm.com/"},
+      {"name": "Opencode", "logo": "opencode", "url": "https://opencode.ai/"}
     ]},
     {"category": "Databases", "items": [
-      {"name": "PostgreSQL", "logo": "postgresql", "url": "https://www.postgresql.org/"}
+      {"name": "PostgreSQL", "logo": "postgresql", "url": "https://www.postgresql.org/"},
+      {"name": "Dbeaver", "logo": "dbeaver", "url": "https://dbeaver.io/"}
     ]}
   ],
   "projects": [
@@ -52,21 +58,15 @@
     {"name": "Not-Quite-My-Tempo", "url": "https://github.com/StackDs/Not-Quite-My-Tempo", "description": "Early-stage project for measuring algorithms and processes across multiple programming languages."}
   ],
   "quotes": [
-    {"text": "I'm the son of rage and love", "author": "St. Jimmy"},
-    {"text": "You can't get a hangover if you don't stop drinking", "author": "Lemmy Kilmister"},
     {"text": "Talk is cheap. Show me the code", "author": "Linus Torvalds"},
     {"text": "A wrong decision is better than indecision", "author": "Tony Soprano"},
-    {"text": "Yeah, Mr. White! Yeah, science!", "author": "Jesse Pinkman"},
     {"text": "Wubba lubba dub dub!", "author": "Rick Sanchez"},
-    {"text": "What's in the box?", "author": "Se7en"},
     {"text": "Cadia stands, and we shall not fall", "author": "Imperial Creed"},
     {"text": "War. War never changes.", "author": "Fallout"},
     {"text": "Forget about Freeman", "author": "Half-Life"},
     {"text": "The cake is a lie", "author": "Portal"},
-    {"text": "Praise the sun!", "author": "Solaire of Astora"},
     {"text": "Would you kindly?", "author": "Atlas"},
     {"text": "How's your sister?", "author": "Cayde-6"},
-    {"text": "In a world without gold, we might've been heroes", "author": "Blackbeard"},
     {"text": "SIC PARVIS MAGNA", "author": "Sir Francis Drake"},
     {"text": "Kept you waiting, huh?", "author": "Big Boss"},
     {"text": "It can't be for nothing", "author": "Ellie"}

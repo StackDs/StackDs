@@ -5,6 +5,9 @@ from html import escape
 from string import Template
 from urllib.parse import quote, urlencode
 
+from render_tech_badges import asset_path
+from render_quotes import CLOSING_MESSAGE
+
 
 def markdown(value):
     """Escape plain config text, including table and blockquote delimiters."""
@@ -17,6 +20,9 @@ def link_url(value):
 
 
 def render_badge(item, theme):
+    local = asset_path(item)
+    if local:
+        return f'[![{markdown(item["name"])}]({local})]({link_url(item["url"])})'
     parameters = {
         "style": "flat", "label": "", "message": item["name"],
         "color": theme["surface"].lstrip("#"),
@@ -63,6 +69,7 @@ def render(profile, theme, about, template):
                            for index, item in enumerate(profile["projects"], 1))
     quotes_alt = "Hall of Fame. " + " ".join(
         f'{item["text"]} — {item["author"]}.' for item in profile["quotes"])
+    quotes_alt += " " + CLOSING_MESSAGE
     period = "All-time commits" if profile["stats"]["include_all_commits"] else "Commit year is shown on the card"
     return Template(template).substitute(
         BANNER_ALT=escape(profile["description"], quote=True), CONTACTS=contacts,

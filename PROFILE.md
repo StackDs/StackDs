@@ -14,11 +14,13 @@ terminal banners, identity, contact links, and color palette.
    | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, quotes, stats endpoint, and optional widgets. |
    | `config/theme.json` | Shared `#RRGGBB` colors, including the five contribution levels for each snake variant. |
    | `ascii.txt` | Default avatar; preserve spaces and line breaks. |
-   | `templates/README.md.tpl` | Section order, headings, separators, and the C snippet before the final quotes. |
+   | `templates/README.md.tpl` | Section order, headings, separators, and contribution image selection. |
    | `scripts/render_quotes.py` | Closing terminal layout and quote reveal timing. |
    | `scripts/render_project_cards.py` | Static project card layout for desktop and mobile. |
    | `scripts/render_contact_badges.py` | Static contact badge layout. |
-   | `scripts/profile_icons.py` | Contact glyphs shared by the badges and web card. |
+   | `scripts/render_tech_badges.py` | Local Java and Kitty badge layout. |
+   | `assets/icons/` | Original-color Java and Kitty artwork and source credits. |
+   | `scripts/profile_icons.py` | Logo artwork shared by the badges and web card. |
    | `templates/site.html.tpl` | Web card structure and interface copy. |
    | `site/styles.css` | Web layout and spacing; palette values come from generated `site/theme.css`. |
 
@@ -46,7 +48,9 @@ Configuration is validated and all outputs are rendered before any are written.
 Generated outputs are `README.md`, `site/index.html`, `site/theme.css`, the
 terminal, quote, and contribution SVGs (animated and static), the contact badges
 (`assets/contact-NN.svg`), the project cards (`assets/project-NN.svg` and
-`assets/project-NN-mobile.svg`), and `assets/stats/github.svg`.
+`assets/project-NN-mobile.svg`), the local Java and Kitty badges (`assets/tech-java.svg`
+and `assets/tech-kitty.svg`),
+and `assets/stats/github.svg`.
 Changes made directly to generated text or banners will be overwritten.
 The snake and stats snapshots keep their existing activity data during a local
 build; their colors and accessibility styling are reapplied offline.
@@ -55,6 +59,28 @@ JSON strings are plain text and are escaped for Markdown or HTML. Use
 `content/about.md` and the templates when you want authored Markdown. Templates
 use Python's `string.Template`: placeholders look like `$ABOUT`; write `$$` for a
 literal dollar sign.
+
+### Add a stack.push message to the opening card
+
+Edit `terminal.push_messages` in `config/profile.json`. Each string produces one
+command in the lower section of the card, in list order:
+
+```json
+"push_messages": [
+  "Last in, first out.",
+  "Your next message.",
+  "Another message."
+]
+```
+
+The generator adds `~ $ stack.push("...");` automatically. Enter only the message;
+quotes and backslashes are escaped as string literals. Keep at least one nonempty,
+single-line message. Long commands wrap and the card grows to fit them on desktop
+and mobile. Regenerate with `python3 scripts/build_profile.py` after editing.
+
+`push_messages` replaces the former `footer` and `interests` settings. The checked-in
+configuration starts with only `Last in, first out.`; the extra lines above are
+examples for adding your own messages.
 
 ### Add a technology, project, or quote
 
@@ -65,9 +91,12 @@ Add a technology to the appropriate `stack[].items` list:
 ```
 
 `logo` is a Shields.io / Simple Icons identifier. Use an empty string for a
-text-only badge, as with Java and SDL3. URLs and names, including `C++`, are
-encoded automatically. All badges use `flat`, the shared surface color, and
-the shared accent for supported logos.
+text-only badge, as with SDL3. `"logo": "java"` and `"logo": "kitty"` select local
+badges using the SVG artwork in `assets/icons/`, embedded at 18px with original
+colors. Java uses a blue cup with red steam; Kitty uses its upstream cat/terminal
+logo on a light tile for contrast. URLs and
+names, including `C++`, are encoded automatically. Badges use a flat style, the
+shared surface color, and the shared accent for provider-hosted logos.
 
 Add a project to `projects` with `name`, `url`, and a one-line `description`.
 Each project becomes a static card with wrapped text and a link to its repository.
@@ -87,22 +116,38 @@ The `email` contact's `mailto:` address is
 also used by the web card's copy button. The ordinary email link remains usable
 when JavaScript or the Clipboard API is unavailable.
 
+The filled PlayStation and Steam paths in `scripts/profile_icons.py` are
+vendored from Simple Icons (CC0-1.0); builds do not fetch them. Source snapshots:
+
+- [PlayStation, 16.0.0](https://github.com/simple-icons/simple-icons/blob/16.0.0/icons/playstation.svg)
+- [Steam, 16.0.0](https://github.com/simple-icons/simple-icons/blob/16.0.0/icons/steam.svg)
+
+Java and Kitty artwork sources are documented in [`assets/icons/README.md`](assets/icons/README.md).
+
 ### README layout and motion
 
 The section order is opening terminal, Contact, About Me, Tech Stack,
-Featured Projects, Activity & Contributions, Code Philosophy, then Hall of Fame.
+Featured Projects, Activity & Contributions, then Hall of Fame.
 Horizontal Markdown rules separate the blocks. Enabled optional widgets appear
-before Code Philosophy so the quotes always close the profile.
+before Hall of Fame so the quotes always close the profile.
 
-Only the opening and closing terminals animate. The opening types its text and
-scans the avatar once, then keeps the completed text and cursor visible.
-The closing terminal reveals all quotes once and ends at a fresh prompt.
+The opening and closing terminals and the contribution snake animate. The opening text repeats this
+cycle: type character by character, hold for **4 seconds**, erase in reverse
+order, pause for **700 ms**, then start again. Commands, profile fields, and all
+`stack.push` messages share the cursor's timeline. The frame and avatar remain
+visible; the avatar scan plays once. `HOLD_MS` and `RESTART_PAUSE_MS` in
+`scripts/render_terminal.py` control the pauses.
+The closing terminal reveals all quotes once, then types
+`~ $ Gobernar es Educar - Pedro Aguirre Cerda.` into the final prompt. The phrase
+and cursor remain visible after typing. Edit `CLOSING_MESSAGE` in
+`scripts/render_quotes.py` to change this closing text.
 Both use mobile layouts and static `<picture>` sources for reduced motion.
+Static variants show all profile fields and push messages at once.
 Animation starts when the browser loads the image; GitHub does not provide a
 scroll-triggered playback mechanism for README images.
 
-About Me and Code Philosophy remain native Markdown. Contact badges, technology
-badges, project cards, the contribution calendar, and statistics are static.
+About Me remains native Markdown. Contact badges, technology
+badges, project cards, and statistics are static.
 Optional externally hosted widgets control their own motion.
 
 ## Regenerate the banner from a photo
@@ -139,7 +184,8 @@ with the same script. Postprocessing is idempotent; in reduced-motion mode it
 shows the static contribution cells and hides the moving snake and progress bar.
 
 The light and dark SVGs and their static counterparts are stored in
-`assets/contributions/`. The README always selects a static version and chooses
+`assets/contributions/`. The README selects the animated snake by default,
+uses a static calendar with `prefers-reduced-motion: reduce`, and chooses
 its palette with `prefers-color-scheme`. Local generation only restyles those
 snapshots; run **Actions → Update contribution snake → Run workflow** to refresh
 the contribution data.

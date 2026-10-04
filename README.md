@@ -27,19 +27,19 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 
 **Languages**
 
-[![C](https://img.shields.io/static/v1?style=flat&label=&message=C&color=0F1419&logoColor=088DDC&logo=c)](https://en.cppreference.com/w/c) [![C++](https://img.shields.io/static/v1?style=flat&label=&message=C%2B%2B&color=0F1419&logoColor=088DDC&logo=cplusplus)](https://isocpp.org/) [![Python](https://img.shields.io/static/v1?style=flat&label=&message=Python&color=0F1419&logoColor=088DDC&logo=python)](https://www.python.org/) [![Java](https://img.shields.io/static/v1?style=flat&label=&message=Java&color=0F1419&logoColor=088DDC)](https://dev.java/)
+[![C](https://img.shields.io/static/v1?style=flat&label=&message=C&color=0F1419&logoColor=088DDC&logo=c)](https://en.cppreference.com/w/c) [![C++](https://img.shields.io/static/v1?style=flat&label=&message=C%2B%2B&color=0F1419&logoColor=088DDC&logo=cplusplus)](https://isocpp.org/) [![Python](https://img.shields.io/static/v1?style=flat&label=&message=Python&color=0F1419&logoColor=088DDC&logo=python)](https://www.python.org/) [![Java](assets/tech-java.svg)](https://dev.java/) [![Dart](https://img.shields.io/static/v1?style=flat&label=&message=Dart&color=0F1419&logoColor=088DDC&logo=dart)](https://dart.dev/) [![Bash](https://img.shields.io/static/v1?style=flat&label=&message=Bash&color=0F1419&logoColor=088DDC&logo=gnubash)](https://www.gnu.org/software/bash/)
 
 **Environment &amp; OS**
 
-[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Bash](https://img.shields.io/static/v1?style=flat&label=&message=Bash&color=0F1419&logoColor=088DDC&logo=gnubash)](https://www.gnu.org/software/bash/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/)
+[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/)
 
-**Libraries &amp; Tools**
+**Frameworks &amp; Tools**
 
-[![SDL3](https://img.shields.io/static/v1?style=flat&label=&message=SDL3&color=0F1419&logoColor=088DDC)](https://wiki.libsdl.org/SDL3/FrontPage) [![LaTeX](https://img.shields.io/static/v1?style=flat&label=&message=LaTeX&color=0F1419&logoColor=088DDC&logo=latex)](https://www.latex-project.org/) [![Git](https://img.shields.io/static/v1?style=flat&label=&message=Git&color=0F1419&logoColor=088DDC&logo=git)](https://git-scm.com/)
+[![LaTeX](https://img.shields.io/static/v1?style=flat&label=&message=LaTeX&color=0F1419&logoColor=088DDC&logo=latex)](https://www.latex-project.org/) [![Flutter](https://img.shields.io/static/v1?style=flat&label=&message=Flutter&color=0F1419&logoColor=088DDC&logo=flutter)](https://flutter.dev/) [![Django](https://img.shields.io/static/v1?style=flat&label=&message=Django&color=0F1419&logoColor=088DDC&logo=django)](https://www.djangoproject.com/) [![Git](https://img.shields.io/static/v1?style=flat&label=&message=Git&color=0F1419&logoColor=088DDC&logo=git)](https://git-scm.com/) [![Opencode](https://img.shields.io/static/v1?style=flat&label=&message=Opencode&color=0F1419&logoColor=088DDC&logo=opencode)](https://opencode.ai/)
 
 **Databases**
 
-[![PostgreSQL](https://img.shields.io/static/v1?style=flat&label=&message=PostgreSQL&color=0F1419&logoColor=088DDC&logo=postgresql)](https://www.postgresql.org/)
+[![PostgreSQL](https://img.shields.io/static/v1?style=flat&label=&message=PostgreSQL&color=0F1419&logoColor=088DDC&logo=postgresql)](https://www.postgresql.org/) [![Dbeaver](https://img.shields.io/static/v1?style=flat&label=&message=Dbeaver&color=0F1419&logoColor=088DDC&logo=dbeaver)](https://dbeaver.io/)
 
 ---
 
@@ -71,8 +71,10 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 ## Activity & Contributions
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
-  <img src="assets/contributions/snake-static.svg" width="100%" alt="GitHub contribution calendar, from empty days to highest activity.">
+  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/contributions/snake-static.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg">
+  <img src="assets/contributions/snake.svg" width="100%" alt="GitHub contribution calendar animated as a snake; a static calendar is shown with reduced motion.">
 </picture>
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)](https://github.com/StackDs)
@@ -82,23 +84,11 @@ Commit year is shown on the card; rank and PR totals are reported by GitHub Read
 
 ---
 
-## Code Philosophy
-
-```c
-if (opening_brace_on_same_line) {
-    respect++;
-}
-```
-
-*Last in, first out.*
-
----
-
 ## Hall of Fame
 
 <picture>
   <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/quotes-mobile-static.svg">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/quotes-static.svg">
   <source media="(max-width: 600px)" srcset="assets/quotes-mobile.svg">
-  <img src="assets/quotes.svg" width="100%" alt="Hall of Fame. I&#x27;m the son of rage and love — St. Jimmy. You can&#x27;t get a hangover if you don&#x27;t stop drinking — Lemmy Kilmister. Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Yeah, Mr. White! Yeah, science! — Jesse Pinkman. Wubba lubba dub dub! — Rick Sanchez. What&#x27;s in the box? — Se7en. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Praise the sun! — Solaire of Astora. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. In a world without gold, we might&#x27;ve been heroes — Blackbeard. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie.">
+  <img src="assets/quotes.svg" width="100%" alt="Hall of Fame. Talk is cheap. Show me the code — Linus Torvalds. A wrong decision is better than indecision — Tony Soprano. Wubba lubba dub dub! — Rick Sanchez. Cadia stands, and we shall not fall — Imperial Creed. War. War never changes. — Fallout. Forget about Freeman — Half-Life. The cake is a lie — Portal. Would you kindly? — Atlas. How&#x27;s your sister? — Cayde-6. SIC PARVIS MAGNA — Sir Francis Drake. Kept you waiting, huh? — Big Boss. It can&#x27;t be for nothing — Ellie. Gobernar es Educar - Pedro Aguirre Cerda.">
 </picture>
