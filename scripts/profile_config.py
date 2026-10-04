@@ -105,6 +105,22 @@ def load_profile(root=ROOT):
                 _url(item["url"], f"{location}.url", mail=name == "contacts")
     ids = [item["id"] for item in profile["contacts"]]
     _require(len(ids) == len(set(ids)), f"{path}:contacts", "IDs must be unique")
+    if "interests" in profile:
+        _list(profile["interests"], f"{path}:interests")
+        for i, item in enumerate(profile["interests"]):
+            location = f"{path}:interests[{i}]"
+            _object(item, location)
+            _string(item.get("id"), f"{location}.id")
+            _string(item.get("title"), f"{location}.title")
+            _string(item.get("description"), f"{location}.description")
+            if "subtitle" in item:
+                _string(item["subtitle"], f"{location}.subtitle")
+            if "tags" in item:
+                _list(item["tags"], f"{location}.tags")
+                for j, tag in enumerate(item["tags"]):
+                    _string(tag, f"{location}.tags[{j}]")
+        interest_ids = [item["id"] for item in profile["interests"]]
+        _require(len(interest_ids) == len(set(interest_ids)), f"{path}:interests", "IDs must be unique")
     stats = profile.get("stats")
     _object(stats, f"{path}:stats")
     _url(stats.get("endpoint"), f"{path}:stats.endpoint")

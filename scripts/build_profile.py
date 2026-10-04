@@ -15,6 +15,7 @@ import render_site
 import render_terminal
 import render_theme
 import render_tech_badges
+import render_interests
 import update_stats
 from svg_motion import static_svg
 
@@ -41,6 +42,10 @@ def artifacts(root=ROOT):
         for index, project in enumerate(profile["projects"], 1):
             result[f"assets/project-{index:02d}{suffix}.svg"] = render_project_cards.render(
                 project, theme, mobile)
+        for interest in profile.get("interests", []):
+            card = render_interests.render(interest, theme, mobile)
+            result[f"assets/interest-{interest['id']}{suffix}.svg"] = card
+            result[f"assets/interest-{interest['id']}{suffix}-static.svg"] = static_svg(card)
     for index, contact in enumerate(profile["contacts"], 1):
         result[f"assets/contact-{index:02d}.svg"] = render_contact_badges.render(contact, theme)
     for group in profile["stack"]:

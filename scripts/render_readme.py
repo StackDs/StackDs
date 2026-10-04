@@ -57,6 +57,17 @@ def render_project(project, index):
             f'</a>')
 
 
+def render_interest(interest):
+    alt = escape(f'{interest["title"]} — {interest["description"]}', quote=True)
+    base = f'assets/interest-{interest["id"]}'
+    return (f'<picture>\n'
+            f'  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="{base}-mobile-static.svg">\n'
+            f'  <source media="(prefers-reduced-motion: reduce)" srcset="{base}-static.svg">\n'
+            f'  <source media="(max-width: 600px)" srcset="{base}-mobile.svg">\n'
+            f'  <img src="{base}.svg" width="100%" alt="{alt}">\n'
+            f'</picture>')
+
+
 def render(profile, theme, about, template):
     contacts = " ".join(
         f'[![{markdown(item["label"])}](assets/contact-{index:02d}.svg)]({link_url(item["url"])})'
@@ -67,6 +78,8 @@ def render(profile, theme, about, template):
         for group in profile["stack"])
     projects = "\n\n".join(render_project(item, index)
                            for index, item in enumerate(profile["projects"], 1))
+    interests = "\n\n".join(render_interest(item)
+                            for item in profile.get("interests", []))
     quotes_alt = "Hall of Fame. " + " ".join(
         f'{item["text"]} — {item["author"]}.' for item in profile["quotes"])
     quotes_alt += " " + CLOSING_MESSAGE
@@ -79,6 +92,7 @@ def render(profile, theme, about, template):
     return Template(template).substitute(
         BANNER_ALT=escape(profile["description"], quote=True), CONTACTS=contacts,
         ABOUT=about.strip(), STACK=stack, PROJECTS=projects,
+        INTERESTS=interests,
         QUOTES_ALT=escape(quotes_alt, quote=True),
         GITHUB_URL=f'https://github.com/{profile["username"]}',
         STATS_CAPTION=stats_caption,

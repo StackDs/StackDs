@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="220" viewBox="0 0 880 220" role="img" aria-label="Data Science: Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL." xml:lang="en">
+  <title>Data Science</title>
+  <desc>Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.</desc>
+  <!-- Card Background -->
+  <rect x="1" y="1" width="878" height="218" rx="8" fill="#0F1419" stroke="#2B3A45"/>
+
+  <!-- Text & Information Column -->
+  <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
+    <text x="32" y="36" font-size="11" fill="#088DDC" font-weight="bold">// STATISTICS &amp; MODELING</text>
+    <text x="32" y="62" font-size="19" fill="#6BC5ED" font-weight="bold">Data Science</text>
+    <text x="32" y="86" font-size="13" fill="#ECEFF4">Analyzing patterns through probability</text>
+    <text x="32" y="104" font-size="13" fill="#ECEFF4">distributions, mathematical modeling, and data</text>
+    <text x="32" y="122" font-size="13" fill="#ECEFF4">pipelines with Python and PostgreSQL.</text>
+    <rect x="32.0" y="152.0" width="86.8" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+<text x="75.4" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Probability</text>
+    <rect x="124.8" y="152.0" width="100.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+<text x="175.0" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Distributions</text>
+    <rect x="231.2" y="152.0" width="80.0" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+<text x="271.2" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">PostgreSQL</text>
+    <rect x="317.2" y="152.0" width="73.2" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+<text x="353.8" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Analytics</text>
+  </g>
+
+  <!-- Interactive Visual Canvas -->
+  <g transform="translate(490, 20)">
+    <!-- Sub-window Frame -->
+    <rect width="358" height="180" rx="6" fill="#080E14" stroke="#2B3A45"/>
+    <!-- Sub-window Header -->
+    <circle cx="14" cy="13" r="3.5" fill="#EA2D2E"/>
+    <circle cx="25" cy="13" r="3.5" fill="#E5C07B"/>
+    <circle cx="36" cy="13" r="3.5" fill="#98C379"/>
+    <text x="50" y="17" font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#5C6370">distribution.py</text>
+    <line x1="0" y1="26" x2="358" y2="26" stroke="#2B3A45"/>
+
+    <!-- Canvas Animation Content -->
+    
+    <style>
+      @keyframes ds-sample {
+        0%, 10% { opacity: 0.2; transform: scaleY(0.1); transform-origin: 0 128px; }
+        40%, 88% { opacity: 0.85; transform: scaleY(1.0); transform-origin: 0 128px; }
+        96%, 100% { opacity: 0.2; transform: scaleY(0.1); transform-origin: 0 128px; }
+      }
+      @keyframes ds-curve {
+        0% { stroke-dashoffset: 600; opacity: 0.4; }
+        35%, 88% { stroke-dashoffset: 0; opacity: 1; }
+        96%, 100% { stroke-dashoffset: 0; opacity: 0.4; }
+      }
+      @keyframes ds-pulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+      .ds-bin { animation: ds-sample 6s ease-out infinite; }
+      .ds-line {
+        stroke-dasharray: 600;
+        animation: ds-curve 6s ease-in-out infinite;
+      }
+      .ds-stat { animation: ds-pulse 3s ease-in-out infinite; }
+    </style>
+    <defs>
+      <linearGradient id="bell-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#6BC5ED" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#088DDC" stop-opacity="0.04"/>
+      </linearGradient>
+    </defs>
+    <!-- Histogram Bars -->
+    <g>
+      <rect class="ds-bin ds-b0" x="60" y="124" width="16" height="4" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b1" x="82" y="120" width="16" height="8" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b2" x="104" y="112" width="16" height="16" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b3" x="126" y="96" width="16" height="32" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b4" x="148" y="76" width="16" height="52" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b5" x="170" y="54" width="16" height="74" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b6" x="192" y="54" width="16" height="74" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b7" x="214" y="76" width="16" height="52" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b8" x="236" y="96" width="16" height="32" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b9" x="258" y="112" width="16" height="16" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+      <rect class="ds-bin ds-b10" x="280" y="120" width="16" height="8" rx="2" fill="#0B1117" stroke="#2B3A45"/>
+    </g>
+    <!-- Area Under Curve -->
+    <path d="M 45.0,127.0 L 65.0,126.0 L 85.0,124.0 L 105.0,118.0 L 120.0,111.0 L 135.0,99.0 L 150.0,83.0 L 165.0,65.0 L 180.0,48.0 L 195.0,65.0 L 210.0,83.0 L 225.0,99.0 L 240.0,111.0 L 255.0,118.0 L 275.0,124.0 L 295.0,126.0 L 315.0,127.0 L 315.0,128 L 45.0,128 Z" fill="url(#bell-grad)"/>
+    <!-- Gaussian Bell Curve -->
+    <path class="ds-line" d="M 45.0,127.0 L 65.0,126.0 L 85.0,124.0 L 105.0,118.0 L 120.0,111.0 L 135.0,99.0 L 150.0,83.0 L 165.0,65.0 L 180.0,48.0 L 195.0,65.0 L 210.0,83.0 L 225.0,99.0 L 240.0,111.0 L 255.0,118.0 L 275.0,124.0 L 295.0,126.0 L 315.0,127.0" fill="none" stroke="#6BC5ED" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Standard Deviation Vertical Guides -->
+    <g stroke="#088DDC" stroke-dasharray="2 2" stroke-width="1" opacity="0.6">
+      <line x1="180" y1="48" x2="180" y2="128"/>
+      <line x1="135" y1="99" x2="135" y2="128"/>
+      <line x1="225" y1="99" x2="225" y2="128"/>
+    </g>
+    <!-- Baseline Axis -->
+    <line x1="35" y1="128" x2="325" y2="128" stroke="#2B3A45" stroke-width="1.5"/>
+    <!-- Axis Ticks & Labels -->
+    <g font-family="DejaVu Sans Mono, monospace" font-size="9" fill="#5C6370" text-anchor="middle">
+      <text x="95" y="140">-2σ</text>
+      <text x="135" y="140">-1σ</text>
+      <text x="180" y="140" fill="#6BC5ED" font-weight="bold">μ</text>
+      <text x="225" y="140">+1σ</text>
+      <text x="265" y="140">+2σ</text>
+    </g>
+    <!-- Badge Indicator -->
+    <g class="ds-stat" font-family="DejaVu Sans Mono, monospace" font-size="9">
+      <rect x="220" y="28" width="105" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+      <text x="272" y="41" fill="#6BC5ED" text-anchor="middle">μ=0.0  σ=1.0</text>
+      <rect x="35" y="28" width="100" height="18" rx="4" fill="#0B1117" stroke="#2B3A45"/>
+      <text x="85" y="41" fill="#D3C6AA" text-anchor="middle">P(|x|&lt;σ) ≈ 68%</text>
+    </g>
+
+  </g>
+</svg>

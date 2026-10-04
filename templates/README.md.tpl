@@ -47,6 +47,12 @@ $WIDGETS
 
 ---
 
+## About My Interests
+
+$INTERESTS
+
+---
+
 ## Hall of Fame
 
 <picture>

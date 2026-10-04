@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="220" viewBox="0 0 880 220" role="img" aria-label="Programming: Building performant, reliable tools in C, C++, and Python. Focused on low-level systems, Linux environments, and clean abstractions." xml:lang="en" data-motion="static">
+  <title>Programming</title>
+  <desc>Building performant, reliable tools in C, C++, and Python. Focused on low-level systems, Linux environments, and clean abstractions.</desc>
+  
+  <rect x="1" y="1" width="878" height="218" rx="8" fill="#0F1419" stroke="#2B3A45" />
+
+  
+  <g font-family="DejaVu Sans Mono, Liberation Mono, monospace">
+    <text x="32" y="36" font-size="11" fill="#088DDC" font-weight="bold">// SYSTEMS &amp; SOFTWARE DEVELOPMENT</text>
+    <text x="32" y="62" font-size="19" fill="#6BC5ED" font-weight="bold">Programming</text>
+    <text x="32" y="86" font-size="13" fill="#ECEFF4">Building performant, reliable tools in C, C++,</text>
+    <text x="32" y="104" font-size="13" fill="#ECEFF4">and Python. Focused on low-level systems,</text>
+    <text x="32" y="122" font-size="13" fill="#ECEFF4">Linux environments, and clean abstractions.</text>
+    <rect x="32.0" y="152.0" width="18.8" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="41.4" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">C</text>
+    <rect x="56.8" y="152.0" width="32.4" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="73.0" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">C++</text>
+    <rect x="95.2" y="152.0" width="52.8" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="121.6" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Python</text>
+    <rect x="154.0" y="152.0" width="46.0" height="18" rx="4" fill="#0B1117" stroke="#2B3A45" />
+<text x="177.0" y="164.5" font-size="10" fill="#5C6370" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">Linux</text>
+  </g>
+
+  
+  <g transform="translate(490, 20)">
+    
+    <rect width="358" height="180" rx="6" fill="#080E14" stroke="#2B3A45" />
+    
+    <circle cx="14" cy="13" r="3.5" fill="#EA2D2E" />
+    <circle cx="25" cy="13" r="3.5" fill="#E5C07B" />
+    <circle cx="36" cy="13" r="3.5" fill="#98C379" />
+    <text x="50" y="17" font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#5C6370">main.c</text>
+    <line x1="0" y1="26" x2="358" y2="26" stroke="#2B3A45" />
+
+    
+    
+    <style>
+      @keyframes prog-type {
+        0%, 10% { opacity: 0; }
+        20%, 100% { opacity: 1; }
+      }
+      @keyframes prog-run {
+        0%, 55% { opacity: 0; transform: translateY(4px); }
+        65%, 100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes prog-cursor {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+      .p-l1 { animation: prog-type 6s infinite 0.2s; }
+      .p-l2 { animation: prog-type 6s infinite 0.8s; }
+      .p-l3 { animation: prog-type 6s infinite 1.4s; }
+      .p-l4 { animation: prog-type 6s infinite 2.0s; }
+      .p-l5 { animation: prog-type 6s infinite 2.4s; }
+      .p-out { animation: prog-run 6s infinite; }
+      .p-cur { animation: prog-cursor 0.9s infinite; }
+    </style>
+    
+    <g font-family="DejaVu Sans Mono, monospace" font-size="11">
+      
+      <g class="p-l1">
+        <text x="16" y="44" fill="#5C6370">1</text>
+        <text x="36" y="44" fill="#088DDC">#include </text>
+        <text x="96" y="44" fill="#6BC5ED">&lt;stdio.h&gt;</text>
+      </g>
+      
+      <g class="p-l2">
+        <text x="16" y="62" fill="#5C6370">2</text>
+        <text x="36" y="62" fill="#088DDC">int </text>
+        <text x="63" y="62" fill="#6BC5ED">main</text>
+        <text x="90" y="62" fill="#ECEFF4">(void) {</text>
+      </g>
+      
+      <g class="p-l3">
+        <text x="16" y="80" fill="#5C6370">3</text>
+        <text x="48" y="80" fill="#6BC5ED">printf</text>
+        <text x="90" y="80" fill="#ECEFF4">(</text>
+        <text x="97" y="80" fill="#D3C6AA">"Hello, World!\n"</text>
+        <text x="219" y="80" fill="#ECEFF4">);</text>
+      </g>
+      
+      <g class="p-l4">
+        <text x="16" y="98" fill="#5C6370">4</text>
+        <text x="48" y="98" fill="#088DDC">return </text>
+        <text x="97" y="98" fill="#ECEFF4">0;</text>
+      </g>
+      
+      <g class="p-l5">
+        <text x="16" y="116" fill="#5C6370">5</text>
+        <text x="36" y="116" fill="#ECEFF4">}</text>
+      </g>
+      
+      <line x1="12" y1="126" x2="348" y2="126" stroke="#2B3A45" stroke-dasharray="3 3" />
+      
+      <g class="p-out">
+        <text x="16" y="142" fill="#088DDC">~ $ </text>
+        <text x="42" y="142" fill="#ECEFF4">./main</text>
+        <text x="16" y="158" fill="#6BC5ED">Hello, World!</text>
+        <rect class="p-cur" x="110" y="148" width="6" height="12" fill="#6BC5ED" />
+      </g>
+    </g>
+
+  </g>
+<style id="static-motion">* { animation: none !important; } .typed-char { opacity: 1 !important; }</style></svg>

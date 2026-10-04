@@ -9,7 +9,7 @@
 
 ---
 
-## My Profiles
+## Contact
 
 [![Instagram](assets/contact-01.svg)](https://www.instagram.com/_bryan.712/) [![PSN Profiles](assets/contact-02.svg)](https://psnprofiles.com/StackDS) [![LinkedIn](assets/contact-03.svg)](https://www.linkedin.com/in/bryan-aguirre-fuentes-1953642bb/) [![Email](assets/contact-04.svg)](mailto:stackctrlz@gmail.com) [![Discord](assets/contact-05.svg)](https://discord.com/users/468600348500688917) [![Steam](assets/contact-06.svg)](https://steamcommunity.com/id/StackDs/)
 
@@ -31,11 +31,11 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 
 **Environment &amp; OS**
 
-[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Hyprland](https://img.shields.io/static/v1?style=flat&label=&message=Hyprland&color=0F1419&logoColor=088DDC&logo=hyprland)](https://hyprland.org/) [![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/)
+[![Arch Linux](https://img.shields.io/static/v1?style=flat&label=&message=Arch%20Linux&color=0F1419&logoColor=088DDC&logo=archlinux)](https://archlinux.org/) [![Hyprland](https://img.shields.io/static/v1?style=flat&label=&message=Hyprland&color=0F1419&logoColor=088DDC&logo=hyprland)](https://hyprland.org/) [![Kitty](assets/tech-kitty.svg)](https://sw.kovidgoyal.net/kitty/)
 
 **Frameworks &amp; Tools**
 
-[![LaTeX](https://img.shields.io/static/v1?style=flat&label=&message=LaTeX&color=0F1419&logoColor=088DDC&logo=latex)](https://www.latex-project.org/) [![Flutter](https://img.shields.io/static/v1?style=flat&label=&message=Flutter&color=0F1419&logoColor=088DDC&logo=flutter)](https://flutter.dev/) [![Django](https://img.shields.io/static/v1?style=flat&label=&message=Django&color=0F1419&logoColor=088DDC&logo=django)](https://www.djangoproject.com/) [![Git](https://img.shields.io/static/v1?style=flat&label=&message=Git&color=0F1419&logoColor=088DDC&logo=git)](https://git-scm.com/) [![Opencode](https://img.shields.io/static/v1?style=flat&label=&message=Opencode&color=0F1419&logoColor=088DDC&logo=opencode)](https://opencode.ai/)
+[![LaTeX](https://img.shields.io/static/v1?style=flat&label=&message=LaTeX&color=0F1419&logoColor=088DDC&logo=latex)](https://www.latex-project.org/) [![Flutter](https://img.shields.io/static/v1?style=flat&label=&message=Flutter&color=0F1419&logoColor=088DDC&logo=flutter)](https://flutter.dev/) [![Django](https://img.shields.io/static/v1?style=flat&label=&message=Django&color=0F1419&logoColor=088DDC&logo=django)](https://www.djangoproject.com/) [![Git](https://img.shields.io/static/v1?style=flat&label=&message=Git&color=0F1419&logoColor=088DDC&logo=git)](https://git-scm.com/) [![Docker](https://img.shields.io/static/v1?style=flat&label=&message=Docker&color=0F1419&logoColor=088DDC&logo=docker)](https://www.docker.com/) [![Opencode](https://img.shields.io/static/v1?style=flat&label=&message=Opencode&color=0F1419&logoColor=088DDC&logo=opencode)](https://opencode.ai/)
 
 **Databases**
 
@@ -77,8 +77,33 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 
 [![GitHub statistics: rank, commits and pull requests](assets/stats/github.svg)](https://github.com/StackDs)
 
-Commit year is shown on the card; rank and PR totals are reported by GitHub Readme Stats. Updated daily when the provider is available.
+I'm trying to improve this, so... KISS. Keep it simple, stupid.
 
+
+---
+
+## About My Interests
+
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-programming-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-programming-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/interest-programming-mobile.svg">
+  <img src="assets/interest-programming.svg" width="100%" alt="Programming — Building performant, reliable tools in C, C++, and Python. Focused on low-level systems, Linux environments, and clean abstractions.">
+</picture>
+
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-algorithms-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-algorithms-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/interest-algorithms-mobile.svg">
+  <img src="assets/interest-algorithms.svg" width="100%" alt="Algorithms and Eds — Exploring graph traversals, data structures, and algorithmic complexity. Benchmarking performance across multiple languages.">
+</picture>
+
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-data_science-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-data_science-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/interest-data_science-mobile.svg">
+  <img src="assets/interest-data_science.svg" width="100%" alt="Data Science — Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.">
+</picture>
 
 ---
 

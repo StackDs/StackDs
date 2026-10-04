@@ -23,6 +23,7 @@ import render_readme
 import render_site
 import render_terminal
 import render_theme
+import render_interests
 import update_stats
 from svg_motion import static_svg
 
@@ -259,6 +260,28 @@ class ProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_profile.build(self.root)
         self.assertEqual(before, self.snapshot())
+
+    def test_interests_validation_and_rendering(self):
+        for item in self.profile.get("interests", []):
+            for mobile in (False, True):
+                source = render_interests.render(item, self.theme, mobile)
+                root = ET.fromstring(source)
+                expected_w = "420" if mobile else "880"
+                expected_h = "360" if mobile else "220"
+                self.assertEqual(expected_w, root.get("width"))
+                self.assertEqual(expected_h, root.get("height"))
+                self.assertEqual(item["title"], root.find(f"{SVG}title").text)
+                static = static_svg(source)
+                static_root = ET.fromstring(static)
+                self.assertEqual("static", static_root.get("data-motion"))
+
+        # Test duplicate ID rejection
+        self.copy_build_inputs()
+        bad_profile = copy.deepcopy(self.profile)
+        bad_profile["interests"].append(copy.deepcopy(bad_profile["interests"][0]))
+        (self.root / "config/profile.json").write_text(json.dumps(bad_profile))
+        with self.assertRaises(ValueError):
+            load_profile(self.root)
 
     def test_default_render_needs_no_third_party_packages(self):
         result = subprocess.run(

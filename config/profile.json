@@ -58,6 +58,29 @@
     {"name": "Basic-C-Without-Tears", "url": "https://github.com/StackDs/Basic-C-Without-Tears", "description": "Helps Python programmers learn C through theory, exercises, and projects, including multimedia with SDL3."},
     {"name": "Not-Quite-My-Tempo", "url": "https://github.com/StackDs/Not-Quite-My-Tempo", "description": "Early-stage project for measuring algorithms and processes across multiple programming languages."}
   ],
+  "interests": [
+    {
+      "id": "programming",
+      "title": "Programming",
+      "subtitle": "Systems & Software Development",
+      "description": "Building performant, reliable tools in C, C++, and Python. Focused on low-level systems, Linux environments, and clean abstractions.",
+      "tags": ["C", "C++", "Python", "Linux"]
+    },
+    {
+      "id": "algorithms",
+      "title": "Algorithms and Eds",
+      "subtitle": "Efficiency & Graph Theory",
+      "description": "Exploring graph traversals, data structures, and algorithmic complexity. Benchmarking performance across multiple languages.",
+      "tags": ["BFS / DFS", "Graphs", "Trees", "Complexity"]
+    },
+    {
+      "id": "data_science",
+      "title": "Data Science",
+      "subtitle": "Statistics & Modeling",
+      "description": "Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.",
+      "tags": ["Probability", "Distributions", "PostgreSQL", "Analytics"]
+    }
+  ],
   "quotes": [
     {"text": "Talk is cheap. Show me the code", "author": "Linus Torvalds"},
     {"text": "A wrong decision is better than indecision", "author": "Tony Soprano"},

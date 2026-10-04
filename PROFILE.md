@@ -11,12 +11,13 @@ terminal banners, identity, contact links, and color palette.
    | Source | What to change |
    | --- | --- |
    | `content/about.md` | The About Me paragraphs; Markdown is supported. |
-   | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, quotes, stats endpoint, and optional widgets. |
+   | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, interests, quotes, stats endpoint, and optional widgets. |
    | `config/theme.json` | Shared `#RRGGBB` colors, including the five contribution levels for each snake variant. |
    | `ascii.txt` | Default avatar; preserve spaces and line breaks. |
    | `templates/README.md.tpl` | Section order, headings, separators, and contribution image selection. |
    | `scripts/render_quotes.py` | Closing terminal layout and quote reveal timing. |
    | `scripts/render_project_cards.py` | Static project card layout for desktop and mobile. |
+   | `scripts/render_interests.py` | Interactive interest cards layout and animations (programming, algorithms BFS, data science). |
    | `scripts/render_contact_badges.py` | Static contact badge layout. |
    | `scripts/render_tech_badges.py` | Local Java and Kitty badge layout. |
    | `assets/icons/` | Java and Kitty artwork and source credits. |
@@ -48,7 +49,8 @@ Configuration is validated and all outputs are rendered before any are written.
 Generated outputs are `README.md`, `site/index.html`, `site/theme.css`, the
 terminal, quote, and contribution SVGs (animated and static), the contact badges
 (`assets/contact-NN.svg`), the project cards (`assets/project-NN.svg` and
-`assets/project-NN-mobile.svg`), the local Java and Kitty badges (`assets/tech-java.svg`
+`assets/project-NN-mobile.svg`), the interest cards (`assets/interest-ID.svg` and
+`assets/interest-ID-mobile.svg`), the local Java and Kitty badges (`assets/tech-java.svg`
 and `assets/tech-kitty.svg`),
 and `assets/stats/github.svg`.
 Changes made directly to generated text or banners will be overwritten.

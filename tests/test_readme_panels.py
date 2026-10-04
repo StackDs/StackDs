@@ -19,6 +19,7 @@ import render_quotes
 import render_readme
 import render_terminal
 import render_tech_badges
+import render_interests
 from svg_motion import static_svg
 
 SVG = "{http://www.w3.org/2000/svg}"
@@ -200,7 +201,7 @@ class TerminalPanelTests(unittest.TestCase):
         headings = re.findall(r"^## (.+)$", source, re.MULTILINE)
         self.assertEqual([
             "Contact", "About Me", "Tech Stack", "Featured Projects",
-            "Activity & Contributions", "Now Playing", "Hall of Fame",
+            "Activity & Contributions", "Now Playing", "About My Interests", "Hall of Fame",
         ], headings)
         for index, contact in enumerate(self.profile["contacts"], 1):
             self.assertIn(f'[![{contact["label"]}](assets/contact-{index:02d}.svg)]({contact["url"]})', source)
@@ -208,13 +209,16 @@ class TerminalPanelTests(unittest.TestCase):
             self.assertIn(f'<a href="{project["url"]}">', source)
             self.assertIn(f'src="assets/project-{index:02d}.svg"', source)
             self.assertIn(f'srcset="assets/project-{index:02d}-mobile.svg"', source)
+        for interest in self.profile["interests"]:
+            self.assertIn(f'src="assets/interest-{interest["id"]}.svg"', source)
+            self.assertIn(f'srcset="assets/interest-{interest["id"]}-mobile.svg"', source)
         self.assertIn("A biography.", source)
         self.assertIn('src="assets/contributions/snake.svg"', source)
         self.assertIn('media="(prefers-color-scheme: dark)" srcset="assets/contributions/snake-dark.svg"', source)
         self.assertNotIn("Code Philosophy", source)
         self.assertNotIn("opening_brace_on_same_line", source)
         self.assertIn("Gobernar es Educar - Pedro Aguirre Cerda.", source)
-        self.assertEqual(7, source.count("\n---\n"))
+        self.assertEqual(8, source.count("\n---\n"))
         self.assertTrue(source.rstrip().endswith("</picture>"))
         self.assertNotIn("<details>", source)
 
@@ -229,10 +233,11 @@ class TerminalPanelTests(unittest.TestCase):
             render_quotes.render(self.profile, theme),
             render_project_cards.render(self.profile["projects"][0], theme),
             render_contact_badges.render(self.profile["contacts"][0], theme),
+            render_interests.render(self.profile["interests"][0], theme),
         ):
             self.assertIn("#FEDCBA", source)
         for name, source in artifacts.items():
-            if name.startswith(("assets/contact-", "assets/project-", "assets/quotes")):
+            if name.startswith(("assets/contact-", "assets/project-", "assets/quotes", "assets/interest-")):
                 ET.fromstring(source)
 
 
