@@ -307,10 +307,245 @@ def _render_data_science_canvas(theme):
 '''
 
 
+def _project_cam(x, y, z, cx=195, cy=96, scale=17.0, theta=0.610865, phi=0.453786):
+    """3D camera projection with azimuth theta (35 deg) and elevation phi (26 deg)."""
+    x1 = x * math.cos(theta) - y * math.sin(theta)
+    y1 = x * math.sin(theta) + y * math.cos(theta)
+    z1 = z
+    u = cx + scale * x1
+    v = cy - scale * (y1 * math.sin(phi) + z1 * math.cos(phi))
+    return round(u, 1), round(v, 1)
+
+
+def _render_mathematics_canvas(theme):
+    """Canvas content: 3D hyperbolic paraboloid (saddle point) surface with gradient field & contours."""
+    accent = theme["accent"]
+    accent_light = theme["accent_light"]
+    text = theme["text"]
+    text_sec = theme["text_secondary"]
+    comment = theme["comment"]
+    border = theme["border"]
+    control = theme["control"]
+
+    cx, cy = 195, 96
+    scale = 17.0
+    floor_z = -3.4
+
+    nx, ny = 19, 19
+    xs = [-2.6 + i * 5.2 / (nx - 1) for i in range(nx)]
+    ys = [-2.6 + j * 5.2 / (ny - 1) for j in range(ny)]
+
+    # Surface: z = (x^2 - y^2) / 2.6
+    curves_x = []
+    for y in ys:
+        pts = []
+        for x in xs:
+            z = (x**2 - y**2) / 2.6
+            u, v = _project_cam(x, y, z, cx=cx, cy=cy, scale=scale)
+            pts.append(f"{u},{v}")
+        curves_x.append("M " + " L ".join(pts))
+
+    curves_y = []
+    for x in xs:
+        pts = []
+        for y in ys:
+            z = (x**2 - y**2) / 2.6
+            u, v = _project_cam(x, y, z, cx=cx, cy=cy, scale=scale)
+            pts.append(f"{u},{v}")
+        curves_y.append("M " + " L ".join(pts))
+
+    # Floor grid
+    floor_grid = []
+    for val in [-2.6, 0, 2.6]:
+        u1, v1 = _project_cam(-2.6, val, floor_z, cx=cx, cy=cy, scale=scale)
+        u2, v2 = _project_cam(2.6, val, floor_z, cx=cx, cy=cy, scale=scale)
+        floor_grid.append(f'<line x1="{u1}" y1="{v1}" x2="{u2}" y2="{v2}" stroke="{border}" stroke-dasharray="2 2"/>')
+        u1, v1 = _project_cam(val, -2.6, floor_z, cx=cx, cy=cy, scale=scale)
+        u2, v2 = _project_cam(val, 2.6, floor_z, cx=cx, cy=cy, scale=scale)
+        floor_grid.append(f'<line x1="{u1}" y1="{v1}" x2="{u2}" y2="{v2}" stroke="{border}" stroke-dasharray="2 2"/>')
+
+    # Floor contour hyperbolas: x^2 - y^2 = c
+    u1, v1 = _project_cam(-2.4, -2.4, floor_z, cx=cx, cy=cy, scale=scale)
+    u2, v2 = _project_cam(2.4, 2.4, floor_z, cx=cx, cy=cy, scale=scale)
+    asymp1 = f'<line x1="{u1}" y1="{v1}" x2="{u2}" y2="{v2}" stroke="{comment}" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.4"/>'
+    u1, v1 = _project_cam(-2.4, 2.4, floor_z, cx=cx, cy=cy, scale=scale)
+    u2, v2 = _project_cam(2.4, -2.4, floor_z, cx=cx, cy=cy, scale=scale)
+    asymp2 = f'<line x1="{u1}" y1="{v1}" x2="{u2}" y2="{v2}" stroke="{comment}" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.4"/>'
+
+    hyp_pos = []
+    for c in [1.6]:
+        for sign in [1, -1]:
+            pts = []
+            for yi in range(-21, 22):
+                y_val = yi / 10.0
+                radicand = c + y_val**2
+                if radicand >= 0:
+                    x_val = sign * math.sqrt(radicand)
+                    if abs(x_val) <= 2.6:
+                        u, v = _project_cam(x_val, y_val, floor_z, cx=cx, cy=cy, scale=scale)
+                        pts.append(f"{u},{v}")
+            if pts:
+                hyp_pos.append(f'<path d="M ' + " L ".join(pts) + '"/>')
+
+    hyp_neg = []
+    for c in [-1.6]:
+        for sign in [1, -1]:
+            pts = []
+            for xi in range(-21, 22):
+                x_val = xi / 10.0
+                radicand = -c + x_val**2
+                if radicand >= 0:
+                    y_val = sign * math.sqrt(radicand)
+                    if abs(y_val) <= 2.6:
+                        u, v = _project_cam(x_val, y_val, floor_z, cx=cx, cy=cy, scale=scale)
+                        pts.append(f"{u},{v}")
+            if pts:
+                hyp_neg.append(f'<path d="M ' + " L ".join(pts) + '"/>')
+
+    # 3D Axes
+    ox, oy = _project_cam(0, 0, floor_z, cx=cx, cy=cy, scale=scale)
+    xx, xy_ = _project_cam(3.1, 0, floor_z, cx=cx, cy=cy, scale=scale)
+    yx, yy = _project_cam(0, 3.1, floor_z, cx=cx, cy=cy, scale=scale)
+    zx, zy = _project_cam(0, 0, 3.2, cx=cx, cy=cy, scale=scale)
+
+    # Origin saddle critical point (0, 0, 0)
+    so_u, so_v = _project_cam(0, 0, 0, cx=cx, cy=cy, scale=scale)
+
+    # Keyframes for particle P(t) on surface
+    n_frames = 24
+    p_kf = []
+    sh_kf = []
+
+    init_px = 1.75
+    init_py = 0.0
+    init_pz = (init_px**2 - init_py**2) / 2.6
+    init_pu, init_pv = _project_cam(init_px, init_py, init_pz, cx=cx, cy=cy, scale=scale)
+    init_pfu, init_pfv = _project_cam(init_px, init_py, floor_z, cx=cx, cy=cy, scale=scale)
+
+    for i in range(n_frames + 1):
+        pct = round(i * 100.0 / n_frames, 1)
+        t = i * 2.0 * math.pi / n_frames
+        px = 1.75 * math.cos(t)
+        py = 1.35 * math.sin(t)
+        pz = (px**2 - py**2) / 2.6
+        pu, pv = _project_cam(px, py, pz, cx=cx, cy=cy, scale=scale)
+        pfu, pfv = _project_cam(px, py, floor_z, cx=cx, cy=cy, scale=scale)
+
+        p_kf.append(f"{pct}% {{ transform: translate({pu}px, {pv}px); }}")
+        sh_kf.append(f"{pct}% {{ transform: translate({pfu}px, {pfv}px); }}")
+
+    p_kf_str = " ".join(p_kf)
+    sh_kf_str = " ".join(sh_kf)
+    floor_grid_str = " ".join(floor_grid)
+    hyp_pos_str = " ".join(hyp_pos)
+    hyp_neg_str = " ".join(hyp_neg)
+    curves_x_str = " ".join(f'<path d="{d}"/>' for d in curves_x)
+    curves_y_str = " ".join(f'<path d="{d}"/>' for d in curves_y)
+
+    return f'''
+    <style>
+      @keyframes m-surf-pt {{
+        {p_kf_str}
+      }}
+      @keyframes m-surf-sh {{
+        {sh_kf_str}
+      }}
+      @keyframes m-pulse-x {{
+        0%, 100% {{ opacity: 0.35; stroke-width: 0.9px; }}
+        50% {{ opacity: 0.9; stroke-width: 1.4px; }}
+      }}
+      @keyframes m-pulse-y {{
+        0%, 100% {{ opacity: 0.9; stroke-width: 1.4px; }}
+        50% {{ opacity: 0.35; stroke-width: 0.9px; }}
+      }}
+      @keyframes m-saddle-glow {{
+        0%, 100% {{ opacity: 0.55; }}
+        50% {{ opacity: 1.0; }}
+      }}
+      .m-tracer {{ animation: m-surf-pt 9s infinite linear; }}
+      .m-shadow {{ animation: m-surf-sh 9s infinite linear; }}
+      .m-hyp-x {{ animation: m-pulse-x 4.5s infinite ease-in-out; stroke: {accent_light}; fill: none; }}
+      .m-hyp-y {{ animation: m-pulse-y 4.5s infinite ease-in-out; stroke: {accent}; fill: none; }}
+      .m-crit {{ animation: m-saddle-glow 2.5s infinite ease-in-out; }}
+    </style>
+
+    <!-- Floor Grid & Asymptotes -->
+    <g opacity="0.25">
+      {floor_grid_str}
+    </g>
+    {asymp1}
+    {asymp2}
+
+    <!-- Pulsing Hyperbolic Contours -->
+    <g class="m-hyp-x">
+      {hyp_pos_str}
+    </g>
+    <g class="m-hyp-y">
+      {hyp_neg_str}
+    </g>
+
+    <!-- 3D Coordinate Axes -->
+    <g stroke="{comment}" stroke-width="1" opacity="0.45">
+      <line x1="{ox}" y1="{oy}" x2="{xx}" y2="{xy_}"/>
+      <line x1="{ox}" y1="{oy}" x2="{yx}" y2="{yy}"/>
+      <line x1="{ox}" y1="{oy}" x2="{zx}" y2="{zy}" stroke-dasharray="2 2"/>
+    </g>
+    <text x="{xx+6}" y="{xy_+3}" font-family="DejaVu Sans Mono" font-size="8" fill="{comment}">x</text>
+    <text x="{yx-9}" y="{yy+3}" font-family="DejaVu Sans Mono" font-size="8" fill="{comment}">y</text>
+    <text x="{zx}" y="{zy-4}" font-family="DejaVu Sans Mono" font-size="8" fill="{comment}" text-anchor="middle">z</text>
+
+    <!-- Surface Mesh: X-parametric (∂/∂x) & Y-parametric (∂/∂y) Curves -->
+    <g fill="none" stroke="{accent}" stroke-width="0.85" opacity="0.72">
+      {curves_x_str}
+    </g>
+    <g fill="none" stroke="{accent_light}" stroke-width="0.85" opacity="0.72">
+      {curves_y_str}
+    </g>
+
+    <!-- Saddle Critical Point at (0,0,0) -->
+    <g class="m-crit">
+      <circle cx="{so_u}" cy="{so_v}" r="3.2" fill="none" stroke="{text_sec}" stroke-width="1.2"/>
+      <circle cx="{so_u}" cy="{so_v}" r="1.4" fill="{text_sec}"/>
+      <text x="{so_u - 38}" y="{so_v + 3}" font-family="DejaVu Sans Mono" font-size="8" fill="{text_sec}">P₀(0,0)</text>
+    </g>
+
+    <!-- Static Vertical Projection Line from Surface to Floor -->
+    <line x1="{init_pu}" y1="{init_pv}" x2="{init_pfu}" y2="{init_pfv}" stroke="{text_sec}" stroke-dasharray="2 2" stroke-width="1" opacity="0.4"/>
+
+    <!-- Moving Projected Shadow on Floor -->
+    <g class="m-shadow" transform="translate({init_pfu}, {init_pfv})">
+      <circle cx="0" cy="0" r="2.2" fill="{text_sec}" opacity="0.5"/>
+    </g>
+
+    <!-- Moving Point on Surface with Gradient Vector -->
+    <g class="m-tracer" transform="translate({init_pu}, {init_pv})">
+      <circle cx="0" cy="0" r="3.2" fill="{text}"/>
+      <line x1="0" y1="0" x2="10" y2="-7" stroke="{text}" stroke-width="1.8" stroke-linecap="round"/>
+      <polygon points="10,-7 6,-10 11,-10" fill="{text}"/>
+      <text x="13" y="-9" font-family="DejaVu Sans Mono" font-size="8.5" fill="{text}" font-weight="bold">∇f</text>
+    </g>
+
+    <!-- Top Formula Badge -->
+    <g font-family="DejaVu Sans Mono, monospace" font-size="9">
+      <rect x="226" y="6" width="120" height="16" rx="3" fill="{control}" stroke="{border}"/>
+      <text x="286" y="18" fill="{accent_light}" text-anchor="middle">∇f = [∂f/∂x, ∂f/∂y]ᵀ</text>
+    </g>
+
+    <!-- Information Badges -->
+    <g font-family="DejaVu Sans Mono, monospace" font-size="8.5">
+      <rect x="14" y="32" width="128" height="17" rx="3" fill="{control}" stroke="{border}"/>
+      <text x="78" y="44" fill="{text_sec}" text-anchor="middle">z = (x² - y²) / 2</text>
+      <rect x="14" y="146" width="168" height="16" rx="3" fill="{control}" stroke="{border}"/>
+      <text x="98" y="158" fill="{comment}" text-anchor="middle">Hessian: det(H) &lt; 0 (Saddle)</text>
+    </g>
+'''
+
+
 CANVAS_RENDERERS = {
     "programming": (_render_programming_canvas, "main.c"),
     "algorithms": (_render_algorithms_canvas, "bfs_graph.py"),
     "data_science": (_render_data_science_canvas, "distribution.py"),
+    "mathematics": (_render_mathematics_canvas, "saddle_field.py"),
 }
 
 

@@ -105,6 +105,13 @@ I'm trying to improve this, so... KISS. Keep it simple, stupid.
   <img src="assets/interest-data_science.svg" width="100%" alt="Data Science — Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.">
 </picture>
 
+<picture>
+  <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/interest-mathematics-mobile-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/interest-mathematics-static.svg">
+  <source media="(max-width: 600px)" srcset="assets/interest-mathematics-mobile.svg">
+  <img src="assets/interest-mathematics.svg" width="100%" alt="Mathematics — Exploring multivariable calculus, vector fields, and differential forms. Analyzing curvature, gradient ascent/descent, and critical points on 3D manifolds.">
+</picture>
+
 ---
 
 ## Hall of Fame

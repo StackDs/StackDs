@@ -79,6 +79,13 @@
       "subtitle": "Statistics & Modeling",
       "description": "Analyzing patterns through probability distributions, mathematical modeling, and data pipelines with Python and PostgreSQL.",
       "tags": ["Probability", "Distributions", "PostgreSQL", "Jupyter"]
+    },
+    {
+      "id": "mathematics",
+      "title": "Mathematics",
+      "subtitle": "Multivariable Calculus & Geometry",
+      "description": "Exploring multivariable calculus, vector fields, and differential forms. Analyzing curvature, gradient ascent/descent, and critical points on 3D manifolds.",
+      "tags": ["Calculus", "Gradient ∇f", "Vector Fields", "Optimization"]
     }
   ],
   "quotes": [
