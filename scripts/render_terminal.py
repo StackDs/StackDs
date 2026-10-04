@@ -15,7 +15,7 @@ from svg_motion import static_svg
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
-DEFAULT_IMAGE = "bryan.jpeg"
+DEFAULT_IMAGE = "Final.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
@@ -106,6 +106,16 @@ def get_avatar_image(root=None):
     target = base_root / "assets" / "images" / DEFAULT_IMAGE
     if not target.is_file():
         target = ROOT / "assets" / "images" / DEFAULT_IMAGE
+    if not target.is_file():
+        for candidate in ("Final.jpeg", "bryan.jpeg"):
+            t = base_root / "assets" / "images" / candidate
+            if t.is_file():
+                target = t
+                break
+            t = ROOT / "assets" / "images" / candidate
+            if t.is_file():
+                target = t
+                break
     if not target.is_file():
         return None
 
