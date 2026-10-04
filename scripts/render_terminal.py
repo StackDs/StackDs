@@ -12,11 +12,10 @@ from textwrap import wrap
 from profile_ascii import ART
 from profile_config import load_profile, load_theme
 from svg_motion import static_svg
-import render_basketball
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
-DEFAULT_IMAGE = "bryan.jpeg"
+DEFAULT_IMAGE = "Final.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
@@ -108,10 +107,11 @@ def image_to_ascii(path, columns, rows, theme=None):
                               centering=(.5, .48))
 
         # Bryan's JPEG has a white field outside the circular illustration.
-        # Remove edge-connected white only; keep white details inside the art.
+        # Remove edge-connected white only; keep dark corners and details inside the art.
         if path.suffix.lower() in {".jpg", ".jpeg"}:
             for seed in ((0, 0), (719, 0), (0, 719), (719, 719)):
-                ImageDraw.floodfill(source, seed, (*background_rgb, 0), thresh=28)
+                if sum(source.getpixel(seed)[:3]) > 700:
+                    ImageDraw.floodfill(source, seed, (*background_rgb, 0), thresh=28)
 
         alpha = source.getchannel("A").resize(
             (columns, rows), Image.Resampling.LANCZOS)
@@ -255,21 +255,6 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
             info.append(typed(f"field-{field_index}-value-{line_index}", value_x,
                               row_y + line_index * 20, line))
         row_y += max(24, len(value_lines) * 20 + 4)
-
-    if mobile:
-        bball_scale = 2.3
-        bball_width = int(render_basketball.WIDTH * bball_scale)
-        bball_x = int((width - bball_width) / 2)
-        bball_y = row_y + 12
-        bball_group = render_basketball.render_svg(theme, bball_x, bball_y, scale=bball_scale)
-        row_y = bball_y + int(render_basketball.HEIGHT * bball_scale) + 12
-    else:
-        bball_scale = 2.3
-        bball_x = 535
-        bball_y = max(row_y + 8, 388)
-        bball_group = render_basketball.render_svg(theme, bball_x, bball_y, scale=bball_scale)
-        row_y = max(row_y, bball_y + int(render_basketball.HEIGHT * bball_scale))
-
     divider = max(art_bottom, row_y) + 24
     parts_width = max(12, int((width - 2 * left) / (14 * .602)))
     prompt = []
@@ -336,8 +321,6 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
       .tone-0 {{ fill: {PHOTO_SHADOW} !important; }}
       .tone-1 {{ fill: {PHOTO_MID} !important; }}
       .tone-2 {{ fill: {PHOTO_COLOR} !important; }}
-      .bball-frame {{ display: none !important; }}
-      .bball-hero {{ display: inline !important; }}
       .motion {{ display: none; }}
     }}
   </style>
@@ -391,7 +374,6 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
 
     parts.extend(info)
-    parts.append(bball_group)
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
     parts.extend(prompt)
     parts.append(terminal_cursor(cursor_frames, duration, ACCENT,
