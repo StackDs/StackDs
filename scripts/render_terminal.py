@@ -12,6 +12,7 @@ from textwrap import wrap
 from profile_ascii import ART
 from profile_config import load_profile, load_theme
 from svg_motion import static_svg
+import render_basketball
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
@@ -255,6 +256,20 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
                               row_y + line_index * 20, line))
         row_y += max(24, len(value_lines) * 20 + 4)
 
+    if mobile:
+        bball_scale = 2.3
+        bball_width = int(render_basketball.WIDTH * bball_scale)
+        bball_x = int((width - bball_width) / 2)
+        bball_y = row_y + 12
+        bball_group = render_basketball.render_svg(theme, bball_x, bball_y, scale=bball_scale)
+        row_y = bball_y + int(render_basketball.HEIGHT * bball_scale) + 12
+    else:
+        bball_scale = 2.3
+        bball_x = 535
+        bball_y = max(row_y + 8, 388)
+        bball_group = render_basketball.render_svg(theme, bball_x, bball_y, scale=bball_scale)
+        row_y = max(row_y, bball_y + int(render_basketball.HEIGHT * bball_scale))
+
     divider = max(art_bottom, row_y) + 24
     parts_width = max(12, int((width - 2 * left) / (14 * .602)))
     prompt = []
@@ -321,6 +336,8 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
       .tone-0 {{ fill: {PHOTO_SHADOW} !important; }}
       .tone-1 {{ fill: {PHOTO_MID} !important; }}
       .tone-2 {{ fill: {PHOTO_COLOR} !important; }}
+      .bball-frame {{ display: none !important; }}
+      .bball-hero {{ display: inline !important; }}
       .motion {{ display: none; }}
     }}
   </style>
@@ -374,6 +391,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None):
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="1.5" class="motion"/>')
 
     parts.extend(info)
+    parts.append(bball_group)
     parts.append(f'<path d="M{left} {divider}H{width-left}" stroke="{RULE}"/>')
     parts.extend(prompt)
     parts.append(terminal_cursor(cursor_frames, duration, ACCENT,

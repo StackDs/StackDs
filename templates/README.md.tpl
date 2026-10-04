@@ -19,10 +19,6 @@ $CONTACTS
 
 $ABOUT
 
-<p align="center">
-  <img src="assets/basketball.gif" alt="Pixel art streetball player slam dunking a basketball">
-</p>
-
 ---
 
 ## Tech Stack

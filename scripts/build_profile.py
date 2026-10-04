@@ -16,7 +16,6 @@ import render_terminal
 import render_theme
 import render_tech_badges
 import render_interests
-import render_basketball
 import update_stats
 from svg_motion import static_svg
 
@@ -73,12 +72,6 @@ def artifacts(root=ROOT):
             fallback_gen(profile, theme) if fallback
             else applier(source, theme)
         )
-    try:
-        result["assets/basketball.gif"] = render_basketball.render_gif(theme)
-    except Exception:
-        gif_file = root / "assets/basketball.gif"
-        if gif_file.is_file():
-            result["assets/basketball.gif"] = gif_file.read_bytes()
     return result
 
 
