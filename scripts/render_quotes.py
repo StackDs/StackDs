@@ -34,72 +34,30 @@ def render(profile, theme, mobile=False):
     rounds_svg = []
 
     cmd_text = "~ $ ./gambling_phrase"
-    closing_text = f"~ $ {CLOSING_MESSAGE}"
-
-    max_content_y = 180
+    cmd_y = 58 if mobile else 60
+    quote_start_y = 80 if mobile else 85
+    max_content_y = quote_start_y
 
     for r_idx, quote in enumerate(quotes):
         slot = time_slots.get(r_idx, r_idx)
-        r_start_pct = round(slot * 100.0 / total_rounds, 2)
-        r_end_pct = round((slot + 1) * 100.0 / total_rounds, 2)
-        r_fade_out = round(r_end_pct - 0.4, 2)
-
         delta_p = 100.0 / total_rounds
-        t_cmd_done = round(r_start_pct + delta_p * 0.18, 2)
-        t_quote_in = round(r_start_pct + delta_p * 0.22, 2)
-        t_close_p1 = round(r_start_pct + delta_p * 0.45, 2)
-        t_close_p2 = round(r_start_pct + delta_p * 0.62, 2)
-        t_close_done = round(r_start_pct + delta_p * 0.78, 2)
+        r_start_pct = round(slot * delta_p, 2)
+        r_end_pct = round((slot + 1) * delta_p, 2)
+        t_in = round(r_start_pct + delta_p * 0.08, 2)
+        t_out = round(r_end_pct - delta_p * 0.08, 2)
 
         css_keyframes.append(f'''
         @keyframes round-{r_idx} {{
           0%, {max(0, r_start_pct - 0.05):.2f}% {{ opacity: 0; visibility: hidden; }}
-          {r_start_pct:.2f}%, {r_fade_out:.2f}% {{ opacity: 1; visibility: visible; }}
+          {t_in:.2f}%, {t_out:.2f}% {{ opacity: 1; visibility: visible; }}
           {r_end_pct:.2f}%, 100% {{ opacity: 0; visibility: hidden; }}
-        }}
-        @keyframes quote-reveal-{r_idx} {{
-          0%, {t_cmd_done:.2f}% {{ opacity: 0; transform: translateY(3px); }}
-          {t_quote_in:.2f}%, 100% {{ opacity: 1; transform: translateY(0); }}
-        }}
-        @keyframes close-s1-{r_idx} {{
-          0%, {t_quote_in:.2f}% {{ opacity: 0; }}
-          {t_close_p1:.2f}%, 100% {{ opacity: 1; }}
-        }}
-        @keyframes close-s2-{r_idx} {{
-          0%, {t_close_p1:.2f}% {{ opacity: 0; }}
-          {t_close_p2:.2f}%, 100% {{ opacity: 1; }}
-        }}
-        @keyframes close-s3-{r_idx} {{
-          0%, {t_close_p2:.2f}% {{ opacity: 0; }}
-          {t_close_done:.2f}%, 100% {{ opacity: 1; }}
         }}
         .gp-round-{r_idx} {{
           animation: round-{r_idx} {total_sec:.1f}s infinite;
         }}
-        .gp-quote-{r_idx} {{
-          animation: quote-reveal-{r_idx} {total_sec:.1f}s infinite;
-        }}
-        .gp-cs1-{r_idx} {{
-          animation: close-s1-{r_idx} {total_sec:.1f}s infinite;
-        }}
-        .gp-cs2-{r_idx} {{
-          animation: close-s2-{r_idx} {total_sec:.1f}s infinite;
-        }}
-        .gp-cs3-{r_idx} {{
-          animation: close-s3-{r_idx} {total_sec:.1f}s infinite;
-        }}
         ''')
 
-        y = 75
-        round_content = []
-
-        # 1. Command
-        round_content.append(
-            f'<text class="terminal-cmd" x="{left}" y="{y}" fill="{theme["accent"]}" font-size="{size}" font-weight="bold">{escape(cmd_text)}</text>'
-        )
-
-        # 2. Quote lines inside an animated group with exact class="quote"
-        y += 26
+        y = quote_start_y
         q_lines = wrap(quote["text"], width=columns, break_long_words=True, break_on_hyphens=False)
         quote_elements = []
         author_text = f'— {quote["author"]}'
@@ -127,59 +85,43 @@ def render(profile, theme, mobile=False):
                 )
                 y += line_height
 
-        round_content.append(f'<g class="gp-quote-{r_idx}"><g class="quote" id="quote-{r_idx + 1}">{"".join(quote_elements)}</g></g>')
-        y += 6
-
-        # Divider
-        divider_y = y - 4
-        round_content.append(
-            f'<line x1="{left}" y1="{divider_y}" x2="{width - left}" y2="{divider_y}" stroke="{theme["border"]}" stroke-dasharray="2 2"/>'
-        )
-
-        # 3. Closing prompt
-        y += 14
-        prompt_id = ' id="closing-prompt"' if r_idx == 0 else f' id="closing-prompt-{r_idx + 1}"'
-        c_lines = wrap(closing_text, width=columns, break_long_words=True, break_on_hyphens=False)
-        if len(c_lines) == 1:
-            p1 = "~ $ Gobernar "
-            p2 = "es Educar "
-            p3 = "- Pedro Aguirre Cerda."
-            closing_svg = (
-                f'<text class="closing-prompt"{prompt_id} x="{left}" y="{y}" font-size="{size}" xml:space="preserve">'
-                f'<tspan fill="{theme["accent"]}" class="gp-cs1-{r_idx}">{escape(p1)}</tspan>'
-                f'<tspan fill="{theme["text_secondary"]}" class="gp-cs2-{r_idx}">{escape(p2)}</tspan>'
-                f'<tspan fill="{theme["text_secondary"]}" class="gp-cs3-{r_idx}">{escape(p3)}</tspan>'
-                f'</text>'
-            )
-            round_content.append(closing_svg)
-        else:
-            closing_svgs = [f'<text class="closing-prompt"{prompt_id} x="{left}" y="{y}" font-size="{size}" xml:space="preserve">']
-            for c_idx, cl in enumerate(c_lines):
-                cur_y = y + c_idx * line_height
-                cls_name = f"gp-cs{min(3, c_idx + 1)}-{r_idx}"
-                fill_color = theme["accent"] if c_idx == 0 else theme["text_secondary"]
-                space = " " if c_idx < len(c_lines) - 1 else ""
-                closing_svgs.append(
-                    f'<tspan class="{cls_name}" x="{left}" y="{cur_y}" fill="{fill_color}">{escape(cl + space)}</tspan>'
-                )
-            closing_svgs.append('</text>')
-            round_content.append("".join(closing_svgs))
-            y += (len(c_lines) - 1) * line_height
-
-        max_content_y = max(max_content_y, y)
+        max_content_y = max(max_content_y, y - line_height)
 
         rounds_svg.append(f'''
     <!-- Round {r_idx + 1}: {escape(quote["author"])} -->
     <g class="gp-round gp-round-{r_idx}" id="round-{r_idx + 1}">
-      {' '.join(round_content)}
+      <g class="quote" id="quote-{r_idx + 1}">
+        {"".join(quote_elements)}
+      </g>
     </g>''')
 
     css_block = "\n".join(css_keyframes)
     rounds_block = "\n".join(rounds_svg)
 
-    # Dynamic height if quotes require more space, else standard compact height
-    default_height = 270 if mobile else 230
-    height = max(default_height, max_content_y + 35)
+    # Calculate layout offsets and compact height
+    std_divider_y = 120 if mobile else 107
+    divider_y = max(std_divider_y, max_content_y + 16)
+    closing_y = divider_y + 20
+
+    if mobile:
+        closing_svg = (
+            f'<text id="closing-prompt" class="closing-prompt" font-size="{size}" xml:space="preserve">'
+            f'<tspan fill="{theme["accent"]}" x="{left}" y="{closing_y}">~ $ echo </tspan>'
+            f'<tspan fill="{theme["text"]}">&quot;Gobernar es Educar </tspan>'
+            f'<tspan fill="{theme["text"]}" x="{left + 24}" y="{closing_y + line_height}">- Pedro Aguirre Cerda.&quot;</tspan>'
+            f'<tspan class="gp-cursor" fill="{theme["accent"]}"> ▋</tspan>'
+            f'</text>'
+        )
+        height = max(186, closing_y + line_height + 22)
+    else:
+        closing_svg = (
+            f'<text id="closing-prompt" class="closing-prompt" x="{left}" y="{closing_y}" font-size="{size}" xml:space="preserve">'
+            f'<tspan fill="{theme["accent"]}">~ $ echo </tspan>'
+            f'<tspan fill="{theme["text"]}">&quot;Gobernar es Educar - Pedro Aguirre Cerda.&quot;</tspan>'
+            f'<tspan class="gp-cursor" fill="{theme["accent"]}"> ▋</tspan>'
+            f'</text>'
+        )
+        height = max(152, closing_y + 22)
 
     description = " ".join(f'{quote["text"]} — {quote["author"]}.' for quote in profile["quotes"])
     description += " " + CLOSING_MESSAGE
@@ -192,13 +134,20 @@ def render(profile, theme, mobile=False):
     .gp-round {{ opacity: 0; }}
     #round-1 {{ opacity: 1; }}
     [data-motion="static"] .gp-round {{ opacity: 0 !important; }}
-    [data-motion="static"] #round-1 {{ opacity: 1 !important; }}
-    [data-motion="static"] .gp-cs1-0, [data-motion="static"] .gp-cs2-0, [data-motion="static"] .gp-cs3-0, [data-motion="static"] .gp-quote-0 {{ opacity: 1 !important; transform: none !important; }}
+    [data-motion="static"] #round-1 {{ opacity: 1 !important; visibility: visible !important; }}
+    [data-motion="static"] .gp-cursor {{ opacity: 1 !important; }}
+    @keyframes blink {{
+      0%, 100% {{ opacity: 1; }}
+      50% {{ opacity: 0; }}
+    }}
+    .gp-cursor {{
+      animation: blink 1.2s step-start infinite;
+    }}
     {css_block}
     @media (prefers-reduced-motion: reduce) {{
       .gp-round {{ opacity: 0 !important; animation: none !important; }}
       #round-1 {{ opacity: 1 !important; visibility: visible !important; }}
-      .gp-cs1-0, .gp-cs2-0, .gp-cs3-0, .gp-quote-0 {{ opacity: 1 !important; animation: none !important; }}
+      .gp-cursor {{ opacity: 1 !important; animation: none !important; }}
     }}
   </style>
   <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="10" fill="{theme['surface']}" stroke="{theme['accent']}"/>
@@ -209,8 +158,17 @@ def render(profile, theme, mobile=False):
   <circle cx="48" cy="19" r="4.5" fill="#98C379"/>
   <text x="{width / 2:.1f}" y="24" fill="{theme['text_secondary']}" font-size="11" text-anchor="middle">stack@arch: ~/gambling_phrase</text>
 
-  <!-- Animated Rounds -->
+  <!-- Fixed Top Command -->
+  <text class="terminal-cmd" x="{left}" y="{cmd_y}" fill="{theme['accent']}" font-size="{size}" font-weight="bold">{escape(cmd_text)}</text>
+
+  <!-- Animated Quote Rounds (Only phrases vary) -->
   {rounds_block}
+
+  <!-- Fixed Divider -->
+  <line x1="{left}" y1="{divider_y}" x2="{width - left}" y2="{divider_y}" stroke="{theme['border']}" stroke-dasharray="2 2"/>
+
+  <!-- Fixed Bottom Prompt with echo -->
+  {closing_svg}
 </svg>
 '''
 
