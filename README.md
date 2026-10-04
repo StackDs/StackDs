@@ -77,16 +77,16 @@ AFK, I'm a musician and play several instruments. I definitely have more hours l
 
 <p align="center">
   <a href="https://github.com/StackDs">
-    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits and pull requests">
+    <img src="assets/stats/github.svg" alt="GitHub statistics: rank, commits, stars and pull requests" width="49%">
   </a>
   <a href="https://github.com/StackDs">
-    <img src="assets/stats/languages.svg" alt="Most used programming languages">
+    <img src="assets/stats/streak.svg" alt="GitHub contribution streak" width="49%">
   </a>
 </p>
 
 <p align="center">
   <a href="https://github.com/StackDs">
-    <img src="assets/stats/streak.svg" alt="GitHub contribution streak">
+    <img src="assets/stats/languages.svg" alt="Most used programming languages" width="98.5%">
   </a>
 </p>
 

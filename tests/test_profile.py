@@ -31,7 +31,7 @@ SVG = "{http://www.w3.org/2000/svg}"
 VALID_STATS = f'''<svg xmlns="{SVG[1:-1]}" viewBox="0 0 450 150">
 <rect data-testid="card-bg"/><text class="header">Stack</text>
 <g data-testid="rank-circle"><text>B</text></g>
-<text data-testid="commits">123</text><text data-testid="prs">4</text>
+<text data-testid="stars">10</text><text data-testid="commits">123</text><text data-testid="prs">4</text>
 </svg>'''
 VALID_LANGS = f'''<svg xmlns="{SVG[1:-1]}" viewBox="0 0 450 165">
 <rect data-testid="card-bg"/><text class="header">Most Used Languages</text>
@@ -147,8 +147,11 @@ class ProfileTests(unittest.TestCase):
         self.assertIn("#AB1234", update_stats.apply_languages_theme(VALID_LANGS, theme))
         params = parse_qs(urlsplit(update_stats.stats_url(self.profile, theme)).query)
         self.assertEqual(["AB1234"], params["ring_color"])
+        self.assertEqual(["issues,contribs"], params["hide"])
         lang_params = parse_qs(urlsplit(update_stats.languages_url(self.profile, theme)).query)
         self.assertEqual(["AB1234"], lang_params["title_color"])
+        self.assertEqual(["900"], lang_params["card_width"])
+        self.assertEqual(["8"], lang_params["langs_count"])
         streak_params = parse_qs(urlsplit(update_stats.streak_url(self.profile, theme)).query)
         self.assertEqual(["AB1234"], streak_params["stroke"])
 

@@ -20,7 +20,7 @@ def stats_url(profile, theme):
     params = dict(parse_qsl(endpoint.query))
     params.update({
         "username": profile["username"], "show_icons": "true", "hide_rank": "false",
-        "hide": "stars,issues,contribs", "include_all_commits": str(profile["stats"]["include_all_commits"]).lower(),
+        "hide": "issues,contribs", "include_all_commits": str(profile["stats"]["include_all_commits"]).lower(),
         "disable_animations": "true", "locale": "en", "card_width": "450",
         "custom_title": f'{profile["display_name"]} — GitHub Stats',
         "bg_color": theme["surface"][1:], "title_color": theme["accent"][1:],
@@ -41,9 +41,9 @@ def validate_svg(source):
     if root.tag != f"{{{SVG}}}svg":
         raise ValueError("Statistics provider did not return an SVG")
     ids = {element.get("data-testid") for element in root.iter()}
-    if not {"commits", "prs", "rank-circle", "card-bg"}.issubset(ids):
-        raise ValueError("Statistics response is an error card or is missing commits, PRs, or rank")
-    for stat in ("commits", "prs"):
+    if not {"stars", "commits", "prs", "rank-circle", "card-bg"}.issubset(ids):
+        raise ValueError("Statistics response is an error card or is missing commits, PRs, stars, or rank")
+    for stat in ("stars", "commits", "prs"):
         node = root.find(f'.//*[@data-testid="{stat}"]')
         if not "".join(node.itertext()).strip():
             raise ValueError(f"Statistics response has no {stat} value")
@@ -90,10 +90,10 @@ def languages_url(profile, theme):
     params.update({
         "username": profile["username"],
         "layout": "compact",
-        "card_width": "450",
+        "card_width": "900",
         "disable_animations": "true",
         "locale": "en",
-        "langs_count": str(profile.get("stats", {}).get("langs_count", 6)),
+        "langs_count": str(profile.get("stats", {}).get("langs_count", 8)),
         "bg_color": theme["surface"][1:],
         "title_color": theme["accent"][1:],
         "text_color": theme["text"][1:],
@@ -147,10 +147,10 @@ def validate_streak_svg(source):
 
 def render_languages_fallback(profile, theme):
     title = escape(f'{profile["display_name"]} — Most Used Languages')
-    return f'''<svg xmlns="{SVG}" width="450" height="165" viewBox="0 0 450 165" role="img" aria-labelledby="title desc" data-profile-stats="unavailable">
+    return f'''<svg xmlns="{SVG}" width="900" height="190" viewBox="0 0 900 190" role="img" aria-labelledby="title desc" data-profile-stats="unavailable">
   <title id="title">{title}</title>
   <desc id="desc">Language statistics are temporarily unavailable.</desc>
-  <rect x="0.5" y="0.5" width="449" height="164" rx="8" fill="{theme['surface']}" stroke="{theme['border']}"/>
+  <rect x="0.5" y="0.5" width="899" height="189" rx="8" fill="{theme['surface']}" stroke="{theme['border']}"/>
   <g font-family="DejaVu Sans, sans-serif" font-size="13" fill="{theme['text']}">
     <text x="24" y="34" font-size="18" fill="{theme['accent']}">Most Used Languages</text>
     <text x="24" y="75">Language statistics are temporarily unavailable.</text>
