@@ -1,6 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="59" height="20" viewBox="0 0 59 20" role="img" aria-labelledby="title" data-motion="static">
+<svg xmlns="http://www.w3.org/2000/svg" width="53" height="20" role="img" aria-label="Java" data-motion="static">
   <title id="title">Java</title>
-  <rect width="59" height="20" rx="3" fill="#0F1419"/>
+  <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <clipPath id="r">
+    <rect width="53" height="20" rx="3"/>
+  </clipPath>
+  <g clip-path="url(#r)">
+    <rect width="0" height="20" fill="#555"/>
+    <rect x="0" width="53" height="20" fill="#0F1419"/>
+    <rect width="53" height="20" fill="url(#s)"/>
+  </g>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" x="4" y="1" width="18" height="18" aria-hidden="true">
   <path fill="#088DDC" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z" />
   <path fill="#6BC5ED" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z" />
@@ -8,5 +20,13 @@
   <path fill="#6BC5ED" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z" />
   <path fill="#088DDC" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z" />
 </svg>
-  <text x="27" y="14" font-family="Verdana, DejaVu Sans, sans-serif" font-size="11" fill="#ECEFF4">Java</text>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
+    <g transform="scale(.1)">
+      <g aria-hidden="true" fill="#010101">
+        <text x="355" y="150" fill-opacity=".8" filter="url(#blur)" textLength="250">Java</text>
+        <text x="355" y="150" fill-opacity=".3" textLength="250">Java</text>
+      </g>
+      <text x="355" y="140" textLength="250">Java</text>
+    </g>
+  </g>
 </svg>

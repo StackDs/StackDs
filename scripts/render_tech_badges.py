@@ -10,6 +10,12 @@ LOCAL_LOGOS = {"java", "kitty"}
 ET.register_namespace("", "http://www.w3.org/2000/svg")
 
 
+BADGE_METRICS = {
+    "Java": {"width": 53, "text_x": 355, "text_len": 250},
+    "Kitty": {"width": 53, "text_x": 355, "text_len": 250},
+}
+
+
 def asset_path(item):
     if item["logo"] in LOCAL_LOGOS:
         return f'assets/tech-{item["logo"]}.svg'
@@ -55,11 +61,39 @@ def render(item, theme, source=None):
     icon.attrib.update(x="4", y="1", width="18", height="18", **{"aria-hidden": "true"})
     artwork = ET.tostring(icon, encoding="unicode")
     label = escape(item["name"])
-    width = ceil(33 + len(item["name"]) * 6.5)
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="20" viewBox="0 0 {width} 20" role="img" aria-labelledby="title" data-motion="static">
+    metrics = BADGE_METRICS.get(item["name"], {
+        "width": ceil(33 + len(item["name"]) * 6.5),
+        "text_x": int(330 + len(item["name"]) * 32.5),
+        "text_len": int(len(item["name"]) * 60),
+    })
+    width = metrics["width"]
+    text_x = metrics["text_x"]
+    text_len = metrics["text_len"]
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="20" role="img" aria-label="{label}" data-motion="static">
   <title id="title">{label}</title>
-  <rect width="{width}" height="20" rx="3" fill="{theme['surface']}"/>
+  <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <clipPath id="r">
+    <rect width="{width}" height="20" rx="3"/>
+  </clipPath>
+  <g clip-path="url(#r)">
+    <rect width="0" height="20" fill="#555"/>
+    <rect x="0" width="{width}" height="20" fill="{surface}"/>
+    <rect width="{width}" height="20" fill="url(#s)"/>
+  </g>
   {artwork}
-  <text x="27" y="14" font-family="Verdana, DejaVu Sans, sans-serif" font-size="11" fill="{theme['text']}">{label}</text>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
+    <g transform="scale(.1)">
+      <g aria-hidden="true" fill="#010101">
+        <text x="{text_x}" y="150" fill-opacity=".8" filter="url(#blur)" textLength="{text_len}">{label}</text>
+        <text x="{text_x}" y="150" fill-opacity=".3" textLength="{text_len}">{label}</text>
+      </g>
+      <text x="{text_x}" y="140" textLength="{text_len}">{label}</text>
+    </g>
+  </g>
 </svg>
 '''
