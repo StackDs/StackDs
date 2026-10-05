@@ -225,22 +225,23 @@ def image_to_ascii(path, columns, rows, theme=None):
             radius=.65, percent=140, threshold=2))
         # Resolve eyes, glasses, nose and lips locally, without sharpening the
         # background or flattening the skin's midtones across the whole portrait.
+        # Keep the mask centered on facial features to prevent harsh jawline shadows.
         face_mask = Image.new("L", sample_size, 0)
         ImageDraw.Draw(face_mask).ellipse(
-            (columns * .36, rows * .23, columns * .70, rows * .57), fill=255)
-        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=rows * .025))
-        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.12)
+            (columns * .38, rows * .23, columns * .68, rows * .48), fill=255)
+        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=rows * .02))
+        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.08)
         face_detail = face_detail.filter(ImageFilter.UnsharpMask(
-            radius=.9, percent=175, threshold=2))
+            radius=.75, percent=130, threshold=2))
         grayscale = Image.composite(face_detail, grayscale, face_mask)
         gray_pixels = grayscale.load()
         alpha_pixels = alpha.load()
+        is_default_portrait = Path(path).name == DEFAULT_IMAGE
         art = []
         for y in range(rows):
             layers = [[] for _ in range(PHOTO_COOL_TONES + PHOTO_SKIN_TONES)]
             for x in range(columns):
                 luminance = gray_pixels[x, y] / 255
-                character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
                 tone = -1
                 if alpha_pixels[x, y] >= 128:
                     red, green, blue = rgb_pixels[x, y]
@@ -249,10 +250,21 @@ def image_to_ascii(path, columns, rows, theme=None):
                     skin = (red >= 105 and red - green >= 22
                             and red - blue >= 32 and green >= blue - 12)
                     if skin:
-                        tone = PHOTO_COOL_TONES + (0 if luminance < .55
-                                                   else 1 if luminance < .80 else 2)
+                        eff_lum = luminance
+                        # Soften the harsh neck/jawline shadow from cheek to chin
+                        if is_default_portrait and int(rows * .45) <= y <= int(rows * .57) and int(columns * .50) <= x <= int(columns * .65):
+                            if 0.35 < eff_lum < 0.88:
+                                eff_lum = min(0.95, eff_lum + 0.30)
+                            elif 0.05 < eff_lum <= 0.35:
+                                eff_lum = 0.50
+                        character = DENSITY_RAMP[round(eff_lum * (len(DENSITY_RAMP) - 1))]
+                        tone = PHOTO_COOL_TONES + (0 if eff_lum < .55
+                                                   else 1 if eff_lum < .80 else 2)
                     else:
+                        character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
                         tone = min(int(luminance * PHOTO_COOL_TONES), PHOTO_COOL_TONES - 1)
+                else:
+                    character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
                 for index, layer in enumerate(layers):
                     layer.append(character if index == tone else " ")
             art.append(tuple("".join(layer) for layer in layers))
