@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COLOR_KEYS = (
     "background", "surface", "accent", "accent_light", "text", "text_secondary",
     "comment", "border", "control", "control_hover", "photo_shadow", "photo_mid",
-    "photo_light",
+    "photo_light", "photo_skin_shadow", "photo_skin_mid", "photo_skin_light",
 )
 
 

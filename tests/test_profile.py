@@ -324,7 +324,7 @@ class ProfileTests(unittest.TestCase):
         tones_used = set()
         characters_used = set()
         for row in art:
-            self.assertEqual(5, len(row))
+            self.assertEqual(8, len(row))
             self.assertTrue(all(len(layer) == columns for layer in row))
             for tone, layer in enumerate(row):
                 characters_used.update(layer.strip())
@@ -332,7 +332,7 @@ class ProfileTests(unittest.TestCase):
                     tones_used.add(tone)
             for column in range(columns):
                 self.assertLessEqual(sum(layer[column] != " " for layer in row), 1)
-        self.assertEqual(set(range(5)), tones_used)
+        self.assertEqual(set(range(8)), tones_used)
         self.assertGreater(len(characters_used), 30)
         self.assertTrue(characters_used <= set(render_terminal.DENSITY_RAMP))
         # The bottom-right corner belongs to the hoodie, not the backdrop.
@@ -380,6 +380,29 @@ class ProfileTests(unittest.TestCase):
             character = next((layer[x] for layer in art[20] if layer[x] != " "), " ")
             samples.append(render_terminal.DENSITY_RAMP.index(character))
         self.assertEqual(sorted(set(samples)), samples)
+
+    def test_skin_chroma_uses_separate_palette_without_recoloring_neutral_or_blue(self):
+        from PIL import Image, ImageDraw
+
+        image = Image.new("RGBA", (120, 80), (255, 255, 255, 0))
+        draw = ImageDraw.Draw(image)
+        for left, color in ((10, (235, 167, 141)), (40, (190, 190, 190)),
+                            (70, (90, 165, 210))):
+            draw.rectangle((left, 10, left + 29, 69), fill=(*color, 255))
+        path = self.root / "skin-and-cool-colors.png"
+        image.save(path)
+        art = render_terminal.image_to_ascii(path, 120, 60)
+        middle = art[30]
+        self.assertTrue(any(layer[25] != " " for layer in middle[5:]))
+        self.assertTrue(all(layer[25] == " " for layer in middle[:5]))
+        for column in (55, 85):
+            self.assertTrue(any(layer[column] != " " for layer in middle[:5]))
+            self.assertTrue(all(layer[column] == " " for layer in middle[5:]))
+        theme = {**self.theme, "photo_skin_light": "#FEDCBA"}
+        root = ET.fromstring(render_terminal.render(art=art, theme=theme, use_image=False))
+        highlights = root.findall(f'.//{SVG}text[@class="ascii-shade tone-7"]')
+        self.assertTrue(highlights)
+        self.assertTrue(all(node.get("fill") == "#FEDCBA" for node in highlights))
 
 
 if __name__ == "__main__":

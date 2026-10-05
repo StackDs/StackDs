@@ -12,6 +12,9 @@
   "photo_shadow": "#3FAFE0",
   "photo_mid": "#7ED7F0",
   "photo_light": "#A5F3FC",
+  "photo_skin_shadow": "#3F6074",
+  "photo_skin_mid": "#678FA3",
+  "photo_skin_light": "#93B9C8",
   "snake_dark": ["#0F1419", "#12344D", "#165A80", "#088DDC", "#6BC5ED"],
   "snake_light": ["#E8EFF5", "#C6E7F7", "#8DCEE9", "#369FD3", "#088DDC"]
 }

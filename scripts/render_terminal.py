@@ -20,6 +20,8 @@ DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW
 ASCII_RAMP = DENSITY_RAMP[::-1]
 PHOTO_GRID_COLUMNS = 320
 PHOTO_CELL_ASPECT = .5  # Cell width / line height; square art needs half as many rows.
+PHOTO_COOL_TONES = 5
+PHOTO_SKIN_TONES = 3
 HOLD_MS = 4000
 RESTART_PAUSE_MS = 700
 
@@ -151,7 +153,7 @@ def get_avatar_image(root=None):
 
 
 def image_to_ascii(path, columns, rows, theme=None):
-    """Map perceptual luminance to glyph density and five dark-to-light layers.
+    """Map luminance to glyph density, with separate general and skin palettes.
 
     Contain the complete composition, rather than cropping the hands or instrument.
     The renderer uses a 1:2 cell grid so the original proportions are preserved.
@@ -204,6 +206,8 @@ def image_to_ascii(path, columns, rows, theme=None):
                 ImageDraw.floodfill(source, seed, (0, 0, 0, 0), thresh=42)
 
         sample_size = (columns, rows)
+        rgb_pixels = source.convert("RGB").resize(
+            sample_size, Image.Resampling.LANCZOS).load()
         alpha = source.getchannel("A")
         if Path(path).name == DEFAULT_IMAGE:
             # Keep only the connected portrait (face, body, hands and bass).
@@ -233,11 +237,22 @@ def image_to_ascii(path, columns, rows, theme=None):
         alpha_pixels = alpha.load()
         art = []
         for y in range(rows):
-            layers = [[] for _ in range(5)]
+            layers = [[] for _ in range(PHOTO_COOL_TONES + PHOTO_SKIN_TONES)]
             for x in range(columns):
                 luminance = gray_pixels[x, y] / 255
                 character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
-                tone = min(int(luminance * 5), 4) if alpha_pixels[x, y] >= 128 else -1
+                tone = -1
+                if alpha_pixels[x, y] >= 128:
+                    red, green, blue = rgb_pixels[x, y]
+                    # Use the illustration's peach/red chroma, not brightness:
+                    # white eyes/logo and blue instrument must stay cool.
+                    skin = (red >= 105 and red - green >= 22
+                            and red - blue >= 32 and green >= blue - 12)
+                    if skin:
+                        tone = PHOTO_COOL_TONES + (0 if luminance < .55
+                                                   else 1 if luminance < .80 else 2)
+                    else:
+                        tone = min(int(luminance * PHOTO_COOL_TONES), PHOTO_COOL_TONES - 1)
                 for index, layer in enumerate(layers):
                     layer.append(character if index == tone else " ")
             art.append(tuple("".join(layer) for layer in layers))
@@ -258,7 +273,8 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
         theme["photo_shadow"], theme["photo_mid"], theme["photo_light"])
     PHOTO_DEEP = theme.get("photo_deep", "#2276A0")
     PHOTO_WHITE = theme.get("photo_white", "#FFFFFF")
-    PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE)
+    PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE,
+                   theme["photo_skin_shadow"], theme["photo_skin_mid"], theme["photo_skin_light"])
 
     image_b64 = None
     if use_image:
@@ -271,14 +287,14 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
             raise ValueError("ASCII artwork must not be empty")
         _NUM_TONES = len(PHOTO_TONES)
         _ramp_len = len(DENSITY_RAMP)
-        _band = max(_ramp_len // _NUM_TONES, 1)
+        _band = max(_ramp_len // PHOTO_COOL_TONES, 1)
         _CHAR_TONE = {}
         for _idx, _ch in enumerate(ASCII_RAMP):
-            _CHAR_TONE[_ch] = min(_idx // _band, _NUM_TONES - 1)
+            _CHAR_TONE[_ch] = min(_idx // _band, PHOTO_COOL_TONES - 1)
         parsed_art = []
         for row in art:
-            if isinstance(row, (tuple, list)) and len(row) == len(PHOTO_TONES):
-                parsed_art.append(row)
+            if isinstance(row, (tuple, list)) and len(row) in (PHOTO_COOL_TONES, len(PHOTO_TONES)):
+                parsed_art.append(tuple(row) + (" " * len(row[0]),) * (_NUM_TONES - len(row)))
             else:
                 layers = [[] for _ in range(_NUM_TONES)]
                 for ch in row:

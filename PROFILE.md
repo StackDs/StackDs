@@ -158,6 +158,10 @@ The card portrait is generated from `assets/images/Final.jpeg` as a 320-column
 by 160-row ASCII image. The 1:2 character-cell proportions preserve the square
 composition, including the hands, bass, and Arch logo. Perceptual luminance drives
 both a broad dark-to-light character ramp and five blue/cyan-to-white shades.
+Skin is identified from the original illustration's peach/red chroma and uses
+three muted steel-blue shades (`photo_skin_shadow`, `photo_skin_mid`, and
+`photo_skin_light` in `config/theme.json`). The eyes, glasses, clothing, bass, and
+Arch logo use the brighter cyan palette; skin shading still follows luminance.
 Shadow lifting, higher-resolution sampling, and a feathered facial-detail pass
 retain hair, glasses, eyes, and clothing detail. Background removal samples the
 exposed blue-gray edges and keeps the connected person and bass, removing stray
