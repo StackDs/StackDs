@@ -13,7 +13,7 @@ terminal banners, identity, contact links, and color palette.
    | `content/about.md` | The About Me paragraphs; Markdown is supported. |
    | `config/profile.json` | Identity, terminal fields, contacts, technology groups, projects, interests, quotes, stats endpoint, and optional widgets. |
    | `config/theme.json` | Shared `#RRGGBB` colors, including the five contribution levels for each snake variant. |
-   | `ascii.txt` | Default avatar; preserve spaces and line breaks. |
+   | `ascii.txt` | Plain-text fallback artwork for direct renderer use; preserve spaces and line breaks. |
    | `templates/README.md.tpl` | Section order, headings, separators, and contribution image selection. |
    | `scripts/render_quotes.py` | Closing terminal layout and quote reveal timing. |
    | `scripts/render_project_cards.py` | Static project card layout for desktop and mobile. |
@@ -41,8 +41,9 @@ terminal banners, identity, contact links, and color palette.
 
 4. Include the edited sources and their generated outputs in the same change.
 
-Python **3.11 or newer** is supported. The normal build and offline tests use
-only the standard library. No network request is made by `build_profile.py`.
+Python **3.11 or newer** is supported. Build and portrait-render checks require
+Pillow (install with `python3 -m pip install -r requirements.txt`). No network
+request is made by `build_profile.py`.
 `--check` exits with status 1 for stale or missing outputs and never writes them.
 Configuration is validated and all outputs are rendered before any are written.
 
@@ -151,19 +152,27 @@ About Me remains native Markdown. Contact badges, technology
 badges, project cards, and statistics are static.
 Optional externally hosted widgets control their own motion.
 
-## Regenerate the banner from a photo
+## Regenerate the banner's ASCII portrait
 
-The default avatar comes from `ascii.txt`. Photo modes are optional and need Pillow:
+The card portrait is generated from `assets/images/Final.jpeg` as a 320-column
+by 160-row ASCII image. The 1:2 character-cell proportions preserve the square
+composition, including the hands, bass, and Arch logo. Perceptual luminance drives
+both a broad dark-to-light character ramp and five blue/cyan-to-white shades.
+Shadow lifting, higher-resolution sampling, and a feathered facial-detail pass
+retain hair, glasses, eyes, and clothing detail. Background removal samples the
+exposed blue-gray edges and keeps the connected person and bass, removing stray
+background specks. The portrait sits on pure black (`#000000`). Each glyph has an
+explicit horizontal position to align the color
+layers independently of SVG whitespace handling.
+Install Pillow before generating or checking the profile:
 
 ```sh
 python3 -m pip install -r requirements.txt
-python3 scripts/render_terminal.py --photo
+python3 scripts/build_profile.py
 ```
 
-Use `--random` to choose from compatible images in `assets/images/`; the same
-photo is used for both banner sizes. These modes are local previews: the
-reproducible full build and CI expect the default ASCII avatar. Run
-`python3 scripts/build_profile.py` to return to that version.
+Use `python3 scripts/render_terminal.py --random` to preview another compatible
+image from `assets/images/`; the same image is used for both banner sizes.
 
 The SVG contains text, not an embedded copy of the photograph. Animation uses
 SMIL and exposes the complete content in viewers without SMIL support. With

@@ -22,7 +22,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Test generators without optional photo dependencies
+      - name: Install image conversion dependency
+        run: python3 -m pip install -r requirements.txt
+
+      - name: Test profile generators
         run: python3 -m unittest discover -s tests -v
 
       - name: Check generated artifacts

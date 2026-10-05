@@ -9,7 +9,6 @@ from math import ceil
 from pathlib import Path
 from textwrap import wrap
 
-from profile_ascii import ART
 from profile_config import load_profile, load_theme
 from svg_motion import static_svg
 
@@ -19,7 +18,8 @@ DEFAULT_IMAGE = "Final.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 ASCII_RAMP = DENSITY_RAMP[::-1]
-PHOTO_GRID_SCALE = 1.25
+PHOTO_GRID_COLUMNS = 320
+PHOTO_CELL_ASPECT = .5  # Cell width / line height; square art needs half as many rows.
 HOLD_MS = 4000
 RESTART_PAUSE_MS = 700
 
@@ -85,9 +85,8 @@ def choose_image(randomize=False):
 
 
 def photo_grid_size():
-    columns = round(max(map(len, ART)) * PHOTO_GRID_SCALE)
-    rows = round(columns / REFERENCE_ASPECT_RATIO * .5)
-    return columns, rows
+    return PHOTO_GRID_COLUMNS, round(
+        PHOTO_GRID_COLUMNS / REFERENCE_ASPECT_RATIO * PHOTO_CELL_ASPECT)
 
 
 _IMAGE_CACHE = {}
@@ -152,16 +151,13 @@ def get_avatar_image(root=None):
 
 
 def image_to_ascii(path, columns, rows, theme=None):
-    """Convert a photo into preserved-whitespace SVG text rows.
+    """Map perceptual luminance to glyph density and five dark-to-light layers.
 
-    The grid has twice as many columns as rows because terminal glyph cells are
-    roughly half as wide as their line height; this keeps square portraits square.
-    Transparent pixels remain spaces, so PNG alpha is preserved in the ASCII.
+    Contain the complete composition, rather than cropping the hands or instrument.
+    The renderer uses a 1:2 cell grid so the original proportions are preserved.
     """
     from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
-    background = (theme or load_theme())["background"]
-    background_rgb = tuple(int(background[i:i + 2], 16) for i in (1, 3, 5))
     with Image.open(path) as source:
         source = ImageOps.exif_transpose(source).convert("RGBA")
         # Crop outer black border frame if present (e.g. Final.jpeg)
@@ -181,65 +177,70 @@ def image_to_ascii(path, columns, rows, theme=None):
             if x_out > x_in and y_out > y_in:
                 source = source.crop((x_in + 2, y_in + 2, x_out - 1, y_out - 1))
 
-        source = ImageOps.fit(source, (720, 720), method=Image.Resampling.LANCZOS,
-                              centering=(.5, .48))
-
-        # Bryan's JPEG has a white field outside the circular illustration.
-        # Remove edge-connected white only; keep dark corners and details inside the art.
-        if path.suffix.lower() in {".jpg", ".jpeg"}:
-            for seed in ((0, 0), (719, 0), (0, 719), (719, 719)):
-                if sum(source.getpixel(seed)[:3]) > 700:
-                    ImageDraw.floodfill(source, seed, (*background_rgb, 0), thresh=28)
-
-        alpha = source.getchannel("A").resize(
-            (columns, rows), Image.Resampling.LANCZOS)
-        backdrop = Image.new("RGBA", source.size, (*background_rgb, 255))
-        grayscale = Image.alpha_composite(backdrop, source).convert("L")
-        grayscale = grayscale.resize((columns, rows), Image.Resampling.LANCZOS)
-        # Adaptive shadow lifting: reveal hoodie folds, hair strands, and fretboard
-        lut = [int((i / 255.0) ** 0.72 * 255) for i in range(256)]
-        grayscale = grayscale.point(lut)
-        grayscale = ImageOps.autocontrast(grayscale, cutoff=1)
-        grayscale = ImageEnhance.Contrast(grayscale).enhance(1.35)
-
-        # Give the upper-center focal area a restrained local clarity boost.
-        # The feathered oval covers facial features in both supplied portraits
-        # without creating a visible boundary in the surrounding image.
-        face_mask = Image.new("L", (720, 720), 0)
-        ImageDraw.Draw(face_mask).ellipse(
-            (int(.16 * 720), int(.08 * 720), int(.96 * 720), int(.76 * 720)),
-            fill=255,
+        working_size = 1280
+        contained = ImageOps.contain(source, (working_size, working_size),
+                                     method=Image.Resampling.LANCZOS)
+        canvas = Image.new("RGBA", (working_size, working_size), (0, 0, 0, 0))
+        canvas.alpha_composite(
+            contained,
+            ((working_size - contained.width) // 2,
+             (working_size - contained.height) // 2),
         )
-        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=48)).resize(
-            (columns, rows), Image.Resampling.LANCZOS)
-        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.10)
-        face_detail = face_detail.filter(ImageFilter.UnsharpMask(
-            radius=.65, percent=190, threshold=1))
-        grayscale = Image.composite(face_detail, grayscale, face_mask)
-        grayscale = grayscale.filter(ImageFilter.UnsharpMask(
-            radius=.8, percent=160, threshold=2))
-        edges = ImageOps.invert(grayscale.filter(ImageFilter.FIND_EDGES))
-        grayscale = Image.blend(grayscale, edges, .10)
-        grayscale = ImageOps.autocontrast(grayscale, cutoff=1)
+        source = canvas
 
-        art = []
-        pixels = grayscale.load()
+        # Keep the original luminance before making the backdrop transparent.
+        grayscale = source.convert("RGB").convert(
+            "L", (.2126, .7152, .0722, 0))
+        # The backdrop darkens toward the bottom: sample exposed side edges too,
+        # rather than leaving gradient bands behind after a top-corner flood.
+        # Avoid the headstock at the left edge and the sleeve at the bottom right.
+        last = working_size - 1
+        seeds = [(0, 0), (last, 0)]
+        seeds.extend((0, y) for y in range(working_size // 2, working_size, 16))
+        seeds.extend((last, y) for y in range(0, working_size * 3 // 5, 16))
+        for seed in seeds:
+            red, green, blue, opacity = source.getpixel(seed)
+            if opacity and blue - red > 12 and green - red > 3 and blue - green > 5:
+                ImageDraw.floodfill(source, seed, (0, 0, 0, 0), thresh=42)
+
+        sample_size = (columns, rows)
+        alpha = source.getchannel("A")
+        if Path(path).name == DEFAULT_IMAGE:
+            # Keep only the connected portrait (face, body, hands and bass).
+            # JPEG texture can otherwise leave detached blue specks in the sky.
+            silhouette = alpha.point(lambda value: 255 if value >= 128 else 0)
+            face_seed = (round(working_size * .53), round(working_size * .39))
+            ImageDraw.floodfill(silhouette, face_seed, 128, thresh=0)
+            alpha = silhouette.point(lambda value: 255 if value == 128 else 0)
+        alpha = alpha.resize(sample_size, Image.Resampling.LANCZOS)
+        grayscale = ImageOps.autocontrast(grayscale, cutoff=.5)
+        # Lift hoodie/hair detail without clipping the face into a solid white mass.
+        grayscale = grayscale.point([round(255 * (i / 255) ** .8) for i in range(256)])
+        grayscale = grayscale.resize(sample_size, Image.Resampling.LANCZOS)
+        grayscale = grayscale.filter(ImageFilter.UnsharpMask(
+            radius=.65, percent=140, threshold=2))
+        # Resolve eyes, glasses, nose and lips locally, without sharpening the
+        # background or flattening the skin's midtones across the whole portrait.
+        face_mask = Image.new("L", sample_size, 0)
+        ImageDraw.Draw(face_mask).ellipse(
+            (columns * .36, rows * .23, columns * .70, rows * .57), fill=255)
+        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=rows * .025))
+        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.12)
+        face_detail = face_detail.filter(ImageFilter.UnsharpMask(
+            radius=.9, percent=175, threshold=2))
+        grayscale = Image.composite(face_detail, grayscale, face_mask)
+        gray_pixels = grayscale.load()
         alpha_pixels = alpha.load()
+        art = []
         for y in range(rows):
-            tones = [[], [], []]
+            layers = [[] for _ in range(5)]
             for x in range(columns):
-                if alpha_pixels[x, y] < 72:
-                    for line in tones:
-                        line.append(" ")
-                    continue
-                brightness = pixels[x, y]
-                luminance = brightness / 255
-                index = round((1 - luminance) * (len(ASCII_RAMP) - 1))
-                character = ASCII_RAMP[index]
-                tone = 0 if luminance < .28 else 1 if luminance < .68 else 2
-                for layer, line in enumerate(tones):
-                    line.append(character if layer == tone else " ")
-            art.append(tuple("".join(line) for line in tones))
+                luminance = gray_pixels[x, y] / 255
+                character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
+                tone = min(int(luminance * 5), 4) if alpha_pixels[x, y] >= 128 else -1
+                for index, layer in enumerate(layers):
+                    layer.append(character if index == tone else " ")
+            art.append(tuple("".join(layer) for layer in layers))
         return art
 
 
@@ -248,14 +249,14 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
     theme = theme if theme is not None else load_theme()
     terminal = profile["terminal"]
     BACKGROUND = theme["surface"]
-    ART_BACKGROUND = theme["background"]
+    ART_BACKGROUND = "#000000"
     TEXT_PRIMARY = theme["text"]
     TEXT_SECONDARY = theme["text_secondary"]
     ACCENT = theme["accent"]
     RULE = theme["border"]
     PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR = (
         theme["photo_shadow"], theme["photo_mid"], theme["photo_light"])
-    PHOTO_DEEP = theme.get("photo_deep", "#1A3A50")
+    PHOTO_DEEP = theme.get("photo_deep", "#2276A0")
     PHOTO_WHITE = theme.get("photo_white", "#FFFFFF")
     PHOTO_TONES = (PHOTO_DEEP, PHOTO_SHADOW, PHOTO_MID, PHOTO_COLOR, PHOTO_WHITE)
 
@@ -429,7 +430,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
     text {{ font-family: 'JetBrains Mono', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
       font-weight: 400; font-feature-settings: "calt" 1, "liga" 1;
       font-variant-ligatures: contextual; }}
-    .ascii-shade {{ font-weight: 500; font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }}
+    .ascii-shade {{ font-weight: 700; font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }}
     @media (prefers-reduced-motion: reduce) {{
       .typed-char {{ opacity: 1 !important; }}
       .tone-0 {{ fill: {PHOTO_DEEP} !important; }}
@@ -466,7 +467,7 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
     parts.append(command)
 
     parts.append('<g id="ascii-art" aria-hidden="true">')
-    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" fill-opacity=".48" stroke="{ACCENT}"/>')
+    parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="{ART_BACKGROUND}" stroke="{ACCENT}"/>')
     if image_b64:
         parts.append(
             f'<image href="data:image/jpeg;base64,{image_b64}" xlink:href="data:image/jpeg;base64,{image_b64}" '
@@ -489,13 +490,20 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
         for i, layers in enumerate(art):
             parts.append(f'<g class="ascii-row" data-row="{i}">')
             for tone, line in enumerate(layers):
+                ink = [(column, character) for column, character in enumerate(line)
+                       if character != " "]
+                if not ink:
+                    continue
+                # Anchor each glyph: SVG textLength can redistribute whitespace
+                # differently across sparse layers, misaligning facial details.
+                positions = " ".join(f"{art_x + column * cell_width:.3f}"
+                                     for column, _ in ink)
                 color = PHOTO_TONES[tone]
                 parts.append(
-                    f'<text class="ascii-shade tone-{tone}" x="{art_x}" '
-                    f'y="{art_y + art_size + i * line_height:.3f}" '
-                    f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve" '
-                    f'textLength="{columns * cell_width:.3f}" lengthAdjust="spacingAndGlyphs">'
-                    f'{escape(line)}</text>')
+                    f'<text class="ascii-shade tone-{tone}" x="{positions}" '
+                    f'y="{art_y + (line_height + art_size * .7) / 2 + i * line_height:.3f}" '
+                    f'fill="{color}" font-size="{art_size:.3f}" xml:space="preserve">'
+                    f'{escape("".join(character for _, character in ink))}</text>')
             parts.append('</g>')
     parts.append('</g>')
     parts.append(f'<rect x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" rx="8" fill="none" stroke="{ACCENT}" stroke-width="4" opacity=".38" filter="url(#neon-glow)" class="motion"/>')
@@ -544,7 +552,8 @@ if __name__ == "__main__":
 
     for filename, mobile in [("terminal.svg", False), ("terminal-mobile.svg", True)]:
         target = ROOT / "assets" / filename
-        source = render(mobile, art=art, image_name=image_name, profile=profile, theme=theme)
+        source = render(mobile, art=art, image_name=image_name, profile=profile,
+                        theme=theme, use_image=False)
         target.write_text(source, encoding="utf-8")
         static_target = target.with_name(target.stem + "-static.svg")
         static_target.write_text(static_svg(source), encoding="utf-8")

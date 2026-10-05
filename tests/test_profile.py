@@ -312,6 +312,75 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertEqual("<svg", result.stdout.strip())
 
+    def test_profile_portrait_preserves_detail_in_aligned_ascii_layers(self):
+        columns, rows = render_terminal.photo_grid_size()
+        art = render_terminal.image_to_ascii(
+            ROOT / "assets/images" / render_terminal.DEFAULT_IMAGE, columns, rows,
+            self.theme,
+        )
+        self.assertEqual(columns, 2 * rows)
+        self.assertGreaterEqual(columns, 300)
+        self.assertEqual(rows, len(art))
+        tones_used = set()
+        characters_used = set()
+        for row in art:
+            self.assertEqual(5, len(row))
+            self.assertTrue(all(len(layer) == columns for layer in row))
+            for tone, layer in enumerate(row):
+                characters_used.update(layer.strip())
+                if layer.strip():
+                    tones_used.add(tone)
+            for column in range(columns):
+                self.assertLessEqual(sum(layer[column] != " " for layer in row), 1)
+        self.assertEqual(set(range(5)), tones_used)
+        self.assertGreater(len(characters_used), 30)
+        self.assertTrue(characters_used <= set(render_terminal.DENSITY_RAMP))
+        # The bottom-right corner belongs to the hoodie, not the backdrop.
+        self.assertTrue(any(layer[-8:].strip() for layer in art[-3]))
+        # Clear both the upper backdrop's detached specks and its lower gradient.
+        for left, top, right, bottom in ((.23, 0, .30, .22),
+                                        (0, .60, .035, .95),
+                                        (.77, .05, .99, .30)):
+            for row in art[int(rows * top):int(rows * bottom)]:
+                self.assertTrue(all(not layer[int(columns * left):int(columns * right)].strip()
+                                    for layer in row))
+        for mobile in (False, True):
+            source = render_terminal.render(mobile, art=art, use_image=False)
+            root = ET.fromstring(source)
+            self.assertIsNone(root.find(f'.//{SVG}image'))
+            portrait = root.find(f'.//{SVG}g[@id="ascii-art"]')
+            frame = portrait.find(f'{SVG}rect')
+            self.assertEqual("#000000", frame.get("fill"))
+            left, top = float(frame.get("x")), float(frame.get("y"))
+            right = left + float(frame.get("width"))
+            bottom = top + float(frame.get("height"))
+            for glyphs in portrait.findall(f'.//{SVG}text'):
+                positions = [float(x) for x in glyphs.get("x").split()]
+                self.assertEqual(len(glyphs.text), len(positions))
+                self.assertEqual(sorted(positions), positions)
+                self.assertGreaterEqual(min(positions), left)
+                self.assertLess(max(positions) + float(glyphs.get("font-size")) * .602, right)
+                self.assertLess(top, float(glyphs.get("y")))
+                self.assertLess(float(glyphs.get("y")), bottom)
+
+    def test_ascii_luminance_is_not_inverted_on_the_dark_terminal(self):
+        from PIL import Image, ImageDraw
+
+        image = Image.new("RGBA", (80, 80), (255, 255, 255, 0))
+        draw = ImageDraw.Draw(image)
+        for index, luminance in enumerate((20, 65, 120, 180, 240)):
+            draw.rectangle((10 + index * 12, 10, 21 + index * 12, 69),
+                           fill=(luminance, luminance, luminance, 255))
+        path = self.root / "luminance.png"
+        image.save(path)
+        art = render_terminal.image_to_ascii(path, 80, 40)
+        self.assertTrue(all(not layer.strip() for layer in art[0]))
+        samples = []
+        for x in (16, 28, 40, 52, 64):
+            character = next((layer[x] for layer in art[20] if layer[x] != " "), " ")
+            samples.append(render_terminal.DENSITY_RAMP.index(character))
+        self.assertEqual(sorted(set(samples)), samples)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -26,14 +26,21 @@ def artifacts(root=ROOT):
     def read(name):
         return (root / name).read_text(encoding="utf-8")
 
-    art = read("ascii.txt").splitlines()
+    columns, rows = render_terminal.photo_grid_size()
+    art = render_terminal.image_to_ascii(
+        root / "assets/images" / render_terminal.DEFAULT_IMAGE,
+        columns, rows, theme,
+    )
     result = {
         "README.md": render_readme.render(profile, theme, read("content/about.md"), read("templates/README.md.tpl")),
         "site/index.html": render_site.render(profile, theme, read("templates/site.html.tpl")),
         "site/theme.css": render_theme.render(theme),
     }
     for suffix, mobile in (("", False), ("-mobile", True)):
-        banner = render_terminal.render(mobile, art=art, profile=profile, theme=theme, root=root)
+        banner = render_terminal.render(
+            mobile, art=art, image_name=render_terminal.DEFAULT_IMAGE,
+            profile=profile, theme=theme, root=root, use_image=False,
+        )
         result[f"assets/terminal{suffix}.svg"] = banner
         result[f"assets/terminal{suffix}-static.svg"] = static_svg(banner)
         quotes = render_quotes.render(profile, theme, mobile)
