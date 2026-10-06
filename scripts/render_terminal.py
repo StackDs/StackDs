@@ -16,9 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_ASPECT_RATIO = 1.0  # Width / height of the supplied square reference.
 DEFAULT_IMAGE = "Final.jpeg"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
-DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+DENSITY_RAMP = " .:+*ox#%@$&MW"
 ASCII_RAMP = DENSITY_RAMP[::-1]
-PHOTO_GRID_COLUMNS = 320
+PHOTO_GRID_COLUMNS = 180
 PHOTO_CELL_ASPECT = .5  # Cell width / line height; square art needs half as many rows.
 PHOTO_COOL_TONES = 5
 PHOTO_SKIN_TONES = 3
@@ -217,31 +217,39 @@ def image_to_ascii(path, columns, rows, theme=None):
             ImageDraw.floodfill(silhouette, face_seed, 128, thresh=0)
             alpha = silhouette.point(lambda value: 255 if value == 128 else 0)
         alpha = alpha.resize(sample_size, Image.Resampling.LANCZOS)
-        grayscale = ImageOps.autocontrast(grayscale, cutoff=.5)
+        grayscale = ImageOps.autocontrast(grayscale, cutoff=1.5)
         # Lift hoodie/hair detail without clipping the face into a solid white mass.
-        grayscale = grayscale.point([round(255 * (i / 255) ** .8) for i in range(256)])
+        grayscale = grayscale.point([round(255 * (i / 255) ** .78) for i in range(256)])
+        # Smooth JPEG micro-noise before downsampling so it doesn't map to
+        # random characters (the main source of salt-and-pepper noise).
+        grayscale = grayscale.filter(ImageFilter.GaussianBlur(radius=1.2))
         grayscale = grayscale.resize(sample_size, Image.Resampling.LANCZOS)
+        # Mild global sharpening only — face region gets its own stronger pass below.
         grayscale = grayscale.filter(ImageFilter.UnsharpMask(
-            radius=.65, percent=140, threshold=2))
+            radius=0.4, percent=80, threshold=3))
         # Resolve eyes, glasses, nose and lips locally, without sharpening the
         # background or flattening the skin's midtones across the whole portrait.
-        # Keep the mask centered on facial features to prevent harsh jawline shadows.
+        # Widen the ellipse to cover brow→chin and ear-to-ear for lower-res grids.
         face_mask = Image.new("L", sample_size, 0)
         ImageDraw.Draw(face_mask).ellipse(
-            (columns * .38, rows * .23, columns * .68, rows * .48), fill=255)
-        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=rows * .02))
-        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.08)
+            (columns * .34, rows * .18, columns * .72, rows * .55), fill=255)
+        face_mask = face_mask.filter(ImageFilter.GaussianBlur(radius=rows * .03))
+        face_detail = ImageEnhance.Contrast(grayscale).enhance(1.15)
         face_detail = face_detail.filter(ImageFilter.UnsharpMask(
-            radius=.75, percent=130, threshold=2))
+            radius=1.0, percent=170, threshold=2))
         grayscale = Image.composite(face_detail, grayscale, face_mask)
         gray_pixels = grayscale.load()
         alpha_pixels = alpha.load()
         is_default_portrait = Path(path).name == DEFAULT_IMAGE
+        _ramp_steps = len(DENSITY_RAMP) - 1
         art = []
         for y in range(rows):
             layers = [[] for _ in range(PHOTO_COOL_TONES + PHOTO_SKIN_TONES)]
             for x in range(columns):
-                luminance = gray_pixels[x, y] / 255
+                raw_lum = gray_pixels[x, y] / 255
+                # Quantize to discrete ramp steps — eliminates salt-and-pepper noise
+                # caused by JPEG micro-variations mapping to visually different chars.
+                luminance = round(raw_lum * _ramp_steps) / _ramp_steps
                 tone = -1
                 if alpha_pixels[x, y] >= 128:
                     red, green, blue = rgb_pixels[x, y]
@@ -257,14 +265,14 @@ def image_to_ascii(path, columns, rows, theme=None):
                                 eff_lum = min(0.95, eff_lum + 0.30)
                             elif 0.05 < eff_lum <= 0.35:
                                 eff_lum = 0.50
-                        character = DENSITY_RAMP[round(eff_lum * (len(DENSITY_RAMP) - 1))]
+                        character = DENSITY_RAMP[round(eff_lum * _ramp_steps)]
                         tone = PHOTO_COOL_TONES + (0 if eff_lum < .55
                                                    else 1 if eff_lum < .80 else 2)
                     else:
-                        character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
+                        character = DENSITY_RAMP[round(luminance * _ramp_steps)]
                         tone = min(int(luminance * PHOTO_COOL_TONES), PHOTO_COOL_TONES - 1)
                 else:
-                    character = DENSITY_RAMP[round(luminance * (len(DENSITY_RAMP) - 1))]
+                    character = DENSITY_RAMP[round(luminance * _ramp_steps)]
                 for index, layer in enumerate(layers):
                     layer.append(character if index == tone else " ")
             art.append(tuple("".join(layer) for layer in layers))
@@ -475,7 +483,9 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
     </filter>
     <linearGradient id="scanline-beam" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="{ACCENT}" stop-opacity="0"/>
-      <stop offset="50%" stop-color="{ACCENT}" stop-opacity="0.28"/>
+      <stop offset="40%" stop-color="{ACCENT}" stop-opacity="0.20"/>
+      <stop offset="50%" stop-color="{ACCENT}" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="{ACCENT}" stop-opacity="0.20"/>
       <stop offset="100%" stop-color="{ACCENT}" stop-opacity="0"/>
     </linearGradient>
     <clipPath id="art-clip">
@@ -501,19 +511,16 @@ def render(mobile=False, art=None, image_name="", profile=None, theme=None, root
             f'<image href="data:image/jpeg;base64,{image_b64}" xlink:href="data:image/jpeg;base64,{image_b64}" '
             f'x="{left}" y="{art_top}" width="{art_width}" height="{art_height}" '
             f'clip-path="url(#art-clip)" preserveAspectRatio="xMidYMid slice"/>')
-    beam_h = 16
+    beam_h = 24
     scan_start_y = art_top - beam_h
     scan_end_y = art_bottom
     scan_dur = 4.0
-    parts.append(f'''<g class="scanline-group motion" clip-path="url(#art-clip)" aria-hidden="true">
-      <rect class="scanline" x="{left}" y="{scan_start_y}" width="{art_width}" height="{beam_h}" fill="url(#scanline-beam)">
-        <animate attributeName="y" values="{scan_start_y};{scan_end_y}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
-      </rect>
-      <line x1="{left}" y1="{scan_start_y + beam_h // 2}" x2="{left + art_width}" y2="{scan_start_y + beam_h // 2}" stroke="{ACCENT}" stroke-width="1.5" opacity="0.65" filter="url(#neon-glow)">
-        <animate attributeName="y1" values="{scan_start_y + beam_h // 2};{scan_end_y + beam_h // 2}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
-        <animate attributeName="y2" values="{scan_start_y + beam_h // 2};{scan_end_y + beam_h // 2}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
-      </line>
-    </g>''')
+    parts.append(f'''\
+<g class="scanline-group motion" clip-path="url(#art-clip)" aria-hidden="true">
+  <rect class="scanline" x="{left}" y="{scan_start_y}" width="{art_width}" height="{beam_h}" fill="url(#scanline-beam)">
+    <animate attributeName="y" values="{scan_start_y};{scan_end_y}" keyTimes="0;1" dur="{scan_dur}s" repeatCount="indefinite"/>
+  </rect>
+</g>''')
     if not image_b64 and art:
         for i, layers in enumerate(art):
             parts.append(f'<g class="ascii-row" data-row="{i}">')
